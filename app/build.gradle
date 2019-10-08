@@ -17,21 +17,81 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
 
         ndk {
             //设置支持的SO库架构（开发者可以根据需要，选择一个或多个平台的so）
             abiFilters "armeabi-v7a"//, "arm64-v8a", "x86","x86_64"
         }
     }
+
+    if(rootProject.ext.signingEnabled){
+        signingConfigs {
+            config  {
+                //加载配置资源
+                Properties properties = new Properties()
+                InputStream inputStream = rootProject.file('local.properties').newDataInputStream()
+                properties.load( inputStream )
+
+                //读取配置文件
+                def storeFileDir = properties.getProperty('storeFile.file')
+                storeFile file( storeFileDir )
+
+                //读取配置字段
+                def key_keyAlias = properties.getProperty('keyAlias')
+                def key_keyPassword = properties.getProperty('keyPassword')
+                def key_storePassword = properties.getProperty('storePassword')
+
+                keyAlias key_keyAlias
+                keyPassword key_keyPassword
+                storePassword key_storePassword
+            }
+
+        }
+    }
+
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            if (rootProject.ext.signingEnabled) {
+                signingConfig signingConfigs.config
+            }
+        }
+
+        debug {
+            debuggable true
+            minifyEnabled false
+        }
+    }
+
+    def API_RELEASE_HOST = "\"http://xx.xx.xx:9000/\""
+    def API_DEV_HOST = "\"http://xx.xx.xx:9000/\""
+
+    flavorDimensions "flavor"
+    productFlavors {
+        //正式
+        flavors_release {
+            dimension "flavor"
+            //url动态替换,正式url
+            buildConfigField("String", "API_HOST", "${API_RELEASE_HOST}")
+        }
+        //开发
+        flavors_dev {
+            dimension "flavor"
+            //url动态替换
+            buildConfigField("String", "API_HOST", "${API_DEV_HOST}")
         }
     }
 
     dataBinding {
         enabled true
+    }
+
+    compileOptions {
+        sourceCompatibility 1.8
+        targetCompatibility 1.8
     }
 }
 
