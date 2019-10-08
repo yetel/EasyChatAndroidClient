@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="colorPrimary">#0d7fea</color>
+    <color name="colorPrimaryDark">#0d7fea</color>
+    <color name="colorAccent">#0d7fea</color>
+
+    <color name="home_status_bar">#1298ed</color>
+
+    <color name="title_bg">#0d7fea</color>
+    <color name="space_bg">#f2f3f6</color>
+
+    <color name="text_3">#333333</color>
+    <color name="text_6">#666666</color>
+    <color name="text_9">#999999</color>
+    <color name="text_80">#808080</color>
+
+    <color name="text_theme">#0d7fea</color>
+
+    <color name="list_divider">#f2f3f6</color>
+
+    <color name="white">#ffffff</color>
+    <color name="black">#000000</color>
+
+
+</resources>
