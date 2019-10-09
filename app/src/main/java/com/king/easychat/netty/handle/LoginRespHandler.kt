@@ -1,6 +1,6 @@
 package com.king.easychat.netty.handle
 
-import com.king.easychat.netty.packet.LoginResp
+import com.king.easychat.netty.packet.resp.LoginResp
 import io.netty.channel.ChannelHandler
 
 /**
