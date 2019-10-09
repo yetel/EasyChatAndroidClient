@@ -2,8 +2,8 @@ package com.king.easychat.app.home
 
 import android.os.Bundle
 import com.king.easychat.R
+import com.king.easychat.app.base.BaseActivity
 import com.king.easychat.databinding.HomeActivityBinding
-import com.king.frame.mvvmframe.base.BaseActivity
 
 /**
  * @author <a href="mailto:jenly1314@gmail.com">Jenly</a>
