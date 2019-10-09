@@ -3,7 +3,7 @@ package com.king.easychat.netty.packet
 /**
  * @author <a href="mailto:jenly1314@gmail.com">Jenly</a>
  */
-open abstract class Packet {
+abstract class Packet {
 
     val version = 1
 
