@@ -1,9 +1,9 @@
 package com.king.easychat.netty.codec
 
 import com.king.easychat.netty.MessageType
-import com.king.easychat.netty.packet.LoginReq
-import com.king.easychat.netty.packet.LoginResp
 import com.king.easychat.netty.packet.Packet
+import com.king.easychat.netty.packet.req.*
+import com.king.easychat.netty.packet.resp.*
 import com.king.easychat.util.JsonUtil
 import io.netty.buffer.ByteBuf
 
@@ -69,10 +69,35 @@ object PacketHelper {
      * 通过消息类型获取数据包
      */
     fun getPacketByMessageType(messageType: Int): Class<out Packet> {
+
         when(messageType){
             MessageType.LOGIN_REQ -> return LoginReq::class.java
             MessageType.LOGIN_RESP -> return LoginResp::class.java
-
+            MessageType.LOGOUT_REQ -> return LogoutReq::class.java
+            MessageType.LOGOUT_RESP -> return LogoutResp::class.java
+            MessageType.SEND_MESSAGE_REQ -> return MessageReq::class.java
+            MessageType.SEND_MESSAGE_RESP -> return MessageResp::class.java
+            MessageType.ADD_FRIEND_REQ -> return AddUserReq::class.java
+            MessageType.ADD_FRIEND_RESP -> return AddUserResp::class.java
+            MessageType.ADD_USER_SELF_RESP -> return AddUserSelfResp::class.java
+            MessageType.CREATE_GROUP_REQ -> return CreateGroupReq::class.java
+            MessageType.CREATE_GROUP_RESP -> return CreateGroupResp::class.java
+            MessageType.INVITE_GROUP_REQ -> return InviteGroupReq::class.java
+            MessageType.INVITE_GROUP_RESP -> return InviteGroupResp::class.java
+            MessageType.INVITE_GROUP_SELF_RESP -> return InviteGroupSelfResp::class.java
+            MessageType.GROUP_MESSAGE_REQ -> return GroupMessageReq::class.java
+            MessageType.GROUP_MESSAGE_RESP -> return GroupMessageResp::class.java
+            MessageType.ACCEPT_GROUP_REQ -> return AcceptGroupReq::class.java
+            MessageType.ACCEPT_GROUP_RESP -> return AcceptGroupResp::class.java
+            MessageType.ACCEPT_REQ -> return AcceptReq::class.java
+            MessageType.ACCEPT_RESP -> return AcceptResp::class.java
+            MessageType.REGISTER_REQ -> return RegisterReq::class.java
+            MessageType.REGISTER_RESP -> return RegisterResp::class.java
+            MessageType.UPDATE_PASSWD_REQ -> return UpdatePasswdReq::class.java
+            MessageType.UPDATE_PASSWD_RESP -> return UpdatePasswdResp::class.java
+            MessageType.MESSAGE_SELF_RESP -> return MessageSelfResp::class.java
+            MessageType.HEAT_BEAT_REQ -> return HertBeatReq::class.java
+            MessageType.HEAT_BEAT_RESP -> return HertBeatResp::class.java
         }
         return Packet::class.java
     }

@@ -1,6 +1,7 @@
-package com.king.easychat.netty.packet
+package com.king.easychat.netty.packet.resp
 
 import com.king.easychat.netty.MessageType
+import com.king.easychat.netty.packet.Packet
 
 /**
  * @author <a href="mailto:jenly1314@gmail.com">Jenly</a>
