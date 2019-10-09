@@ -1,6 +1,7 @@
 package com.king.easychat.netty
 
 import com.king.anetty.ANetty
+import timber.log.Timber
 
 /**
  * @author <a href="mailto:jenly1314@gmail.com">Jenly</a>
@@ -31,6 +32,7 @@ class NettyClient {
    * 发送消息
    */
   fun sendMessage(msg: Any){
+    Timber.d("send Message:%s", msg.toString())
     netty.sendMessage(msg)
   }
 

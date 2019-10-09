@@ -42,7 +42,6 @@
             android:drawablePadding="@dimen/size_6dp"
             android:padding="@dimen/size_8dp"
             android:gravity="center_vertical"
-            android:inputType="number"
             android:maxLength="@integer/username_max_length"
             android:background="@drawable/edit_bg_line_selector"
             android:drawableLeft="@drawable/ic_user"

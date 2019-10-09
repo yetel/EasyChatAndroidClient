@@ -1,5 +1,6 @@
 package com.king.easychat.di.module
 
+import com.king.easychat.app.account.LoginActivity
 import com.king.easychat.app.home.HomeActivity
 import com.king.frame.mvvmframe.di.component.BaseActivitySubcomponent
 import dagger.Module
@@ -13,4 +14,7 @@ abstract class ActivityModule {
 
     @ContributesAndroidInjector
     abstract fun contributeHomeActivity(): HomeActivity
+
+    @ContributesAndroidInjector
+    abstract fun contributeLoginActivity(): LoginActivity
 }

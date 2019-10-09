@@ -1,6 +1,7 @@
 package com.king.easychat.di.module
 
 import androidx.lifecycle.ViewModel
+import com.king.easychat.app.account.LoginViewModel
 import com.king.easychat.app.home.HomeViewModel
 import com.king.frame.mvvmframe.di.scope.ViewModelKey
 import dagger.Binds
@@ -17,4 +18,9 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(HomeViewModel::class)
     abstract fun bindHomeViewModel(viewModel: HomeViewModel) : ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(LoginViewModel::class)
+    abstract fun bindLoginViewModel(viewModel: LoginViewModel) : ViewModel
 }

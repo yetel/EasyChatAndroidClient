@@ -7,6 +7,8 @@
 
     <color name="home_status_bar">#1298ed</color>
 
+    <color name="et_line_bg">#d0d0d0</color>
+
     <color name="title_bg">#0d7fea</color>
     <color name="space_bg">#f2f3f6</color>
 
