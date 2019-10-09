@@ -10,10 +10,8 @@ import timber.log.Timber
  */
 open class RespHandler<T : Any> : SimpleChannelInboundHandler<T>(){
     override fun channelRead0(ctx: ChannelHandlerContext?, msg: T) {
-        msg?.let {
-            Timber.d(it.toString())
-            Event.sendEvent(it)
-        }
+        Timber.d(msg.toString())
+        Event.sendEvent(msg)
     }
 
 }

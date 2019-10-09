@@ -7,26 +7,52 @@ import com.king.anetty.ANetty
  */
 class NettyClient {
 
+  private var netty = ANetty(ChannelInitial(),true)
+
   companion object{
 
-    const val HOST = "192.168.100.54"
-    const val PORT = 8000
+    private const val HOST = "120.79.175.213"
+    private const val PORT = 8000
+
+    val INSTANCE : NettyClient by lazy (mode = LazyThreadSafetyMode.SYNCHRONIZED) { NettyClient() }
 
   }
 
-  var netty = ANetty(ChannelInitial(),true)
 
   /**
-   * netty启动示例
+   * netty启动
    */
-  fun start(){
-    netty.takeIf { netty.isConnected }?.apply {
-      start()
-      return
-    }
-
+  fun connect(){
     netty.connect(HOST, PORT)
 
+  }
+
+  /**
+   * 发送消息
+   */
+  fun sendMessage(msg: Any){
+    netty.sendMessage(msg)
+  }
+
+  /**
+   * 重连
+   */
+  fun reconnect(delayMillis: Long){
+    netty.reconnect(delayMillis)
+  }
+
+  /**
+   * 断开连接
+   */
+  fun disconnect(){
+    netty.disconnect()
+  }
+
+  /**
+   * 关闭
+   */
+  fun close(){
+    netty.close()
   }
 
 }

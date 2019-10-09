@@ -18,4 +18,12 @@ object Event {
 
     }
 
+    fun registerEvent(obj: Any){
+        event.register(obj)
+    }
+
+    fun unregisterEvent(obj: Any){
+        event.unregister(obj)
+    }
+
 }

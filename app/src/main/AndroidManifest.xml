@@ -32,7 +32,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+
+        <activity android:name=".app.account.LoginActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateVisible|adjustPan"/>
+
+
     </application>
+
 
     <meta-data android:name="com.king.easychat.config.ConfigModule"
         android:value="FrameConfigModule"/>

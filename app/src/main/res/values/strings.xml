@@ -1,3 +1,33 @@
 <resources>
     <string name="app_name">EasyChat</string>
+
+    <!-- Login -->
+    <string name="login">登录</string>
+    <string name="hint_username">用户名</string>
+    <string name="hint_password">密码</string>
+    <string name="hint_confirm_password">确认密码</string>
+
+
+    <string name="forgot_password">忘记密码</string>
+
+
+    <string name="tips_username_is_empty">请输入用户名，老铁。</string>
+    <string name="tips_password_is_empty">请输入密码，老铁。</string>
+    <string name="tips_re_password_is_empty">请输入确认密码，老铁。</string>
+    <string name="tips_password_is_different">密码和确认密码不一致。</string>
+
+    <string name="register_u"><u>注册</u></string>
+    <string name="register">注册</string>
+    <string name="register_now">立即注册</string>
+
+    <!-- success -->
+    <string name="success_login">登录成功</string>
+    <string name="success_register">注册成功</string>
+
+    <!-- Error -->
+    <string name="result_connect_failed_error">服务器连接失败，请稍后再试。</string>
+    <string name="result_connect_timeout_error">服务器连接超时，请稍后再试。</string>
+    <string name="result_empty_error">系统繁忙，请稍后再试。</string>
+    <string name="result_network_unavailable_error">网络不给力，请检查网络。</string>
+
 </resources>

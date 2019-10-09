@@ -27,7 +27,7 @@ object PacketHelper {
             .writeByte(packet.version)//版本
             .writeByte(JSON)//json
             .writeByte(packet.messageType())
-            .writeByte(bytes.size)
+            .writeInt(bytes.size)
             .writeBytes(bytes)
 
     }

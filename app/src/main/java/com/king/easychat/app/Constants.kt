@@ -9,4 +9,22 @@ object Constants {
 
     const val TAG = "Jenly"
 
+    //---------------------------------------------
+
+    const val KEY_TITLE = "key_title"
+
+    const val KEY_URL = "key_url"
+
+    const val KEY_TOKEN = "key_token"
+
+    const val KEY_USERNAME = "key_username"
+
+    const val KEY_BEAN = "key_bean"
+
+
+    //---------------------------------------------
+
+
+    const val PAGE_SIZE = 20
+
 }
