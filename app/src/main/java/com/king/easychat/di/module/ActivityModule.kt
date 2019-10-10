@@ -2,6 +2,7 @@ package com.king.easychat.di.module
 
 import com.king.easychat.app.account.LoginActivity
 import com.king.easychat.app.account.RegisterActivity
+import com.king.easychat.app.chat.ChatActivity
 import com.king.easychat.app.home.HomeActivity
 import com.king.easychat.app.splash.SplashActivity
 import com.king.easychat.temp.TempActivity
@@ -29,6 +30,9 @@ abstract class ActivityModule {
 
     @ContributesAndroidInjector
     abstract fun contributeRegisterActivity(): RegisterActivity
+
+    @ContributesAndroidInjector
+    abstract fun contributeChatActivity(): ChatActivity
 
 
 }

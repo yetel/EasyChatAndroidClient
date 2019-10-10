@@ -34,10 +34,13 @@
 
 
     <!-- Home -->
-
     <string name="menu_message">消息</string>
     <string name="menu_friend">好友</string>
     <string name="menu_group">群组</string>
     <string name="menu_me">我的</string>
+
+    <!-- Chat -->
+
+    <string name="send">发送</string>
 
 </resources>

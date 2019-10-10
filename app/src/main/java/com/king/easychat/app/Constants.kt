@@ -5,7 +5,7 @@ package com.king.easychat.app
  */
 object Constants {
 
-    const val BASE_URL = "https://xx.xx.xx"
+    const val BASE_URL = "https://120.79.175.213:9004"
 
     const val TAG = "Jenly"
 
@@ -23,6 +23,8 @@ object Constants {
 
 
     //---------------------------------------------
+
+    const val EVENT_SUCCESS = 0x01
 
 
     const val PAGE_SIZE = 20

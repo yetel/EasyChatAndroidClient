@@ -8,9 +8,9 @@ import com.king.easychat.netty.packet.Packet
  * date: 2019/08/19.
  * description:
  */
-class HertBeatResp : Packet() {
+class HeartBeatResp : Packet() {
     override fun messageType(): Int {
-        return MessageType.HEAT_BEAT_RESP
+        return MessageType.HEART_BEAT_RESP
     }
 
 

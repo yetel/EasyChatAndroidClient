@@ -96,8 +96,8 @@ object PacketHelper {
             MessageType.UPDATE_PASSWD_REQ -> return UpdatePasswdReq::class.java
             MessageType.UPDATE_PASSWD_RESP -> return UpdatePasswdResp::class.java
             MessageType.MESSAGE_SELF_RESP -> return MessageSelfResp::class.java
-            MessageType.HEAT_BEAT_REQ -> return HertBeatReq::class.java
-            MessageType.HEAT_BEAT_RESP -> return HertBeatResp::class.java
+            MessageType.HEART_BEAT_REQ -> return HeartBeatReq::class.java
+            MessageType.HEART_BEAT_RESP -> return HeartBeatResp::class.java
         }
         return Packet::class.java
     }

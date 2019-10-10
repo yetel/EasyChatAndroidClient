@@ -1,6 +1,8 @@
 package com.king.easychat.netty
 
 import com.king.anetty.ANetty
+import io.netty.channel.ChannelFuture
+import io.netty.util.concurrent.GenericFutureListener
 import timber.log.Timber
 
 /**
@@ -21,7 +23,7 @@ class NettyClient {
 
 
   /**
-   * netty启动
+   * Netty建立连接
    */
   fun connect(){
     netty.connect(HOST, PORT)
@@ -44,7 +46,7 @@ class NettyClient {
   }
 
   /**
-   * 断开连接
+   * Netty断开连接
    */
   fun disconnect(){
     netty.disconnect()
@@ -57,4 +59,35 @@ class NettyClient {
     netty.close()
   }
 
+  /**
+   * Netty是否已经连接
+   */
+  fun isConnected(): Boolean{
+    return netty.isConnected
+  }
+
+  /**
+   * 通道是否开启
+   */
+  fun isOpen(): Boolean{
+    return netty.isOpen
+  }
+
+  /**
+   * 添加监听、经测试：后续添加的监听并没什么卵用
+   */
+  fun addListener(listener: GenericFutureListener<ChannelFuture>){
+      getChannelFuture()?.addListener(listener)
+  }
+
+  /**
+   * 移除监听
+   */
+  fun removeListener(listener: GenericFutureListener<ChannelFuture>){
+    getChannelFuture()?.removeListener(listener)
+  }
+
+  fun getChannelFuture(): ChannelFuture? {
+    return netty.channelFuture
+  }
 }

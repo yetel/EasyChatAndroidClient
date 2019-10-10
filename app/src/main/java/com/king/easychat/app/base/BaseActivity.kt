@@ -13,6 +13,7 @@ import androidx.annotation.StringRes
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.content.ContextCompat
 import androidx.databinding.ViewDataBinding
+import androidx.lifecycle.Observer
 import com.king.base.util.StringUtils
 import com.king.base.util.ToastUtils
 import com.king.easychat.App
@@ -39,6 +40,7 @@ abstract class BaseActivity<VM : BaseViewModel<out BaseModel>,VDB : ViewDataBind
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if(useEvent()) Event.registerEvent(this)
+
     }
 
     override fun onDestroy() {

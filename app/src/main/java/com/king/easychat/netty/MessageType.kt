@@ -33,8 +33,8 @@ object MessageType {
     const val UPDATE_PASSWD_REQ = 23
     const val UPDATE_PASSWD_RESP = 24
     const val MESSAGE_SELF_RESP = 25
-    const val HEAT_BEAT_REQ = 26
-    const val HEAT_BEAT_RESP = 27
+    const val HEART_BEAT_REQ = 26
+    const val HEART_BEAT_RESP = 27
 
 
 }

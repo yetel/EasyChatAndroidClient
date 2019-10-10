@@ -3,6 +3,7 @@ package com.king.easychat.di.module
 import androidx.lifecycle.ViewModel
 import com.king.easychat.app.account.LoginViewModel
 import com.king.easychat.app.account.RegisterViewModel
+import com.king.easychat.app.chat.ChatViewModel
 import com.king.easychat.app.friend.FriendViewModel
 import com.king.easychat.app.group.GroupViewModel
 import com.king.easychat.app.home.HomeViewModel
@@ -53,4 +54,9 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(MeViewModel::class)
     abstract fun bindMeViewModel(viewModel: MeViewModel) : ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(ChatViewModel::class)
+    abstract fun bindChatViewModel(viewModel: ChatViewModel) : ViewModel
 }
