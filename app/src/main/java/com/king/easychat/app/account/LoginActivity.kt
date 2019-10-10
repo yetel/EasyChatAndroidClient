@@ -10,6 +10,9 @@ import com.king.easychat.R
 import com.king.easychat.app.Constants
 import com.king.easychat.app.base.BaseActivity
 import com.king.easychat.databinding.LoginActivityBinding
+import com.king.easychat.netty.packet.resp.LoginResp
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 /**
  * @author <a href="mailto:jenly1314@gmail.com">Jenly</a>
@@ -52,19 +55,36 @@ class LoginActivity : BaseActivity<LoginViewModel, LoginActivityBinding>(), View
         return R.layout.login_activity
     }
 
-    fun clickForgotPwd(){
 
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onMessageEvent(event: LoginResp){
+        handleLoginResp(event)
+    }
+
+    fun handleLoginResp(resp : LoginResp){
+        if(resp.success){
+            startHomeActivity()
+            finish()
+        }else{
+            showToast(resp.reason)
+        }
+    }
+
+
+    fun clickForgotPwd(){
+        showTodo()
     }
 
     fun clickLogin(){
 
-        if (!checkInput(mBinding.etUsername, "请输入用户名")) {
+        if (!checkInput(mBinding.etUsername, R.string.tips_username_is_empty)) {
             return
         }
 
         username = mBinding.etUsername.text.toString()
 
-        if (!checkInput(mBinding.etPassword, "请输入密码")) {
+        if (!checkInput(mBinding.etPassword, R.string.tips_password_is_empty)) {
             return
         }
 
@@ -74,7 +94,7 @@ class LoginActivity : BaseActivity<LoginViewModel, LoginActivityBinding>(), View
     }
 
     fun clickRegister(){
-
+        showTodo()
     }
 
     override fun onClick(v: View){

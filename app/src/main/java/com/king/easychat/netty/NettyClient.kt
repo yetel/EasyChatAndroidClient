@@ -32,7 +32,7 @@ class NettyClient {
    * 发送消息
    */
   fun sendMessage(msg: Any){
-    Timber.d("send Message:%s", msg.toString())
+    Timber.d(msg.toString())
     netty.sendMessage(msg)
   }
 
