@@ -13,4 +13,9 @@ class HeartBeatReq : Packet(){
         return MessageType.HEART_BEAT_REQ
     }
 
+    override fun toString(): String {
+        return "HeartBeatReq(messageType=MessageType.HEART_BEAT_REQ) ${super.toString()}"
+    }
+
+
 }

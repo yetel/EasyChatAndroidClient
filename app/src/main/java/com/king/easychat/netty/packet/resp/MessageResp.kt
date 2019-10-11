@@ -1,5 +1,6 @@
 package com.king.easychat.netty.packet.resp
 
+import com.chad.library.adapter.base.entity.MultiItemEntity
 import com.king.easychat.netty.MessageType
 import com.king.easychat.netty.packet.Packet
 import com.king.easychat.util.AES
@@ -9,7 +10,17 @@ import com.king.easychat.util.AES
  * date: 2019/08/19.
  * description:
  */
-class MessageResp(val sender : String,val senderName : String,val message : String) : Packet() {
+class MessageResp(val sender : String?,val senderName : String?,val message : String, val isSender: Boolean = false) : Packet(), MultiItemEntity {
+
+
+    companion object{
+        val Left = 1
+        val Right = 2
+    }
+
+    override fun getItemType(): Int {
+        return if(isSender) Right else Left
+    }
 
 //    @Expose val msg = AES.decrypt(message,dateTime + "ab").toString()
 
@@ -25,5 +36,8 @@ class MessageResp(val sender : String,val senderName : String,val message : Stri
         return "MessageResp(sender='$sender', senderName='$senderName', message='$message', msg='${getMsg()}') ${super.toString()}"
     }
 
+    fun isSelf(self: String): Boolean{
+        return self == sender
+    }
 
 }

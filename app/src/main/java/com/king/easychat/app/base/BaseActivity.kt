@@ -214,4 +214,8 @@ abstract class BaseActivity<VM : BaseViewModel<out BaseModel>,VDB : ViewDataBind
         startActivity(intent, optionsCompat.toBundle())
     }
 
+
+    open fun onClick(v: View){
+        if(v.id == R.id.ivLeft) onBackPressed()
+    }
 }

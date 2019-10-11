@@ -1,6 +1,8 @@
 package com.king.easychat.app.me
 
 import android.app.Application
+import android.content.ComponentName
+import android.os.IBinder
 import com.king.frame.mvvmframe.base.BaseModel
 import com.king.frame.mvvmframe.base.DataViewModel
 import javax.inject.Inject

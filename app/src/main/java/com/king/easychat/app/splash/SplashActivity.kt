@@ -8,6 +8,7 @@ import com.king.easychat.R
 import com.king.easychat.app.account.LoginActivity
 import com.king.easychat.app.account.LoginViewModel
 import com.king.easychat.app.base.BaseActivity
+import com.king.easychat.app.service.HeartBeatService
 import com.king.easychat.databinding.SplashActivityBinding
 import kotlinx.android.synthetic.main.splash_activity.*
 

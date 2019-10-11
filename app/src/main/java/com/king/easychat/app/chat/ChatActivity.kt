@@ -6,33 +6,42 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.king.base.adapter.divider.DividerItemDecoration
 import com.king.easychat.R
 import com.king.easychat.app.Constants
-import com.king.easychat.app.adapter.BindingAdapter
+import com.king.easychat.app.adapter.ChatAdapter
 import com.king.easychat.app.base.BaseActivity
+import com.king.easychat.bean.User
 import com.king.easychat.databinding.ChatActivityBinding
 import com.king.easychat.netty.packet.resp.MessageResp
 import kotlinx.android.synthetic.main.chat_activity.*
+import kotlinx.android.synthetic.main.toolbar.*
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
 /**
  * @author <a href="mailto:jenly1314@gmail.com">Jenly</a>
  */
-class ChatActivity : BaseActivity<ChatViewModel, ChatActivityBinding>(),View.OnClickListener{
+class ChatActivity : BaseActivity<ChatViewModel, ChatActivityBinding>(){
 
-    lateinit var mAdapter : BindingAdapter<MessageResp>
+    var user : User? = null
+    var userId : String = "7"
+
+    val mAdapter by lazy { ChatAdapter() }
 
     var message : String? = null
 
     override fun initData(savedInstanceState: Bundle?) {
 
-        registerSingleLiveEvent {
-            when(it.what){
-                Constants.EVENT_SUCCESS -> handleMessageResp(mViewModel.messageReq?.toMessageResp("1","jenly"))
-            }
+        user = intent.getSerializableExtra(Constants.KEY_BEAN) as User
+        user?.let {
+            tvTitle.setText(it.userName)
+            userId = it.userId!!
         }
 
-        tvSend.setOnClickListener(this)
-        mAdapter = BindingAdapter(R.layout.rv_chat_item)
+
+        registerSingleLiveEvent {
+            when(it.what){
+                Constants.EVENT_SUCCESS -> handleMessageResp(mViewModel.messageReq?.toMessageResp(getApp().loginResp,true))
+            }
+        }
 
         rv.layoutManager = LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false)
         rv.addItemDecoration(DividerItemDecoration(context,DividerItemDecoration.VERTICAL,R.drawable.line_drawable_xh_none))
@@ -58,15 +67,15 @@ class ChatActivity : BaseActivity<ChatViewModel, ChatActivityBinding>(),View.OnC
 
 
     fun clickSend(){
-
         message = etContent.text.toString()
         message?.let {
-            mViewModel.sendMessage("7",it)
+            mViewModel.sendMessage(userId,it)
         }
 
     }
 
     override fun onClick(v: View){
+        super.onClick(v)
         when(v.id){
             R.id.tvSend -> clickSend()
         }

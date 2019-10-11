@@ -9,6 +9,7 @@ import com.king.base.util.SharedPreferencesUtils
 import com.king.easychat.R
 import com.king.easychat.app.Constants
 import com.king.easychat.app.base.BaseActivity
+import com.king.easychat.app.service.HeartBeatService
 import com.king.easychat.databinding.LoginActivityBinding
 import com.king.easychat.netty.packet.resp.LoginResp
 import org.greenrobot.eventbus.Subscribe
@@ -63,7 +64,10 @@ class LoginActivity : BaseActivity<LoginViewModel, LoginActivityBinding>(), View
     }
 
     fun handleLoginResp(resp : LoginResp){
+        hideLoading()
         if(resp.success){
+            getApp().loginResp = resp
+            HeartBeatService.startHeartBeatService(context)
             startHomeActivity()
             finish()
         }else{

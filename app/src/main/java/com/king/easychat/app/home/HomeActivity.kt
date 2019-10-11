@@ -110,7 +110,7 @@ class HomeActivity : BaseActivity<HomeViewModel, HomeActivityBinding>() {
     }
 
 
-    open fun onClick(v: View){
+    override fun onClick(v: View){
         when(v.id){
             R.id.rb1 -> showHomeFragment()
             R.id.rb2 -> showFriendFragment()

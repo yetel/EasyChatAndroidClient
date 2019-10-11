@@ -3,6 +3,7 @@ package com.king.easychat
 import android.content.Context
 import com.king.easychat.app.Constants
 import com.king.easychat.di.component.DaggerApplicationComponent
+import com.king.easychat.netty.packet.resp.LoginResp
 import com.king.frame.mvvmframe.base.BaseApplication
 import com.orhanobut.logger.AndroidLogAdapter
 import com.orhanobut.logger.Logger
@@ -13,6 +14,8 @@ import timber.log.Timber
  * @author <a href="mailto:jenly1314@gmail.com">Jenly</a>
  */
 class App : BaseApplication() {
+
+    var loginResp: LoginResp? = null
 
     override fun attachBaseContext(base: Context?) {
         //初始化打印日志

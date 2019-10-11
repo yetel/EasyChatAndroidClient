@@ -11,5 +11,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="@dimen/size_10dp"
+        android:gravity="right"
         android:text="@{data.msg}"/>
 </layout>

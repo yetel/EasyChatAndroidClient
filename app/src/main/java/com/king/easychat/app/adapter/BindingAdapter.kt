@@ -7,7 +7,7 @@ import com.king.easychat.BR
 /**
  * @author <a href="mailto:jenly1314@gmail.com">Jenly</a>
  */
-class BindingAdapter<T> : BaseQuickAdapter<T, BindingHolder> {
+open class BindingAdapter<T> : BaseQuickAdapter<T, BindingHolder> {
 
     constructor(layoutResId: Int, @Nullable data: List<T>) : super(layoutResId, data)
 

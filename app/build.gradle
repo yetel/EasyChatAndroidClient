@@ -6,6 +6,9 @@ apply plugin: 'kotlin-android-extensions'
 
 apply plugin: 'kotlin-kapt'
 
+androidExtensions {
+    experimental = true
+}
 
 android {
     compileSdkVersion 29
@@ -107,6 +110,8 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
 
     kapt 'androidx.room:room-compiler:2.2.0-alpha01'
+    implementation 'androidx.room:room-rxjava2:2.2.0-alpha01'
+
 
     kapt 'com.google.dagger:dagger-android-processor:2.23.2'
     kapt 'com.google.dagger:dagger-compiler:2.23.2'
