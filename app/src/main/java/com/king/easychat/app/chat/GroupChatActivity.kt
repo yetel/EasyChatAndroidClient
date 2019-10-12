@@ -6,15 +6,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.king.base.adapter.divider.DividerItemDecoration
 import com.king.easychat.R
 import com.king.easychat.app.Constants
-import com.king.easychat.app.adapter.ChatAdapter
 import com.king.easychat.app.adapter.GroupChatAdapter
 import com.king.easychat.app.base.BaseActivity
 import com.king.easychat.bean.Group
-import com.king.easychat.bean.User
-import com.king.easychat.databinding.ChatActivityBinding
 import com.king.easychat.databinding.GroupChatActivityBinding
 import com.king.easychat.netty.packet.resp.GroupMessageResp
-import com.king.easychat.netty.packet.resp.MessageResp
 import kotlinx.android.synthetic.main.chat_activity.*
 import kotlinx.android.synthetic.main.toolbar.*
 import org.greenrobot.eventbus.Subscribe

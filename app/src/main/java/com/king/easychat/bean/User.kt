@@ -19,7 +19,7 @@ import androidx.room.PrimaryKey
 class User(val userId: String,val userName: String,var nickName: String?,var avatar: String?,var signature: String?) : Parcelable {
 
     @PrimaryKey(autoGenerate = true)
-    private var id: Long = 0
+    var id: Int = 0
 
     fun getShowName(): String {
         nickName?.let {

@@ -10,4 +10,5 @@ class Result<T> {
     var desc : String? = null
 
     var data : T? = null
+
 }

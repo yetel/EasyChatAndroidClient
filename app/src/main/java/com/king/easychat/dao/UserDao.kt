@@ -42,6 +42,6 @@ interface UserDao {
     /**
      * 修改用户
      */
-    @Update
-    fun updateUser(user: User)
+//    @Update
+//    fun updateUser(user: User)
 }

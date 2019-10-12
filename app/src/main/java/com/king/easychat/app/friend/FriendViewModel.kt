@@ -8,6 +8,7 @@ import com.king.easychat.bean.User
 import com.king.easychat.bean.Result
 
 import com.king.frame.mvvmframe.base.BaseModel
+import com.king.frame.mvvmframe.base.BaseViewModel
 import com.king.frame.mvvmframe.base.DataViewModel
 import com.king.frame.mvvmframe.base.livedata.StatusEvent
 import com.king.frame.mvvmframe.http.callback.ApiCallback
@@ -17,7 +18,7 @@ import javax.inject.Inject
 /**
  * @author <a href="mailto:jenly1314@gmail.com">Jenly</a>
  */
-class FriendViewModel @Inject constructor(application: Application, model: BaseModel?) : DataViewModel(application, model){
+class FriendViewModel @Inject constructor(application: Application, model: FriendModel?) : BaseViewModel<FriendModel>(application, model){
 
     var friendsLiveData = MutableLiveData<MutableList<User>>()
 
@@ -36,7 +37,7 @@ class FriendViewModel @Inject constructor(application: Application, model: BaseM
     fun getFriends(){
         updateStatus(StatusEvent.Status.LOADING)
         val token = getApplication<App>().loginResp?.token
-        getRetrofitService(ApiService::class.java)
+        mModel.getRetrofitService(ApiService::class.java)
             .getFriends(token)
             .enqueue(object : ApiCallback<Result<MutableList<User>>>(){
                 override fun onResponse(call: Call<Result<MutableList<User>>>?, result: Result<MutableList<User>>?) {

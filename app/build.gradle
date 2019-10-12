@@ -6,6 +6,11 @@ apply plugin: 'kotlin-android-extensions'
 
 apply plugin: 'kotlin-kapt'
 
+//使用生成文件
+kapt {
+    generateStubs = true
+}
+
 androidExtensions {
     experimental = true
 }
@@ -25,6 +30,13 @@ android {
         ndk {
             //设置支持的SO库架构（开发者可以根据需要，选择一个或多个平台的so）
             abiFilters "armeabi-v7a"//, "arm64-v8a", "x86","x86_64"
+        }
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = ["room.schemaLocation":
+                                     "$projectDir/schemas".toString()]
+            }
         }
     }
 
