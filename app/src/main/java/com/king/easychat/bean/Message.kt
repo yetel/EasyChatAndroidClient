@@ -1,5 +1,7 @@
 package com.king.easychat.bean
 
+import com.king.easychat.util.AES
+
 /**
  * @author Zed
  * date: 2019/10/12.
@@ -20,5 +22,12 @@ class Message {
 
     /** 0 普通消息 1 图片消息*/
     var messageType : Int?=null
+
+    fun getDecryptMessage() : String? {
+        message?.let {
+            return AES.decrypt(it, "${dateTime}ab")
+        }
+       return null
+    }
 
 }

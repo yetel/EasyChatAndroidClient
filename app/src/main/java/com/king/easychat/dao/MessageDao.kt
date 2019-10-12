@@ -2,8 +2,6 @@ package com.king.easychat.dao
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import com.king.easychat.bean.User
-import com.king.easychat.netty.packet.resp.GroupMessageResp
 import com.king.easychat.netty.packet.resp.MessageResp
 
 /**
@@ -26,7 +24,7 @@ interface MessageDao {
      * 删除所有
      */
     @Query("DELETE FROM MessageResp")
-    fun queryAll()
+    fun deleteAll()
 
     /**
      * 获取所有的聊天好友id
