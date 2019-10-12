@@ -25,7 +25,7 @@ interface UserDao {
      * 删除所有
      */
     @Query("DELETE FROM User")
-    fun queryAll()
+    fun delateAll()
 
     /**
      * 查询所有用户列表
