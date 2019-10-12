@@ -129,4 +129,6 @@ dependencies {
 
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.49-androidx'
 
+    implementation 'de.hdodenhof:circleimageview:3.0.1'
+
 }

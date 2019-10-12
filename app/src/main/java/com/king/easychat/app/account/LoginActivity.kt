@@ -12,6 +12,7 @@ import com.king.easychat.app.base.BaseActivity
 import com.king.easychat.app.service.HeartBeatService
 import com.king.easychat.databinding.LoginActivityBinding
 import com.king.easychat.netty.packet.resp.LoginResp
+import com.king.easychat.util.Cache
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
@@ -67,6 +68,7 @@ class LoginActivity : BaseActivity<LoginViewModel, LoginActivityBinding>(), View
         hideLoading()
         if(resp.success){
             getApp().loginResp = resp
+            Cache.put(context,mViewModel.loginReq)
             HeartBeatService.startHeartBeatService(context)
             startHomeActivity()
             finish()

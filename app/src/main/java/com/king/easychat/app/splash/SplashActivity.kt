@@ -4,28 +4,80 @@ import android.os.Bundle
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import com.king.anetty.Netty
 import com.king.easychat.R
 import com.king.easychat.app.account.LoginActivity
 import com.king.easychat.app.account.LoginViewModel
 import com.king.easychat.app.base.BaseActivity
 import com.king.easychat.app.service.HeartBeatService
 import com.king.easychat.databinding.SplashActivityBinding
+import com.king.easychat.netty.NettyClient
+import com.king.easychat.netty.packet.req.LoginReq
+import com.king.easychat.netty.packet.resp.LoginResp
+import com.king.easychat.util.Cache
 import kotlinx.android.synthetic.main.splash_activity.*
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
+import java.lang.Exception
 
 /**
  * @author <a href="mailto:jenly1314@gmail.com">Jenly</a>
  */
-class SplashActivity : BaseActivity<LoginViewModel, SplashActivityBinding>(){
+class SplashActivity : BaseActivity<SplashViewModel, SplashActivityBinding>(){
 
-
+    var isRequest = false
     var isAnimEnd = false
+    var loginResp: LoginResp? = null
 
     override fun initData(savedInstanceState: Bundle?) {
+
+        NettyClient.INSTANCE.setOnConnectListener(object: Netty.OnConnectListener{
+            override fun onSuccess() {
+                autoLogin()
+            }
+
+            override fun onFailed() {
+                isRequest = true
+                startActivity()
+            }
+
+            override fun onError(e: Exception?) {
+                isRequest = true
+                startActivity()
+            }
+
+        })
+        NettyClient.INSTANCE.connect()
+
         startAnimation(rootView)
+    }
+
+    fun autoLogin(){
+        var loginReq: LoginReq?  = Cache.getLoginReq(context)
+        loginReq?.let {
+            mViewModel.login(loginReq)
+        } ?: run{
+            isRequest = true
+            startActivity()
+        }
     }
 
     override fun getLayoutId(): Int {
         return R.layout.splash_activity
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onMessageEvent(event: LoginResp){
+        handleLoginResp(event)
+    }
+
+    fun handleLoginResp(resp : LoginResp){
+        isRequest = true
+        if(resp.success){
+            loginResp = resp
+        }
+
+        startActivity()
     }
 
 
@@ -49,7 +101,18 @@ class SplashActivity : BaseActivity<LoginViewModel, SplashActivityBinding>(){
     }
 
     fun startActivity(){
-        startLoginActivity()
-        finish()
+        if(isAnimEnd && isRequest){
+
+            if(loginResp != null){
+                getApp().loginResp = loginResp
+                HeartBeatService.startHeartBeatService(context)
+                startHomeActivity()
+            }else{
+                startLoginActivity()
+            }
+
+            finish()
+        }
+
     }
 }

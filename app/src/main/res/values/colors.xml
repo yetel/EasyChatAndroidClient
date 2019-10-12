@@ -26,6 +26,8 @@
 
     <color name="list_divider">#f2f3f6</color>
 
+    <color name="white_pressed">#ddffffff</color>
+
     <color name="white">#ffffff</color>
     <color name="black">#000000</color>
 

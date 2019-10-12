@@ -14,18 +14,19 @@ import com.king.easychat.util.AES
  */
 class MessageReq(val receiver : String,@Expose val msg : String) : Packet(){
 
-    val message = AES.encrypt(msg,dateTime + "ab").toString()
+    val message = AES.encrypt(msg,"${dateTime}ab").toString()
 
     override fun messageType(): Int {
         return MessageType.SEND_MESSAGE_REQ
     }
 
-    override fun toString(): String {
-        return "MessageReq(receiver='$receiver', msg='$msg', message='$message') ${super.toString()}"
-    }
 
     fun toMessageResp(loginResp: LoginResp?,isSender: Boolean): MessageResp{
         return MessageResp(loginResp?.userId,loginResp?.userName,message,isSender)
     }
 
+
+    override fun toString(): String {
+        return "MessageReq(receiver='$receiver', msg='$msg', message='$message') ${super.toString()}"
+    }
 }

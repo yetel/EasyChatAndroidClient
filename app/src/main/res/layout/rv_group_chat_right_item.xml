@@ -4,7 +4,7 @@
     <data>
         <variable
             name="data"
-            type="com.king.easychat.netty.packet.resp.MessageResp" />
+            type="com.king.easychat.netty.packet.resp.GroupMessageResp" />
     </data>
     <LinearLayout
         android:orientation="vertical"
@@ -14,7 +14,7 @@
         android:paddingBottom="@dimen/size_10dp"
         android:paddingLeft="@dimen/size_16dp"
         android:paddingRight="@dimen/size_16dp"
-        android:gravity="left">
+        android:gravity="right">
         <TextView
             android:id="@+id/tvTime"
             android:layout_width="wrap_content"

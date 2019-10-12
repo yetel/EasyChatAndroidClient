@@ -1,6 +1,7 @@
 package com.king.easychat.netty
 
 import com.king.anetty.ANetty
+import com.king.anetty.Netty
 import io.netty.channel.ChannelFuture
 import io.netty.util.concurrent.GenericFutureListener
 import timber.log.Timber
@@ -71,6 +72,10 @@ class NettyClient {
    */
   fun isOpen(): Boolean{
     return netty.isOpen
+  }
+
+  fun setOnConnectListener(listener: Netty.OnConnectListener){
+      netty.setOnConnectListener(listener)
   }
 
   /**

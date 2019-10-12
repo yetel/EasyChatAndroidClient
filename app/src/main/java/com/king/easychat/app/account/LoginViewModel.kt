@@ -1,6 +1,8 @@
 package com.king.easychat.app.account
 
 import android.app.Application
+import androidx.core.content.ContextCompat.startActivity
+import com.king.anetty.Netty
 import com.king.easychat.app.Constants
 import com.king.easychat.netty.NettyClient
 import com.king.easychat.netty.packet.req.LoginReq
@@ -16,9 +18,11 @@ import javax.inject.Inject
  */
 class LoginViewModel @Inject constructor(application: Application, model: BaseModel?) : DataViewModel(application, model){
 
+    var loginReq: LoginReq? = null
+
     val genericFutureListener by lazy {
         GenericFutureListener<ChannelFuture> {
-            if(!it.isSuccess){
+            if(it.isSuccess){
                 sendSingleLiveEvent(Constants.EVENT_SUCCESS)
             }
             hideLoading()
@@ -27,9 +31,23 @@ class LoginViewModel @Inject constructor(application: Application, model: BaseMo
 
     override fun onCreate() {
         super.onCreate()
-        NettyClient.INSTANCE.connect()
 
-        NettyClient.INSTANCE.addListener(genericFutureListener)
+        NettyClient.INSTANCE.setOnConnectListener(object: Netty.OnConnectListener{
+            override fun onSuccess() {
+                NettyClient.INSTANCE.addListener(genericFutureListener)
+            }
+
+            override fun onFailed() {
+
+            }
+
+            override fun onError(e: Exception?) {
+
+            }
+
+        })
+
+        NettyClient.INSTANCE.connect()
     }
 
     override fun onDestroy() {
@@ -39,6 +57,7 @@ class LoginViewModel @Inject constructor(application: Application, model: BaseMo
 
     fun login(username: String,password: String){
         showLoading()
-        NettyClient.INSTANCE.sendMessage(LoginReq(username,password))
+        loginReq = LoginReq(username,password)
+        NettyClient.INSTANCE.sendMessage(loginReq!!)
     }
 }

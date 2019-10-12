@@ -4,7 +4,7 @@
     <data>
         <variable
             name="data"
-            type="com.king.easychat.netty.packet.resp.MessageResp" />
+            type="com.king.easychat.netty.packet.resp.GroupMessageResp" />
     </data>
     <LinearLayout
         android:orientation="vertical"

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="viewModel"
+            type="com.king.easychat.app.chat.GroupChatViewModel" />
+    </data>
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <include layout="@layout/toolbar"/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@color/space_bg"/>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/size_16dp"
+            android:paddingRight="@dimen/size_16dp"
+            android:paddingTop="@dimen/size_10dp"
+            android:paddingBottom="@dimen/size_10dp"
+            android:background="@drawable/white_layer">
+            <EditText
+                android:id="@+id/etContent"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:padding="@dimen/size_6dp"
+                android:background="@drawable/edit_bg_line_selector"
+                app:layout_constraintVertical_chainStyle="packed"
+                app:layout_constraintHorizontal_weight="1"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintRight_toLeftOf="@+id/tvSend"/>
+            <TextView
+                android:id="@+id/tvSend"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/send"
+                android:textColor="@color/white"
+                android:paddingTop="@dimen/size_6dp"
+                android:paddingBottom="@dimen/size_6dp"
+                android:paddingLeft="@dimen/size_16dp"
+                android:paddingRight="@dimen/size_16dp"
+                android:layout_marginLeft="@dimen/size_10dp"
+                android:background="@drawable/btn_bg_selector"
+                app:layout_constraintBaseline_toBaselineOf="@+id/etContent"
+                app:layout_constraintLeft_toRightOf="@+id/etContent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                style="@style/OnClick"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
+
+</layout>

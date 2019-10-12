@@ -3,10 +3,7 @@ package com.king.easychat.netty
 import com.king.easychat.netty.codec.PacketDecoder
 import com.king.easychat.netty.codec.PacketEncoder
 import com.king.easychat.netty.codec.Spliter
-import com.king.easychat.netty.handle.HeartBeatRespHandler
-import com.king.easychat.netty.handle.LoginRespHandler
-import com.king.easychat.netty.handle.MessageRespHandler
-import com.king.easychat.netty.handle.RespHandler
+import com.king.easychat.netty.handle.*
 import com.king.easychat.netty.packet.Packet
 import io.netty.channel.ChannelInitializer
 import io.netty.channel.socket.SocketChannel
@@ -23,6 +20,7 @@ class ChannelInitial : ChannelInitializer<SocketChannel>(){
                 .addLast(PacketEncoder())
                 .addLast(LoginRespHandler())
                 .addLast(MessageRespHandler())
+                .addLast(GroupMessageRespHandler())
                 .addLast(HeartBeatRespHandler())
         }
     }

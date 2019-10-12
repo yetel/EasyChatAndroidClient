@@ -26,6 +26,10 @@ class FriendViewModel @Inject constructor(application: Application, model: BaseM
         getFriends()
     }
 
+    fun retry(){
+        getFriends()
+    }
+
     /**
      * 获取好友列表
      */

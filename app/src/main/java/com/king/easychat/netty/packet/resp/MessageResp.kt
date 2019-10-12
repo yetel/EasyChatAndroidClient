@@ -29,7 +29,7 @@ class MessageResp(val sender : String?,val senderName : String?,val message : St
     }
 
     fun getMsg(): String?{
-        return AES.decrypt(message,dateTime + "ab")
+        return AES.decrypt(message,"${dateTime}ab")
     }
 
     override fun toString(): String {

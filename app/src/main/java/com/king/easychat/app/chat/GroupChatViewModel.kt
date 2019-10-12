@@ -3,30 +3,28 @@ package com.king.easychat.app.chat
 import android.app.Application
 import com.king.easychat.app.Constants
 import com.king.easychat.netty.NettyClient
+import com.king.easychat.netty.packet.req.GroupMessageReq
 import com.king.easychat.netty.packet.req.MessageReq
 import com.king.frame.mvvmframe.base.BaseModel
 import com.king.frame.mvvmframe.base.DataViewModel
-import io.netty.channel.ChannelFuture
-import io.netty.util.concurrent.GenericFutureListener
-import timber.log.Timber
 import javax.inject.Inject
 
 /**
  * @author <a href="mailto:jenly1314@gmail.com">Jenly</a>
  */
-class ChatViewModel @Inject constructor(application: Application, model: BaseModel?) : DataViewModel(application, model){
+class GroupChatViewModel @Inject constructor(application: Application, model: BaseModel?) : DataViewModel(application, model){
 
-    var messageReq : MessageReq? = null
+    var messageReq : GroupMessageReq? = null
 
     override fun onCreate() {
         super.onCreate()
     }
 
     /**
-     * 发送消息
+     * 发送群消息
      */
-    fun sendMessage(receiver: String,message: String){
-        messageReq = MessageReq(receiver,message)
+    fun sendMessage(groupId: String,message: String,type: Int){
+        messageReq = GroupMessageReq(groupId,message,type)
         messageReq?.let {
             NettyClient.INSTANCE.sendMessage(it)
 

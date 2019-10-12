@@ -49,6 +49,8 @@
         <activity android:name=".app.chat.ChatActivity"
             android:screenOrientation="portrait" />
 
+        <activity android:name=".app.chat.GroupChatActivity"
+            android:screenOrientation="portrait" />
 
         <service android:name=".app.service.HeartBeatService"/>
 

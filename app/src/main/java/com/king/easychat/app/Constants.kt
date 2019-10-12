@@ -21,6 +21,8 @@ object Constants {
 
     const val KEY_BEAN = "key_bean"
 
+    const val KEY_PASSWORD = "key_password"
+
 
     //---------------------------------------------
 

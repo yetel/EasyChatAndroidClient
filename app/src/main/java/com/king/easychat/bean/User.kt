@@ -2,7 +2,6 @@ package com.king.easychat.bean
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
-import java.io.Serializable
 
 
 /**
@@ -10,17 +9,16 @@ import java.io.Serializable
  * date: 2019/10/09.
  * description:
  */
-class User : Serializable {
-    /** 用户id*/
-    var userId: String? = null
-    /** 登录名*/
-    var userName: String? = null
-    /** 昵称*/
-    var nickName: String? = null
-    /** 图像*/
-    var avatar: String? = null
-    /** 签名*/
-    var signature: String? = null
+@Parcelize
+class User(val userId: String,val userName: String,var nickName: String?,var avatar: String?,var signature: String?) : Parcelable {
+
+    fun getShowName(): String {
+        nickName?.let {
+            return it
+        }
+
+        return userName
+    }
 
     override fun toString(): String {
         return "User(userId=$userId, userName=$userName, nickName=$nickName, avatar=$avatar, signature=$signature)"

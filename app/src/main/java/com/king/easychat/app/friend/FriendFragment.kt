@@ -3,7 +3,6 @@ package com.king.easychat.app.friend
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.chad.library.adapter.base.BaseQuickAdapter
@@ -36,7 +35,6 @@ class FriendFragment : BaseFragment<FriendViewModel,FriendFragmentBinding>(), Vi
         ivRight.setOnClickListener(this)
 
         srl.setColorSchemeResources(R.color.colorAccent)
-        srl.setOnRefreshListener { mViewModel.getFriends() }
 
         rv.layoutManager = LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false)
         rv.addItemDecoration(DividerItemDecoration(context,DividerItemDecoration.VERTICAL))
@@ -58,9 +56,9 @@ class FriendFragment : BaseFragment<FriendViewModel,FriendFragmentBinding>(), Vi
 
     }
 
-    fun clickItem(user: User){
+    fun clickItem(data: User){
         val intent = Intent(context,ChatActivity::class.java)
-        intent.putExtra(Constants.KEY_BEAN,user)
+        intent.putExtra(Constants.KEY_BEAN,data)
         startActivity(intent)
     }
 
