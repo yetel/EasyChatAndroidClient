@@ -1,7 +1,7 @@
 package com.king.easychat.netty.packet.resp
 
-import com.king.easychat.netty.MessageType
 import com.king.easychat.netty.packet.Packet
+import com.king.easychat.netty.packet.PacketType
 
 /**
  * @author Zed
@@ -12,8 +12,8 @@ class RegisterResp : Packet() {
     var success: Boolean = false
     var reason: String? = null
 
-    override fun messageType(): Int {
-        return MessageType.REGISTER_RESP
+    override fun packetType(): Int {
+        return PacketType.REGISTER_RESP
     }
 
 

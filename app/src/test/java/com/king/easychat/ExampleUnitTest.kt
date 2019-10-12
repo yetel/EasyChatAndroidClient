@@ -26,7 +26,7 @@ class ExampleUnitTest {
     fun testPacket() {
         var req = GroupMessageReq("123", "456", 1)
         println(req.messageType)
-        println(req.messageType())
+        println(req.packetType())
     }
     @Test
     fun testClass() {

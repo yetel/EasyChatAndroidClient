@@ -1,9 +1,9 @@
-package com.king.easychat.netty
+package com.king.easychat.netty.packet
 
 /**
  * @author <a href="mailto:jenly1314@gmail.com">Jenly</a>
  */
-object MessageType {
+object PacketType {
 
     const val LOGIN_REQ =  1
     const val LOGIN_RESP = 2

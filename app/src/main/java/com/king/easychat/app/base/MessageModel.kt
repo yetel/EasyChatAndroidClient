@@ -81,7 +81,7 @@ open class MessageModel @Inject constructor(repository: IDataRepository?) : Base
             messageList.messageMode = 0
             messageList.senderId = messageResp.sender
             messageList.message = messageResp.message
-            messageList.messageType = messageResp.messageType()
+            messageList.messageType = messageResp.messageType
             messageLists.add(messageList)
         }
 
@@ -93,7 +93,7 @@ open class MessageModel @Inject constructor(repository: IDataRepository?) : Base
             messageList.messageMode = 1
             messageList.senderId = groupMessageResp.sender
             messageList.message = groupMessageResp.message
-            messageList.messageType = groupMessageResp.messageType()
+            messageList.messageType = groupMessageResp.messageType
             messageLists.add(messageList)
         }
 

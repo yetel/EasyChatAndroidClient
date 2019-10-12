@@ -1,7 +1,7 @@
 package com.king.easychat.netty.packet.resp
 
-import com.king.easychat.netty.MessageType
 import com.king.easychat.netty.packet.Packet
+import com.king.easychat.netty.packet.PacketType
 
 /**
  * @author <a href="mailto:jenly1314@gmail.com">Jenly</a>
@@ -9,8 +9,8 @@ import com.king.easychat.netty.packet.Packet
 class LoginResp(val userId: String,val userName: String,val token: String,val success: Boolean,val reason: String) : Packet() {
 
 
-    override fun messageType(): Int {
-        return MessageType.LOGIN_RESP
+    override fun packetType(): Int {
+        return PacketType.LOGIN_RESP
     }
 
     override fun toString(): String {

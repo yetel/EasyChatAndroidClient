@@ -1,7 +1,7 @@
 package com.king.easychat.netty.packet.resp
 
-import com.king.easychat.netty.MessageType
 import com.king.easychat.netty.packet.Packet
+import com.king.easychat.netty.packet.PacketType
 
 /**
  * @author Zed
@@ -9,8 +9,8 @@ import com.king.easychat.netty.packet.Packet
  * description:
  */
 class AcceptGroupResp(val acceptUser: String, val groupId: String, val success: Boolean) : Packet() {
-    override fun messageType(): Int {
-        return MessageType.ACCEPT_GROUP_RESP
+    override fun packetType(): Int {
+        return PacketType.ACCEPT_GROUP_RESP
     }
 
 }

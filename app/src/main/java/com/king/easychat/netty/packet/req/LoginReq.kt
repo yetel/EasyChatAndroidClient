@@ -1,8 +1,8 @@
 package com.king.easychat.netty.packet.req
 
 import android.os.Parcelable
-import com.king.easychat.netty.MessageType
 import com.king.easychat.netty.packet.Packet
+import com.king.easychat.netty.packet.PacketType
 import kotlinx.android.parcel.Parcelize
 
 /**
@@ -11,8 +11,8 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class LoginReq(val userName: String,val password: String) : Packet(), Parcelable {
 
-    override fun messageType(): Int {
-        return MessageType.LOGIN_REQ
+    override fun packetType(): Int {
+        return PacketType.LOGIN_REQ
     }
 
     override fun toString(): String {

@@ -1,7 +1,7 @@
 package com.king.easychat.netty.packet.req
 
-import com.king.easychat.netty.MessageType
 import com.king.easychat.netty.packet.Packet
+import com.king.easychat.netty.packet.PacketType
 
 /**
  * @author Zed
@@ -9,12 +9,12 @@ import com.king.easychat.netty.packet.Packet
  * description:
  */
 class HeartBeatReq : Packet(){
-    override fun messageType(): Int {
-        return MessageType.HEART_BEAT_REQ
+    override fun packetType(): Int {
+        return PacketType.HEART_BEAT_REQ
     }
 
     override fun toString(): String {
-        return "HeartBeatReq(messageType=MessageType.HEART_BEAT_REQ) ${super.toString()}"
+        return "HeartBeatReq(packetType=PacketType.HEART_BEAT_REQ) ${super.toString()}"
     }
 
 

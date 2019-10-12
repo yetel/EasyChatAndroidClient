@@ -7,11 +7,11 @@ import com.king.base.util.TimeUtils
  */
 abstract class Packet {
 
-    val version = 1
+    var version = 1
 
     var dateTime = TimeUtils.formatDate(System.currentTimeMillis(),TimeUtils.FORMAT_Y_TO_S)
 
-    abstract fun messageType(): Int
+    abstract fun packetType(): Int
 
 
     override fun toString(): String {

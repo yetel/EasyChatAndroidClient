@@ -5,8 +5,8 @@ import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
 import com.chad.library.adapter.base.entity.MultiItemEntity
-import com.king.easychat.netty.MessageType
 import com.king.easychat.netty.packet.Packet
+import com.king.easychat.netty.packet.PacketType
 import com.king.easychat.util.AES
 import kotlinx.android.parcel.Parcelize
 
@@ -21,7 +21,8 @@ class MessageResp(val sender : String?,val senderName : String?,val message : St
     Parcelable {
 
     @PrimaryKey(autoGenerate = true)
-    private var id: Long = 0
+    var id: Int = 0
+
     companion object{
         val Left = 1
         val Right = 2
@@ -33,8 +34,8 @@ class MessageResp(val sender : String?,val senderName : String?,val message : St
 
 //    @Expose val msg = AES.decrypt(message,dateTime + "ab").toString()
 
-    override fun messageType(): Int {
-        return MessageType.SEND_MESSAGE_RESP
+    override fun packetType(): Int {
+        return PacketType.SEND_MESSAGE_RESP
     }
 
     fun getMsg(): String?{

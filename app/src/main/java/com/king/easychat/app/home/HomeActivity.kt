@@ -104,7 +104,7 @@ class HomeActivity : BaseActivity<HomeViewModel, HomeActivityBinding>() {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onMessageEvent(event: Packet){
-        when(event.messageType()){
+        when(event.packetType()){
 
         }
     }

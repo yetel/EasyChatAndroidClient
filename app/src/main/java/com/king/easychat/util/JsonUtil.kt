@@ -25,7 +25,7 @@ object JsonUtil{
     }
 
 
-    fun getMessageType(json: String): Int {
+    fun getPacketType(json: String): Int {
         val jsonObject = JSONObject(json)
         return jsonObject.getInt("command")
     }

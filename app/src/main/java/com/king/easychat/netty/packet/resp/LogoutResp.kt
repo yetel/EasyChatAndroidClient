@@ -1,7 +1,7 @@
 package com.king.easychat.netty.packet.resp
 
-import com.king.easychat.netty.MessageType
 import com.king.easychat.netty.packet.Packet
+import com.king.easychat.netty.packet.PacketType
 
 /**
  * @author Zed
@@ -10,8 +10,8 @@ import com.king.easychat.netty.packet.Packet
  */
 class LogoutResp : Packet() {
 
-    override fun messageType(): Int {
-        return MessageType.LOGOUT_RESP
+    override fun packetType(): Int {
+        return PacketType.LOGOUT_RESP
     }
 
 

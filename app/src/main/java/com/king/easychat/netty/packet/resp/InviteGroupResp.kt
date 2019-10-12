@@ -1,7 +1,7 @@
 package com.king.easychat.netty.packet.resp
 
-import com.king.easychat.netty.MessageType
 import com.king.easychat.netty.packet.Packet
+import com.king.easychat.netty.packet.PacketType
 
 /**
  * @author Zed
@@ -16,8 +16,8 @@ class InviteGroupResp : Packet() {
     /** 邀请方id */
     val inviteId: String? = null
 
-    override fun messageType(): Int {
-        return MessageType.INVITE_GROUP_RESP
+    override fun packetType(): Int {
+        return PacketType.INVITE_GROUP_RESP
     }
 
 
