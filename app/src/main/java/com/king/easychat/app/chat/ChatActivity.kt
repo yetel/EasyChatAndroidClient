@@ -5,7 +5,9 @@ import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
 import android.view.View
+import android.view.animation.AnimationUtils
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.vectordrawable.graphics.drawable.AnimationUtilsCompat
 import com.king.base.adapter.divider.DividerItemDecoration
 import com.king.easychat.R
 import com.king.easychat.app.Constants
@@ -69,12 +71,18 @@ class ChatActivity : BaseActivity<ChatViewModel, ChatActivityBinding>(){
     }
 
     fun updateBtnStatus(isEmpty: Boolean){
-        if(isEmpty && tvSend.visibility == View.GONE){
+        if(isEmpty){
+            if(tvSend.visibility == View.VISIBLE){
+                tvSend.visibility = View.GONE
+                ivAdd.visibility = View.VISIBLE
+                ivAdd.startAnimation(AnimationUtils.loadAnimation(context,R.anim.anim_in))
+                tvSend.startAnimation(AnimationUtils.loadAnimation(context,R.anim.anim_out))
+            }
+        }else if(tvSend.visibility == View.GONE){
             tvSend.visibility = View.VISIBLE
             ivAdd.visibility = View.GONE
-        }else if(tvSend.visibility == View.VISIBLE && !isEmpty){
-            tvSend.visibility = View.GONE
-            ivAdd.visibility = View.VISIBLE
+            ivAdd.startAnimation(AnimationUtils.loadAnimation(context,R.anim.anim_out))
+            tvSend.startAnimation(AnimationUtils.loadAnimation(context,R.anim.anim_in))
         }
     }
 
