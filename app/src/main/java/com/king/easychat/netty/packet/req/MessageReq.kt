@@ -12,7 +12,7 @@ import com.king.easychat.util.AES
  * date: 2019/10/09.
  * description:
  */
-class MessageReq(val receiver : String,@Expose val msg : String) : Packet(){
+class MessageReq(val receiver : String,@Expose val msg : String, val messageType : Int) : Packet(){
 
     val message = AES.encrypt(msg,"${dateTime}ab").toString()
 
@@ -22,7 +22,7 @@ class MessageReq(val receiver : String,@Expose val msg : String) : Packet(){
 
 
     fun toMessageResp(loginResp: LoginResp?,isSender: Boolean): MessageResp{
-        return MessageResp(loginResp?.userId,loginResp?.userName,message,isSender)
+        return MessageResp(loginResp?.userId,loginResp?.userName,message,isSender,messageType)
     }
 
 

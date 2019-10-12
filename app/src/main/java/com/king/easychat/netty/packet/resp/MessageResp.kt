@@ -1,18 +1,27 @@
 package com.king.easychat.netty.packet.resp
 
+import android.os.Parcelable
+import androidx.room.Entity
+import androidx.room.Index
+import androidx.room.PrimaryKey
 import com.chad.library.adapter.base.entity.MultiItemEntity
 import com.king.easychat.netty.MessageType
 import com.king.easychat.netty.packet.Packet
 import com.king.easychat.util.AES
+import kotlinx.android.parcel.Parcelize
 
 /**
  * @author Zed
  * date: 2019/08/19.
  * description:
  */
-class MessageResp(val sender : String?,val senderName : String?,val message : String, val isSender: Boolean = false) : Packet(), MultiItemEntity {
+@Entity(indices = [Index(value = ["sender"])])
+@Parcelize
+class MessageResp(val sender : String?,val senderName : String?,val message : String, val isSender: Boolean = false, val messageType : Int) : Packet(), MultiItemEntity,
+    Parcelable {
 
-
+    @PrimaryKey(autoGenerate = true)
+    private var id: Long = 0
     companion object{
         val Left = 1
         val Right = 2
