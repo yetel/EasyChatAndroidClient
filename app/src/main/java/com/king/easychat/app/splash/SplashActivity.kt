@@ -30,24 +30,28 @@ class SplashActivity : BaseActivity<SplashViewModel, SplashActivityBinding>(){
     var loginResp: LoginResp? = null
 
     override fun initData(savedInstanceState: Bundle?) {
+        if(!NettyClient.INSTANCE.isConnected()){
+            NettyClient.INSTANCE.setOnConnectListener(object: Netty.OnConnectListener{
+                override fun onSuccess() {
+                    autoLogin()
+                }
 
-        NettyClient.INSTANCE.setOnConnectListener(object: Netty.OnConnectListener{
-            override fun onSuccess() {
-                autoLogin()
-            }
+                override fun onFailed() {
+                    isRequest = true
+                    startActivity()
+                }
 
-            override fun onFailed() {
-                isRequest = true
-                startActivity()
-            }
+                override fun onError(e: Exception?) {
+                    isRequest = true
+                    startActivity()
+                }
 
-            override fun onError(e: Exception?) {
-                isRequest = true
-                startActivity()
-            }
+            })
+            NettyClient.INSTANCE.connect()
+        }else{
+            isRequest = true
+        }
 
-        })
-        NettyClient.INSTANCE.connect()
 
         startAnimation(rootView)
     }

@@ -12,21 +12,34 @@
         android:layout_height="wrap_content"
         android:paddingLeft="@dimen/size_16dp"
         android:paddingRight="@dimen/size_16dp"
-        android:paddingTop="@dimen/size_14dp"
-        android:paddingBottom="@dimen/size_14dp"
+        android:paddingTop="@dimen/size_10dp"
+        android:paddingBottom="@dimen/size_10dp"
         android:background="@drawable/list_item_bg_selector">
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/ivAvatar"
+            android:layout_width="@dimen/size_50dp"
+            android:layout_height="@dimen/size_50dp"
+            android:src="@drawable/default_avatar"
+            app:civ_border_width="1dp"
+            app:civ_border_color="@color/line"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/tvName"/>
         <TextView
             android:id="@+id/tvName"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            app:layout_constraintHorizontal_weight="1"
             android:textSize="@dimen/size_16sp"
             android:textColor="@color/text_3"
             android:text="@{data.groupName}"
             tools:text="群组"
+            android:layout_marginLeft="@dimen/size_6dp"
             android:drawablePadding="@dimen/size_4dp"
             android:drawableRight="@drawable/ic_right_arrow"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"/>
+            app:layout_constraintLeft_toRightOf="@+id/ivAvatar"
+            app:layout_constraintRight_toRightOf="parent"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

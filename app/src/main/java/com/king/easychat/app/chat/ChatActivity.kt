@@ -1,6 +1,9 @@
 package com.king.easychat.app.chat
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextUtils
+import android.text.TextWatcher
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.king.base.adapter.divider.DividerItemDecoration
@@ -30,6 +33,23 @@ class ChatActivity : BaseActivity<ChatViewModel, ChatActivityBinding>(){
 
     override fun initData(savedInstanceState: Bundle?) {
 
+        tvSend.visibility = View.GONE
+
+        etContent.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+                updateBtnStatus(s.isEmpty())
+            }
+
+            override fun afterTextChanged(s: Editable) {
+
+            }
+
+        })
+
         user = intent.getParcelableExtra(Constants.KEY_BEAN)
         user?.let {
             tvTitle.setText(it.getShowName())
@@ -46,6 +66,16 @@ class ChatActivity : BaseActivity<ChatViewModel, ChatActivityBinding>(){
         rv.layoutManager = LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false)
         rv.addItemDecoration(DividerItemDecoration(context,DividerItemDecoration.VERTICAL,R.drawable.line_drawable_xh_none))
         rv.adapter = mAdapter
+    }
+
+    fun updateBtnStatus(isEmpty: Boolean){
+        if(isEmpty && tvSend.visibility == View.GONE){
+            tvSend.visibility = View.VISIBLE
+            ivAdd.visibility = View.GONE
+        }else if(tvSend.visibility == View.VISIBLE && !isEmpty){
+            tvSend.visibility = View.GONE
+            ivAdd.visibility = View.VISIBLE
+        }
     }
 
     override fun getLayoutId(): Int {

@@ -20,7 +20,7 @@
             android:id="@+id/ivLogo"
             android:layout_width="@dimen/size_100dp"
             android:layout_height="@dimen/size_100dp"
-            android:src="@drawable/login_logo"
+            android:src="@drawable/logo"
             app:layout_constraintTop_toBottomOf="@+id/ivLeft"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"/>

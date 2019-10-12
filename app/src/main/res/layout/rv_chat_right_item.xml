@@ -1,33 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:bind="http://schemas.android.com/apk/res-auto">
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
     <data>
         <variable
             name="data"
             type="com.king.easychat.netty.packet.resp.MessageResp" />
     </data>
-    <LinearLayout
-        android:orientation="vertical"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/size_10dp"
         android:paddingBottom="@dimen/size_10dp"
         android:paddingLeft="@dimen/size_16dp"
-        android:paddingRight="@dimen/size_16dp"
-        android:gravity="right">
+        android:paddingRight="@dimen/size_16dp">
         <TextView
             android:id="@+id/tvTime"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/text_9"
             android:textSize="@dimen/size_14sp"
-            bind:time="@{data.dateTime}"/>
+            android:gravity="center_horizontal"
+            bind:time="@{data.dateTime}"
+            tools:text="11:26"/>
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/ivAvatar"
+            android:layout_width="@dimen/size_40dp"
+            android:layout_height="@dimen/size_40dp"
+            android:src="@drawable/default_avatar"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="@dimen/size_2dp"
+            android:layout_below="@+id/tvTime"
+            app:civ_border_width="1dp"
+            app:civ_border_color="@color/line" />
         <TextView
             android:id="@+id/tvContent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_8dp"
+            android:layout_below="@+id/tvTime"
+            android:layout_toLeftOf="@+id/ivAvatar"
+            android:layout_marginRight="@dimen/size_6dp"
             android:textSize="@dimen/size_16sp"
-            android:text="@{data.msg}"/>
-    </LinearLayout>
+            android:textColor="@color/text_white"
+            android:text="@{data.msg}"
+            tools:text="我用双手成就你的梦想"
+            android:background="@drawable/ec_chat_bubble_right"/>
+    </RelativeLayout>
+
 
 </layout>

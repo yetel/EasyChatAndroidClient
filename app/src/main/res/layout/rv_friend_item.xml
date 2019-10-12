@@ -12,9 +12,19 @@
         android:layout_height="wrap_content"
         android:paddingLeft="@dimen/size_16dp"
         android:paddingRight="@dimen/size_16dp"
-        android:paddingTop="@dimen/size_12dp"
-        android:paddingBottom="@dimen/size_12dp"
+        android:paddingTop="@dimen/size_10dp"
+        android:paddingBottom="@dimen/size_10dp"
         android:background="@drawable/list_item_bg_selector">
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/ivAvatar"
+            android:layout_width="@dimen/size_50dp"
+            android:layout_height="@dimen/size_50dp"
+            android:src="@drawable/default_avatar"
+            app:civ_border_width="1dp"
+            app:civ_border_color="@color/line"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            />
         <TextView
             android:id="@+id/tvName"
             android:layout_width="wrap_content"
@@ -23,8 +33,9 @@
             android:textColor="@color/text_3"
             android:text="@{data.showName}"
             tools:text="亚索"
+            android:layout_marginLeft="@dimen/size_6dp"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"/>
+            app:layout_constraintLeft_toRightOf="@+id/ivAvatar"/>
         <TextView
             android:id="@+id/tvSignture"
             android:layout_width="wrap_content"
@@ -34,8 +45,9 @@
             android:text="@{data.signature}"
             android:singleLine="true"
             tools:text="死亡如风，常伴吾身"
+            android:layout_marginLeft="@dimen/size_6dp"
             android:layout_marginTop="@dimen/size_4dp"
             app:layout_constraintTop_toBottomOf="@+id/tvName"
-            app:layout_constraintLeft_toLeftOf="parent"/>
+            app:layout_constraintLeft_toRightOf="@+id/ivAvatar"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
