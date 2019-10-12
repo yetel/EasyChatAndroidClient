@@ -12,14 +12,9 @@ import javax.inject.Inject
 class FriendModel @Inject constructor(repository: IDataRepository?) : BaseModel(repository){
 
 
-
     fun getUserDao(): UserDao{
         return getRoomDatabase(AppDatabase::class.java)
             .userDao()
-    }
-
-    override fun <T> getRetrofitService(service: Class<T>): T {
-        return getRetrofitService(service)
     }
 
 }

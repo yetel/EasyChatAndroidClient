@@ -5,6 +5,7 @@ import com.king.easychat.app.Constants
 import com.king.easychat.netty.NettyClient
 import com.king.easychat.netty.packet.req.MessageReq
 import com.king.frame.mvvmframe.base.BaseModel
+import com.king.frame.mvvmframe.base.BaseViewModel
 import com.king.frame.mvvmframe.base.DataViewModel
 import io.netty.channel.ChannelFuture
 import io.netty.util.concurrent.GenericFutureListener
@@ -14,7 +15,7 @@ import javax.inject.Inject
 /**
  * @author <a href="mailto:jenly1314@gmail.com">Jenly</a>
  */
-class ChatViewModel @Inject constructor(application: Application, model: BaseModel?) : DataViewModel(application, model){
+class ChatViewModel @Inject constructor(application: Application, model: ChatModel?) : BaseViewModel<ChatModel>(application, model){
 
     var messageReq : MessageReq? = null
 
