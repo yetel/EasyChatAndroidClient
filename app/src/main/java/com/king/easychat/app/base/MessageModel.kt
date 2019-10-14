@@ -151,7 +151,11 @@ open class MessageModel @Inject constructor(repository: IDataRepository?) : Base
             messageList.id = groupMessageResp.groupId
             messageList.dateTime = groupMessageResp.dateTime
             messageList.messageMode = 1
-            messageList.senderId = groupMessageResp.sender
+            if (groupMessageResp.send) {
+                messageList.senderId =  userId
+            } else {
+                messageList.senderId =  groupMessageResp.sender
+            }
             messageList.message = groupMessageResp.message
             messageList.messageType = groupMessageResp.messageType
             messageLists.add(messageList)
