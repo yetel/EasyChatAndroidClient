@@ -41,34 +41,72 @@ open class MessageModel @Inject constructor(repository: IDataRepository?) : Base
      * 保存消息记录
      */
     fun saveMessage(messageReq : MessageReq){
-        getMessageDao().insert(messageReq)
+        val messageDbo = MessageDbo(
+            null,
+            messageReq.receiver,
+            messageReq.message,
+            true,
+            messageReq.messageType,
+            messageReq.dateTime,
+            null
+        )
+        getMessageDao().insert(messageDbo)
     }
 
     /**
      * 保存消息记录
      */
-    fun saveMessage(messageResp : MessageResp){
-        getMessageDao().insert(messageResp)
+    fun saveMessage(messageResp : MessageResp, loginUserId:String?){
+        val messageDbo = MessageDbo(
+            messageResp.sender,
+            null,
+            messageResp.message,
+            false,
+            messageResp.messageType,
+            messageResp.dateTime,
+            messageResp.senderName
+        )
+        getMessageDao().insert(messageDbo)
     }
 
     /**
      *保存群聊消息
      */
     fun saveGroupMessage(groupMessageReq: GroupMessageReq){
-        getGroupMessageDao().insert(groupMessageReq)
+        val groupMessageDbo = GroupMessageDbo(
+            groupMessageReq.groupId,
+            null,
+            null,
+            groupMessageReq.message,
+            true,
+            groupMessageReq.messageType,
+            groupMessageReq.dateTime
+
+        )
+        getGroupMessageDao().insert(groupMessageDbo)
     }
 
     /**
      *保存群聊消息
      */
     fun saveGroupMessage(groupMessageResp : GroupMessageResp){
-        getGroupMessageDao().insert(groupMessageResp)
+        val groupMessageDbo = GroupMessageDbo(
+            groupMessageResp.groupId,
+            groupMessageResp.sender,
+            groupMessageResp.senderName,
+            groupMessageResp.message,
+            false,
+            groupMessageResp.messageType,
+            groupMessageResp.dateTime
+
+        )
+        getGroupMessageDao().insert(groupMessageDbo)
     }
 
     /**
      * 根据好友id获取聊天记录
      */
-    fun queryMessageByFriendId(friendId : String, currentPage : Int, pageSize: Int) : LiveData<List<MessageDao>> {
+    fun queryMessageByFriendId(friendId : String, currentPage : Int, pageSize: Int) : LiveData<List<MessageDbo>> {
         return getMessageDao().getMessageBySenderId(friendId, currentPage, pageSize)
     }
 
