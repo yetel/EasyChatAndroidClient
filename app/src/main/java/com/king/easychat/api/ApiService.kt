@@ -25,6 +25,8 @@ interface ApiService {
     fun getGroups(@Header("token")token : String?): Call<Result<MutableList<Group>>>
 
 
+    @GET("image/upload")
+    fun uploadImage(@Header("token")token : String?): Call<Result<*>>
 
 
 }

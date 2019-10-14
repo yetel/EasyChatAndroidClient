@@ -20,6 +20,8 @@
     <color name="text_80">#808080</color>
     <color name="text_white">#ffffff</color>
 
+    <color name="text_white_50">#7fffffff</color>
+
     <color name="text_theme">#4587f0</color>
 
     <color name="bottom_menu_checked">#4587f0</color>

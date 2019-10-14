@@ -1,6 +1,7 @@
 package com.king.easychat.app.chat
 
 import android.app.Application
+import com.king.easychat.api.ApiService
 import com.king.easychat.app.Constants
 import com.king.easychat.app.base.MessageViewModel
 import com.king.easychat.netty.NettyClient
