@@ -1,11 +1,15 @@
 package com.king.easychat.app.base
 
 import androidx.lifecycle.LiveData
+import com.king.easychat.bean.GroupMessageDbo
 import com.king.easychat.bean.Message
+import com.king.easychat.bean.MessageDbo
 import com.king.easychat.dao.AppDatabase
 import com.king.easychat.dao.GroupMessageDao
 import com.king.easychat.dao.MessageDao
 import com.king.easychat.dao.UserDao
+import com.king.easychat.netty.packet.req.GroupMessageReq
+import com.king.easychat.netty.packet.req.MessageReq
 import com.king.easychat.netty.packet.resp.GroupMessageResp
 import com.king.easychat.netty.packet.resp.MessageResp
 import com.king.frame.mvvmframe.base.BaseModel
@@ -36,8 +40,22 @@ open class MessageModel @Inject constructor(repository: IDataRepository?) : Base
     /**
      * 保存消息记录
      */
+    fun saveMessage(messageReq : MessageReq){
+        getMessageDao().insert(messageReq)
+    }
+
+    /**
+     * 保存消息记录
+     */
     fun saveMessage(messageResp : MessageResp){
         getMessageDao().insert(messageResp)
+    }
+
+    /**
+     *保存群聊消息
+     */
+    fun saveGroupMessage(groupMessageReq: GroupMessageReq){
+        getGroupMessageDao().insert(groupMessageReq)
     }
 
     /**
@@ -50,14 +68,14 @@ open class MessageModel @Inject constructor(repository: IDataRepository?) : Base
     /**
      * 根据好友id获取聊天记录
      */
-    fun queryMessageByFriendId(friendId : String, currentPage : Int, pageSize: Int) : LiveData<List<MessageResp>> {
+    fun queryMessageByFriendId(friendId : String, currentPage : Int, pageSize: Int) : LiveData<List<MessageDao>> {
         return getMessageDao().getMessageBySenderId(friendId, currentPage, pageSize)
     }
 
     /**
      * 根据群聊id获取聊天记录
      */
-    fun queryMessageByGroupId(groupId : String, currentPage : Int, pageSize : Int) : LiveData<List<GroupMessageResp>> {
+    fun queryMessageByGroupId(groupId : String, currentPage : Int, pageSize : Int) : LiveData<List<GroupMessageDbo>> {
         return getGroupMessageDao().getGroupMessageByGroupId(groupId, currentPage, pageSize)
     }
 
