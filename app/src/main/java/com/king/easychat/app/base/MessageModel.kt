@@ -40,8 +40,9 @@ open class MessageModel @Inject constructor(repository: IDataRepository?) : Base
     /**
      * 保存消息记录
      */
-    fun saveMessage(messageReq : MessageReq){
+    fun saveMessage(userId : String, messageReq : MessageReq){
         val messageDbo = MessageDbo(
+            userId,
             null,
             messageReq.receiver,
             messageReq.message,
@@ -56,8 +57,9 @@ open class MessageModel @Inject constructor(repository: IDataRepository?) : Base
     /**
      * 保存消息记录
      */
-    fun saveMessage(messageResp : MessageResp, loginUserId:String?){
+    fun saveMessage(userId : String, messageResp : MessageResp){
         val messageDbo = MessageDbo(
+            userId,
             messageResp.sender,
             null,
             messageResp.message,
@@ -72,8 +74,9 @@ open class MessageModel @Inject constructor(repository: IDataRepository?) : Base
     /**
      *保存群聊消息
      */
-    fun saveGroupMessage(groupMessageReq: GroupMessageReq){
+    fun saveGroupMessage(userId : String, groupMessageReq: GroupMessageReq){
         val groupMessageDbo = GroupMessageDbo(
+            userId,
             groupMessageReq.groupId,
             null,
             null,
@@ -89,8 +92,9 @@ open class MessageModel @Inject constructor(repository: IDataRepository?) : Base
     /**
      *保存群聊消息
      */
-    fun saveGroupMessage(groupMessageResp : GroupMessageResp){
+    fun saveGroupMessage(userId : String, groupMessageResp : GroupMessageResp){
         val groupMessageDbo = GroupMessageDbo(
+            userId,
             groupMessageResp.groupId,
             groupMessageResp.sender,
             groupMessageResp.senderName,
@@ -106,31 +110,31 @@ open class MessageModel @Inject constructor(repository: IDataRepository?) : Base
     /**
      * 根据好友id获取聊天记录
      */
-    fun queryMessageByFriendId(friendId : String, currentPage : Int, pageSize: Int) : LiveData<List<MessageDbo>> {
-        return getMessageDao().getMessageBySenderId(friendId, currentPage, pageSize)
+    fun queryMessageByFriendId(userId : String, friendId : String, currentPage : Int, pageSize: Int) : LiveData<List<MessageDbo>> {
+        return getMessageDao().getMessageBySenderId(userId, friendId, currentPage, pageSize)
     }
 
     /**
      * 根据群聊id获取聊天记录
      */
-    fun queryMessageByGroupId(groupId : String, currentPage : Int, pageSize : Int) : LiveData<List<GroupMessageDbo>> {
-        return getGroupMessageDao().getGroupMessageByGroupId(groupId, currentPage, pageSize)
+    fun queryMessageByGroupId(userId : String, groupId : String, currentPage : Int, pageSize : Int) : LiveData<List<GroupMessageDbo>> {
+        return getGroupMessageDao().getGroupMessageByGroupId(userId, groupId, currentPage, pageSize)
     }
 
     /**
      * 获取最近的消息列表  包括好友跟群聊
      */
-    fun queryMessageList(count: Int) : List<Message> {
+    fun queryMessageList(userId : String, count: Int) : List<Message> {
         val messageDao = getMessageDao()
         val groupMessageDao = getGroupMessageDao()
-        val friends = messageDao.queryAllFriends()
-        val groups = groupMessageDao.queryAllGroups()
+        val friends = messageDao.queryAllFriends(userId)
+        val groups = groupMessageDao.queryAllGroups(userId)
 
         val messageLists = ArrayList<Message>()
 
 
         for (v in friends) {
-            val messageResp = messageDao.getLastMessageBySenderId(v)
+            val messageResp = messageDao.getLastMessageBySenderId(userId, v)
             val messageList = Message()
             messageList.id = messageResp.sender
             messageList.dateTime = messageResp.dateTime
@@ -142,7 +146,7 @@ open class MessageModel @Inject constructor(repository: IDataRepository?) : Base
         }
 
         for (v in groups) {
-            val groupMessageResp = groupMessageDao.getLastMessageByGroupId(v)
+            val groupMessageResp = groupMessageDao.getLastMessageByGroupId(userId, v)
             val messageList = Message()
             messageList.id = groupMessageResp.groupId
             messageList.dateTime = groupMessageResp.dateTime
