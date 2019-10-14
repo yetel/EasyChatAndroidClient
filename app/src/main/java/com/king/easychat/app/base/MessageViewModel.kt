@@ -1,9 +1,7 @@
 package com.king.easychat.app.base
 
 import android.app.Application
-import androidx.lifecycle.LiveData
 import com.king.easychat.App
-import com.king.easychat.bean.Message
 import com.king.easychat.netty.packet.resp.GroupMessageResp
 import com.king.easychat.netty.packet.resp.MessageResp
 import com.king.frame.mvvmframe.base.BaseViewModel
@@ -25,9 +23,9 @@ open class MessageViewModel @Inject constructor(application: Application, model:
     /**
      * 保存消息记录
      */
-    fun saveMessage(resp: MessageResp){
+    fun saveMessage(userId: String,resp: MessageResp){
         GlobalScope.launch(Dispatchers.IO) {
-            mModel.saveMessage(resp)
+            mModel.saveMessage(userId,resp)
         }
     }
 
@@ -35,9 +33,9 @@ open class MessageViewModel @Inject constructor(application: Application, model:
     /**
      *保存群聊消息
      */
-    fun saveGroupMessage(resp : GroupMessageResp){
+    fun saveGroupMessage(userId: String,resp : GroupMessageResp){
         GlobalScope.launch(Dispatchers.IO) {
-            mModel.saveGroupMessage(resp)
+            mModel.saveGroupMessage(userId,resp)
         }
     }
 

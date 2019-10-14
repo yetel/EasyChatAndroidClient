@@ -38,7 +38,7 @@ class FriendViewModel @Inject constructor(application: Application, model: Frien
         updateStatus(StatusEvent.Status.LOADING)
         val token = getApplication<App>().loginResp?.token
         mModel.getRetrofitService(ApiService::class.java)
-            .getFriends(token)
+            .getFriends(token!!)
             .enqueue(object : ApiCallback<Result<MutableList<User>>>(){
                 override fun onResponse(call: Call<Result<MutableList<User>>>?, result: Result<MutableList<User>>?) {
                     result?.let {

@@ -2,6 +2,7 @@ package com.king.easychat.app.me
 
 import android.os.Bundle
 import android.view.View
+import androidx.lifecycle.Observer
 import com.king.easychat.BR
 import com.king.easychat.R
 import com.king.easychat.app.base.BaseFragment
@@ -26,6 +27,9 @@ class MeFragment : BaseFragment<MeViewModel,MeFragmentBinding>(),View.OnClickLis
             mBinding.setVariable(BR.data,it)
         }
 
+        mViewModel.userLiveData.observe(this, Observer {
+            mBinding.user = it
+        })
         clUser.setOnClickListener(this)
         tvPassword.setOnClickListener(this)
         tvAbout.setOnClickListener(this)

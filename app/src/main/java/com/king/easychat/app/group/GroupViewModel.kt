@@ -38,7 +38,7 @@ class GroupViewModel @Inject constructor(application: Application, model: GroupM
         updateStatus(StatusEvent.Status.LOADING)
         val token = getApplication<App>().loginResp?.token
         mModel.getRetrofitService(ApiService::class.java)
-            .getGroups(token)
+            .getGroups(token!!)
             .enqueue(object : ApiCallback<Result<MutableList<Group>>>(){
                 override fun onResponse(call: Call<Result<MutableList<Group>>>?, result: Result<MutableList<Group>>?) {
                     result?.let {

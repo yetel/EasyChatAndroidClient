@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools">
     <data>
         <variable
-            name="data"
-            type="com.king.easychat.netty.packet.resp.LoginResp" />
+            name="user"
+            type="com.king.easychat.bean.User" />
     </data>
     <LinearLayout
         android:orientation="vertical"
@@ -48,7 +48,7 @@
                             android:layout_height="wrap_content"
                             android:textSize="@dimen/size_16sp"
                             android:textColor="@color/text_white"
-                            android:text="@{data.showName}"
+                            android:text="@{data.sho}"
                             tools:text="亚索"
                             android:layout_marginTop="@dimen/size_6dp"
                             android:layout_marginLeft="@dimen/size_6dp"

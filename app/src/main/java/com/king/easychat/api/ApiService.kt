@@ -6,6 +6,7 @@ import com.king.easychat.bean.Result
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Header
+import retrofit2.http.Path
 
 /**
  * @author <a href="mailto:jenly1314@gmail.com">Jenly</a>
@@ -15,18 +16,24 @@ interface ApiService {
     /**
      * 获取好友列表
      */
+    @GET("user/{userId}")
+    fun getUser(@Header("token")token : String,@Path("userId")userId: String): Call<Result<User>>
+
+    /**
+     * 获取好友列表
+     */
     @GET("users")
-    fun getFriends(@Header("token")token : String?): Call<Result<MutableList<User>>>
+    fun getFriends(@Header("token")token : String): Call<Result<MutableList<User>>>
 
     /**
      * 获取群列表
      */
     @GET("groups")
-    fun getGroups(@Header("token")token : String?): Call<Result<MutableList<Group>>>
+    fun getGroups(@Header("token")token : String): Call<Result<MutableList<Group>>>
 
 
     @GET("image/upload")
-    fun uploadImage(@Header("token")token : String?): Call<Result<*>>
+    fun uploadImage(@Header("token")token : String): Call<Result<*>>
 
 
 }
