@@ -31,18 +31,18 @@ interface MessageDao {
      * 获取所有的聊天好友id
      */
     @Query(value = "select sender from MessageDbo group by sender")
-    fun queryAllFriends() : List<String>
+    fun queryAllFriends(userId : String) : List<String>
 
     /**
      * 根据时间倒序查询最近聊天的几个用户
      */
     @Query("select * from MessageDbo where sender = :sender or receiver = :sender order by dateTime desc limit 1")
-    fun getLastMessageBySenderId(sender: String): MessageDbo
+    fun getLastMessageBySenderId(userId : String, sender: String): MessageDbo
 
     /**
      * 根据好友id获取好友的最近几条聊天记录
      */
     @Query(value = "select * from MessageDbo where sender = :senderId or receiver = :senderId order by dateTime desc limit :currentPage, :pageSize")
-    fun getMessageBySenderId(senderId : String, currentPage : Int, pageSize : Int) : LiveData<List<MessageDbo>>
+    fun getMessageBySenderId(userId : String, senderId : String, currentPage : Int, pageSize : Int) : LiveData<List<MessageDbo>>
 
 }

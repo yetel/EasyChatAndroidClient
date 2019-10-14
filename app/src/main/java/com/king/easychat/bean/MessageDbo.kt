@@ -13,7 +13,7 @@ import kotlinx.android.parcel.Parcelize
  */
 @Entity(indices = [Index(value = ["sender"]), Index(value = ["receiver"])])
 @Parcelize
-open class MessageDbo(val sender : String?, val receiver: String?
+open class MessageDbo(var userId : String, val sender : String?, val receiver: String?
                       ,val message : String, val send: Boolean = false
                       , val messageType : Int, var dateTime : String?
                       ,val senderName : String?) : Parcelable {
