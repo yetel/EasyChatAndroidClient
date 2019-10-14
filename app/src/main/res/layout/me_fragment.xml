@@ -2,7 +2,11 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
-    <data></data>
+    <data>
+        <variable
+            name="data"
+            type="com.king.easychat.netty.packet.resp.LoginResp" />
+    </data>
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
@@ -20,12 +24,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
                     <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/clUser"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingLeft="@dimen/size_16dp"
                         android:paddingRight="@dimen/size_16dp"
-                        android:paddingTop="@dimen/size_10dp"
-                        android:paddingBottom="@dimen/size_10dp"
+                        android:paddingTop="@dimen/size_2dp"
+                        android:paddingBottom="@dimen/size_16dp"
                         android:background="@color/title_bg">
                         <de.hdodenhof.circleimageview.CircleImageView
                             android:id="@+id/ivAvatar"
@@ -39,19 +44,21 @@
                             />
                         <TextView
                             android:id="@+id/tvName"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:textSize="@dimen/size_16sp"
                             android:textColor="@color/text_white"
                             android:text="@{data.showName}"
                             tools:text="亚索"
-                            android:paddingTop="@dimen/size_6dp"
+                            android:layout_marginTop="@dimen/size_6dp"
                             android:layout_marginLeft="@dimen/size_6dp"
                             app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintLeft_toRightOf="@+id/ivAvatar"/>
+                            app:layout_constraintBottom_toTopOf="@+id/tvSignature"
+                            app:layout_constraintLeft_toRightOf="@+id/ivAvatar"
+                            app:layout_constraintRight_toLeftOf="@+id/ivArrow"/>
                         <TextView
-                            android:id="@+id/tvSignture"
-                            android:layout_width="wrap_content"
+                            android:id="@+id/tvSignature"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:textSize="@dimen/size_14sp"
                             android:textColor="@color/text_white_50"
@@ -61,8 +68,55 @@
                             android:layout_marginLeft="@dimen/size_6dp"
                             android:layout_marginTop="@dimen/size_4dp"
                             app:layout_constraintTop_toBottomOf="@+id/tvName"
-                            app:layout_constraintLeft_toRightOf="@+id/ivAvatar"/>
+                            app:layout_constraintLeft_toRightOf="@+id/ivAvatar"
+                            app:layout_constraintRight_toLeftOf="@+id/ivArrow"/>
+                        <ImageView
+                            android:id="@+id/ivArrow"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ec_next_white"
+                            android:layout_marginLeft="@dimen/size_6dp"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"/>
                     </androidx.constraintlayout.widget.ConstraintLayout>
+                    <TextView
+                        android:id="@+id/tvPassword"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/white_selector"
+                        android:layout_marginTop="@dimen/size_space"
+                        android:paddingLeft="@dimen/size_16dp"
+                        android:paddingRight="@dimen/size_16dp"
+                        android:paddingTop="@dimen/size_12dp"
+                        android:paddingBottom="@dimen/size_12dp"
+                        android:gravity="center_vertical"
+                        android:text="@string/modify_password"
+                        android:textColor="@color/text_3"
+                        android:textSize="@dimen/size_16sp"
+                        android:drawableLeft="@drawable/ec_modify_password"
+                        android:drawablePadding="@dimen/size_6dp"
+                        android:drawableRight="@drawable/ec_next"
+                        android:layout_marginBottom="@dimen/size_line"/>
+                    <TextView
+                        android:id="@+id/tvAbout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/white_selector"
+                        android:layout_marginTop="@dimen/size_space"
+                        android:paddingLeft="@dimen/size_16dp"
+                        android:paddingRight="@dimen/size_16dp"
+                        android:paddingTop="@dimen/size_12dp"
+                        android:paddingBottom="@dimen/size_12dp"
+                        android:gravity="center_vertical"
+                        android:text="@string/about"
+                        android:textColor="@color/text_3"
+                        android:textSize="@dimen/size_16sp"
+                        android:drawableLeft="@drawable/ec_about"
+                        android:drawablePadding="@dimen/size_6dp"
+                        android:drawableRight="@drawable/ec_next"
+                        android:layout_marginBottom="@dimen/size_line"/>
+
                 </LinearLayout>
             </ScrollView>
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

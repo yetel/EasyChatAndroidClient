@@ -14,7 +14,7 @@
         android:paddingRight="@dimen/size_16dp"
         android:paddingTop="@dimen/size_10dp"
         android:paddingBottom="@dimen/size_10dp"
-        android:background="@drawable/list_item_bg_selector">
+        android:background="@drawable/white_selector">
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/ivAvatar"
             android:layout_width="@dimen/size_50dp"
@@ -37,7 +37,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toRightOf="@+id/ivAvatar"/>
         <TextView
-            android:id="@+id/tvSignture"
+            android:id="@+id/tvSignature"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/size_14sp"

@@ -43,4 +43,10 @@
 
     <string name="send">发送</string>
 
+
+
+    <string name="modify_password">修改密码</string>
+    <string name="about">关于</string>
+
+
 </resources>

@@ -108,7 +108,7 @@ class ChatActivity : BaseActivity<ChatViewModel, ChatActivityBinding>(){
     fun handleMessageResp(resp: MessageResp?){
         resp?.let {
             mAdapter.addData(it)
-            mViewModel.saveMesage(resp)
+            mViewModel.saveMessage(resp)
         }
 
     }
