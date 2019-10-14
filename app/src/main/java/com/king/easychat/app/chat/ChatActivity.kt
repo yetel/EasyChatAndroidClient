@@ -6,6 +6,7 @@ import android.text.TextUtils
 import android.text.TextWatcher
 import android.view.View
 import android.view.animation.AnimationUtils
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.vectordrawable.graphics.drawable.AnimationUtilsCompat
 import com.king.base.adapter.divider.DividerItemDecoration
@@ -52,12 +53,6 @@ class ChatActivity : BaseActivity<ChatViewModel, ChatActivityBinding>(){
 
         })
 
-        user = intent.getParcelableExtra(Constants.KEY_BEAN)
-        user?.let {
-            tvTitle.setText(it.getShowName())
-            userId = it.userId
-        }
-
 
         registerSingleLiveEvent {
             when(it.what){
@@ -68,6 +63,20 @@ class ChatActivity : BaseActivity<ChatViewModel, ChatActivityBinding>(){
         rv.layoutManager = LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false)
         rv.addItemDecoration(DividerItemDecoration(context,DividerItemDecoration.VERTICAL,R.drawable.line_drawable_xh_none))
         rv.adapter = mAdapter
+
+        user = intent.getParcelableExtra(Constants.KEY_BEAN)
+        user?.let {
+            tvTitle.setText(it.getShowName())
+            userId = it.userId
+//            mViewModel.queryMessageByFriendId(userId,1,Constants.PAGE_SIZE).observe(this, Observer {
+//               it?.let {
+//                   mAdapter.replaceData(it)
+//               }
+//            })
+
+        }
+
+
     }
 
     fun updateBtnStatus(isEmpty: Boolean){
@@ -99,6 +108,7 @@ class ChatActivity : BaseActivity<ChatViewModel, ChatActivityBinding>(){
     fun handleMessageResp(resp: MessageResp?){
         resp?.let {
             mAdapter.addData(it)
+            mViewModel.saveMesage(resp)
         }
 
     }

@@ -8,6 +8,7 @@ import com.chad.library.adapter.base.entity.MultiItemEntity
 import com.king.easychat.netty.packet.Packet
 import com.king.easychat.netty.packet.PacketType
 import com.king.easychat.util.AES
+import kotlinx.android.parcel.IgnoredOnParcel
 import kotlinx.android.parcel.Parcelize
 
 /**

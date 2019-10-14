@@ -14,9 +14,9 @@ class Spliter : LengthFieldBasedFrameDecoder(Int.MAX_VALUE,LENGTH_FIELD_OFFSET,L
         const val LENGTH_FIELD_LENGTH = 4
     }
 
-    override fun decode(ctx: ChannelHandlerContext?, byteBuf: ByteBuf?): Any {
+    override fun decode(ctx: ChannelHandlerContext?, byteBuf: ByteBuf): Any {
 
-        val magicNumber = byteBuf?.getInt(byteBuf?.readerIndex())
+        val magicNumber = byteBuf.getInt(byteBuf.readerIndex())
         //如果魔数不匹配则直接关闭通道
         if(magicNumber != PacketHelper.MAGIC_NUMBER){
             ctx?.channel()?.close()

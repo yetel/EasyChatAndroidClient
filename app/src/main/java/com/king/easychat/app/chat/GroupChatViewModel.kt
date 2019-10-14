@@ -2,6 +2,7 @@ package com.king.easychat.app.chat
 
 import android.app.Application
 import com.king.easychat.app.Constants
+import com.king.easychat.app.base.MessageViewModel
 import com.king.easychat.netty.NettyClient
 import com.king.easychat.netty.packet.req.GroupMessageReq
 import com.king.easychat.netty.packet.req.MessageReq
@@ -13,7 +14,7 @@ import javax.inject.Inject
 /**
  * @author <a href="mailto:jenly1314@gmail.com">Jenly</a>
  */
-class GroupChatViewModel @Inject constructor(application: Application, model: GroupChatModel?) : BaseViewModel<GroupChatModel>(application, model){
+class GroupChatViewModel @Inject constructor(application: Application, model: GroupChatModel?) : MessageViewModel(application, model){
 
     var messageReq : GroupMessageReq? = null
 
