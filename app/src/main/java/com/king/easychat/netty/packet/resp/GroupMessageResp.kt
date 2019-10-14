@@ -6,6 +6,8 @@ import androidx.room.Ignore
 import androidx.room.Index
 import androidx.room.PrimaryKey
 import com.chad.library.adapter.base.entity.MultiItemEntity
+import com.king.easychat.bean.GroupMessageDbo
+import com.king.easychat.bean.MessageDbo
 import com.king.easychat.netty.packet.Packet
 import com.king.easychat.netty.packet.PacketType
 import com.king.easychat.util.AES
@@ -50,6 +52,13 @@ class GroupMessageResp(val sender : String?,val senderName : String?,val message
 
     fun isSelf(self: String): Boolean{
         return self == sender
+    }
+
+
+    fun toGroupMessageDbo(userId: String): GroupMessageDbo{
+        val data = GroupMessageDbo(userId,groupId,sender,senderName,message,isSender,messageType,dateTime)
+        data.dateTime = dateTime
+        return data
     }
 
 }

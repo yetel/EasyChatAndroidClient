@@ -7,9 +7,15 @@ import com.king.base.util.TimeUtils
  */
 abstract class Packet {
 
+    constructor(): this(TimeUtils.formatDate(System.currentTimeMillis(),TimeUtils.FORMAT_Y_TO_S))
+
+    constructor(dateTime: String){
+        this.dateTime = dateTime
+    }
+
     var version = 1
 
-    var dateTime = TimeUtils.formatDate(System.currentTimeMillis(),TimeUtils.FORMAT_Y_TO_S)
+    var dateTime : String
 
     abstract fun packetType(): Int
 

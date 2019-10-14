@@ -42,7 +42,7 @@ interface MessageDao {
     /**
      * 根据好友id获取好友的最近几条聊天记录
      */
-    @Query(value = "select * from MessageDbo where userId = :userId and (sender = :senderId or receiver = :senderId) order by dateTime desc limit :currentPage, :pageSize")
-    fun getMessageBySenderId(userId : String, senderId : String, currentPage : Int, pageSize : Int) : LiveData<List<MessageDbo>>
+    @Query(value = "select * from MessageDbo where userId = :userId and (sender = :senderId or receiver = :receiver) order by dateTime desc limit :currentPage, :pageSize")
+    fun getMessageBySenderId(userId : String, senderId : String,receiver : String, currentPage : Int, pageSize : Int) : List<MessageDbo>
 
 }

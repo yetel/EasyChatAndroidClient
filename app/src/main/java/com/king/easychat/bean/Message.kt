@@ -8,6 +8,12 @@ import com.king.easychat.util.AES
  * description: 消息列表
  */
 class Message {
+
+    companion object{
+        var userMode = 0
+        var groupMode = 1
+    }
+
     /** 用户id 或者群聊id*/
     var id : String?=null
     /** 消息时间 用于排序*/
@@ -23,7 +29,9 @@ class Message {
     /** 0 普通消息 1 图片消息*/
     var messageType : Int?=null
 
-    fun getDecryptMessage() : String? {
+    var name : String? = null
+
+    fun getMsg() : String? {
         message?.let {
             return AES.decrypt(it, "${dateTime}ab")
         }

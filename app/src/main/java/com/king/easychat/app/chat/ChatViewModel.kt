@@ -35,7 +35,6 @@ class ChatViewModel @Inject constructor(application: Application, model: ChatMod
 
             if(NettyClient.INSTANCE.isConnected()){
                 sendSingleLiveEvent(Constants.EVENT_SUCCESS)
-                saveMessage(it.toMessageResp(getApp().loginResp,true))
             }
         }
 

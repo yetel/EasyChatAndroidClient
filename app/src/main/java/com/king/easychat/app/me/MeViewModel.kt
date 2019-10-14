@@ -22,6 +22,11 @@ class MeViewModel @Inject constructor(application: Application, model: BaseModel
 
     var userLiveData = MutableLiveData<User>()
 
+    override fun onCreate() {
+        super.onCreate()
+        getUser()
+    }
+
     /**
      * 获取好友列表
      */

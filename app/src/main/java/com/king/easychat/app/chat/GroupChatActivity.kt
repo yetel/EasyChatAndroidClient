@@ -5,6 +5,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import android.view.animation.AnimationUtils
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.king.base.adapter.divider.DividerItemDecoration
 import com.king.easychat.R
@@ -31,8 +32,11 @@ class GroupChatActivity : BaseActivity<GroupChatViewModel, GroupChatActivityBind
 
     var message : String? = null
 
+    var curPage = 1
+
     override fun initData(savedInstanceState: Bundle?) {
 
+        srl.setColorSchemeResources(R.color.colorAccent)
         tvSend.visibility = View.GONE
 
         etContent.addTextChangedListener(object : TextWatcher {
@@ -50,22 +54,39 @@ class GroupChatActivity : BaseActivity<GroupChatViewModel, GroupChatActivityBind
 
         })
 
-        group = intent.getParcelableExtra(Constants.KEY_BEAN)
-        group?.let {
-            tvTitle.setText(it.groupName)
-            groupId = it.groupId
-        }
-
-
         registerSingleLiveEvent {
             when(it.what){
                 Constants.EVENT_SUCCESS -> handleMessageResp(mViewModel.messageReq?.toGroupMessageResp(getApp().loginResp,true))
+                Constants.REFRESH_SUCCESS -> srl.isRefreshing = false
             }
         }
 
         rv.layoutManager = LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false)
         rv.addItemDecoration(DividerItemDecoration(context,DividerItemDecoration.VERTICAL,R.drawable.line_drawable_xh_none))
         rv.adapter = mAdapter
+
+        mViewModel.groupMessageLiveData.observe(this, Observer {
+            if(curPage == 1){
+                mAdapter.replaceData(it)
+            }else if(it.size >= Constants.PAGE_SIZE){
+                mAdapter.addData(0,it)
+                curPage++
+            }
+
+        })
+
+        group = intent.getParcelableExtra(Constants.KEY_BEAN)
+        group?.let {
+            tvTitle.text = it.groupName
+            groupId = it.groupId
+            mViewModel.queryMessageByGroupId(getApp().getUserId(),groupId,curPage,Constants.PAGE_SIZE)
+        }
+
+    }
+
+    override fun hideLoading() {
+        super.hideLoading()
+        srl.isRefreshing = false
     }
 
     fun updateBtnStatus(isEmpty: Boolean){
@@ -97,6 +118,7 @@ class GroupChatActivity : BaseActivity<GroupChatViewModel, GroupChatActivityBind
     fun handleMessageResp(resp: GroupMessageResp?){
         resp?.let {
             mAdapter.addData(it)
+            mViewModel.saveGroupMessage(getApp().getUserId(),resp)
         }
 
     }

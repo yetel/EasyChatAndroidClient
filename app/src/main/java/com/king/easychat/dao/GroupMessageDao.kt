@@ -43,5 +43,5 @@ interface GroupMessageDao {
      * 根据群id获取好友的最近几条聊天记录
      */
     @Query(value = "select * from GroupMessageDbo where  userId = :userId and sender = :groupId order by dateTime desc limit :currentPage, :pageSize")
-    fun getGroupMessageByGroupId(userId : String, groupId : String, currentPage : Int, pageSize : Int) : LiveData<List<GroupMessageDbo>>
+    fun getGroupMessageByGroupId(userId : String, groupId : String, currentPage : Int, pageSize : Int) : List<GroupMessageDbo>
 }

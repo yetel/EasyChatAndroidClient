@@ -1,6 +1,5 @@
 package com.king.easychat.app.base
 
-import androidx.lifecycle.LiveData
 import com.king.easychat.bean.GroupMessageDbo
 import com.king.easychat.bean.Message
 import com.king.easychat.bean.MessageDbo
@@ -40,85 +39,43 @@ open class MessageModel @Inject constructor(repository: IDataRepository?) : Base
     /**
      * 保存消息记录
      */
-    fun saveMessage(userId : String, messageReq : MessageReq){
-        val messageDbo = MessageDbo(
-            userId,
-            null,
-            messageReq.receiver,
-            messageReq.message,
-            true,
-            messageReq.messageType,
-            messageReq.dateTime,
-            null
-        )
-        getMessageDao().insert(messageDbo)
+    fun saveMessage(userId : String,userName: String?,friendId: String?, data: MessageReq){
+        getMessageDao().insert(data.toMessageResp(userId,userName,true).toMessageDbo(userId,friendId))
     }
 
     /**
      * 保存消息记录
      */
-    fun saveMessage(userId : String, messageResp : MessageResp){
-        val messageDbo = MessageDbo(
-            userId,
-            messageResp.sender,
-            null,
-            messageResp.message,
-            false,
-            messageResp.messageType,
-            messageResp.dateTime,
-            messageResp.senderName
-        )
-        getMessageDao().insert(messageDbo)
+    fun saveMessage(userId : String,friendId: String?, data: MessageResp){
+        getMessageDao().insert(data.toMessageDbo(userId,friendId))
     }
 
     /**
      *保存群聊消息
      */
-    fun saveGroupMessage(userId : String, groupMessageReq: GroupMessageReq){
-        val groupMessageDbo = GroupMessageDbo(
-            userId,
-            groupMessageReq.groupId,
-            null,
-            null,
-            groupMessageReq.message,
-            true,
-            groupMessageReq.messageType,
-            groupMessageReq.dateTime
-
-        )
-        getGroupMessageDao().insert(groupMessageDbo)
+    fun saveGroupMessage(userId: String,userName: String?, data: GroupMessageReq){
+        getGroupMessageDao().insert(data.toGroupMessageResp(userId,userName,true).toGroupMessageDbo(userId))
     }
 
     /**
      *保存群聊消息
      */
-    fun saveGroupMessage(userId : String, groupMessageResp : GroupMessageResp){
-        val groupMessageDbo = GroupMessageDbo(
-            userId,
-            groupMessageResp.groupId,
-            groupMessageResp.sender,
-            groupMessageResp.senderName,
-            groupMessageResp.message,
-            false,
-            groupMessageResp.messageType,
-            groupMessageResp.dateTime
-
-        )
-        getGroupMessageDao().insert(groupMessageDbo)
+    fun saveGroupMessage(userId : String, data: GroupMessageResp){
+        getGroupMessageDao().insert(data.toGroupMessageDbo(userId))
     }
 
     /**
      * 根据好友id获取聊天记录
      */
-    fun queryMessageByFriendId(userId : String, friendId : String, currentPage : Int, pageSize: Int) : LiveData<List<MessageDbo>> {
-        return getMessageDao().getMessageBySenderId(userId, friendId, currentPage, pageSize)
+    fun queryMessageByFriendId(userId : String, friendId : String, currentPage : Int, pageSize: Int) : List<MessageDbo> {
+        return getMessageDao().getMessageBySenderId(userId, friendId,friendId, currentPage, pageSize).sortedBy { it.dateTime }
     }
 
     /**
      * 根据群聊id获取聊天记录
      */
-    fun queryMessageByGroupId(userId : String, groupId : String, currentPage : Int, pageSize : Int) : LiveData<List<GroupMessageDbo>> {
-        return getGroupMessageDao().getGroupMessageByGroupId(userId, groupId, currentPage, pageSize)
+    fun queryMessageByGroupId(userId : String, groupId : String, currentPage : Int, pageSize : Int) : List<GroupMessageDbo> {
+        return getGroupMessageDao().getGroupMessageByGroupId(userId, groupId, currentPage, pageSize).sortedBy { it.dateTime }
     }
 
     /**
@@ -138,10 +95,11 @@ open class MessageModel @Inject constructor(repository: IDataRepository?) : Base
             val messageList = Message()
             messageList.id = messageResp.sender
             messageList.dateTime = messageResp.dateTime
-            messageList.messageMode = 0
+            messageList.messageMode = Message.userMode
             messageList.senderId = messageResp.sender
             messageList.message = messageResp.message
             messageList.messageType = messageResp.messageType
+            messageList.name = messageResp.senderName
             messageLists.add(messageList)
         }
 
@@ -150,7 +108,7 @@ open class MessageModel @Inject constructor(repository: IDataRepository?) : Base
             val messageList = Message()
             messageList.id = groupMessageResp.groupId
             messageList.dateTime = groupMessageResp.dateTime
-            messageList.messageMode = 1
+            messageList.messageMode = Message.groupMode
             if (groupMessageResp.send) {
                 messageList.senderId =  userId
             } else {

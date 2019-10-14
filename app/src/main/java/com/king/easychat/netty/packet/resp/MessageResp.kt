@@ -5,6 +5,7 @@ import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
 import com.chad.library.adapter.base.entity.MultiItemEntity
+import com.king.easychat.bean.MessageDbo
 import com.king.easychat.netty.packet.Packet
 import com.king.easychat.netty.packet.PacketType
 import com.king.easychat.util.AES
@@ -49,6 +50,14 @@ class MessageResp(val sender : String?,val senderName : String?,val message : St
 
     fun isSelf(self: String): Boolean{
         return self == sender
+    }
+
+
+    fun toMessageDbo(userId: String,friendId: String?): MessageDbo{
+        var receiver = if(isSender) friendId else sender
+        var data = MessageDbo(userId,sender,receiver,message,isSender,messageType,dateTime,senderName)
+        data.dateTime = dateTime
+        return data
     }
 
 }

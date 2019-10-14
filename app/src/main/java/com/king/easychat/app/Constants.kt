@@ -27,6 +27,7 @@ object Constants {
     //---------------------------------------------
 
     const val EVENT_SUCCESS = 0x01
+    const val REFRESH_SUCCESS = 0x02
 
 
     const val PAGE_SIZE = 20

@@ -4,6 +4,8 @@ import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
+import com.king.easychat.netty.packet.resp.GroupMessageResp
+import com.king.easychat.netty.packet.resp.MessageResp
 import kotlinx.android.parcel.Parcelize
 
 /**
@@ -14,7 +16,12 @@ import kotlinx.android.parcel.Parcelize
 @Entity(indices = [Index(value = ["groupId"])])
 @Parcelize
 class GroupMessageDbo(val userId : String, val groupId: String, val sender : String?, val senderName : String?,val message : String,
-                      val send: Boolean = false, val messageType : Int, var dateTime : String?) : Parcelable {
+                      val send: Boolean = false, val messageType : Int, var dateTime : String) : Parcelable {
     @PrimaryKey(autoGenerate = true)
     var id: Long = 0
+
+    fun toGroupMessageResp(): GroupMessageResp {
+        return GroupMessageResp(sender,senderName,message,groupId,messageType,userId == sender)
+    }
+
 }

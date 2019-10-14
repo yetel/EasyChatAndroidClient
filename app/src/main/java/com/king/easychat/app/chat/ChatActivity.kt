@@ -28,14 +28,17 @@ import org.greenrobot.eventbus.ThreadMode
 class ChatActivity : BaseActivity<ChatViewModel, ChatActivityBinding>(){
 
     var user : User? = null
-    var userId : String = ""
+    var friendId : String = ""
 
     val mAdapter by lazy { ChatAdapter() }
 
     var message : String? = null
 
+    var curPage = 1
+
     override fun initData(savedInstanceState: Bundle?) {
 
+        srl.setColorSchemeResources(R.color.colorAccent)
         tvSend.visibility = View.GONE
 
         etContent.addTextChangedListener(object : TextWatcher {
@@ -57,6 +60,7 @@ class ChatActivity : BaseActivity<ChatViewModel, ChatActivityBinding>(){
         registerSingleLiveEvent {
             when(it.what){
                 Constants.EVENT_SUCCESS -> handleMessageResp(mViewModel.messageReq?.toMessageResp(getApp().loginResp,true))
+                Constants.REFRESH_SUCCESS -> srl.isRefreshing = false
             }
         }
 
@@ -64,20 +68,26 @@ class ChatActivity : BaseActivity<ChatViewModel, ChatActivityBinding>(){
         rv.addItemDecoration(DividerItemDecoration(context,DividerItemDecoration.VERTICAL,R.drawable.line_drawable_xh_none))
         rv.adapter = mAdapter
 
+        mViewModel.messageLiveData.observe(this, Observer {
+            if(curPage == 1){
+                mAdapter.replaceData(it)
+            }else if(it.size >= Constants.PAGE_SIZE){
+                mAdapter.addData(0,it)
+                curPage++
+            }
+        })
+
         user = intent.getParcelableExtra(Constants.KEY_BEAN)
         user?.let {
-            tvTitle.setText(it.getShowName())
-            userId = it.userId
-//            mViewModel.queryMessageByFriendId(userId,1,Constants.PAGE_SIZE).observe(this, Observer {
-//               it?.let {
-//                   mAdapter.replaceData(it)
-//               }
-//            })
+            tvTitle.text = it.getShowName()
+            friendId = it.userId
+            mViewModel.queryMessageByFriendId(getApp().getUserId(),friendId,curPage,Constants.PAGE_SIZE)
 
         }
 
 
     }
+
 
     fun updateBtnStatus(isEmpty: Boolean){
         if(isEmpty){
@@ -108,7 +118,7 @@ class ChatActivity : BaseActivity<ChatViewModel, ChatActivityBinding>(){
     fun handleMessageResp(resp: MessageResp?){
         resp?.let {
             mAdapter.addData(it)
-            mViewModel.saveMessage(resp)
+            mViewModel.saveMessage(getApp().getUserId(),friendId,resp)
         }
 
     }
@@ -117,7 +127,7 @@ class ChatActivity : BaseActivity<ChatViewModel, ChatActivityBinding>(){
     fun clickSend(){
         message = etContent.text.toString()
         message?.let {
-            mViewModel.sendMessage(userId,it)
+            mViewModel.sendMessage(friendId,it)
         }
 
     }

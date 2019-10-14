@@ -20,9 +20,16 @@ class MessageReq(val receiver : String,@Expose val msg : String, val messageType
         return PacketType.SEND_MESSAGE_REQ
     }
 
+    fun toMessageResp(userId: String?,userName: String?,isSender: Boolean): MessageResp{
+        val data = MessageResp(userId,userName,message,isSender,messageType)
+        data.dateTime = dateTime
+        return data
+    }
 
     fun toMessageResp(loginResp: LoginResp?,isSender: Boolean): MessageResp{
-        return MessageResp(loginResp?.userId,loginResp?.userName,message,isSender,messageType)
+        val data = MessageResp(loginResp?.userId,loginResp?.userName,message,isSender,messageType)
+        data.dateTime = dateTime
+        return data
     }
 
 

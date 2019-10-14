@@ -4,6 +4,7 @@ import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
+import com.king.easychat.netty.packet.resp.MessageResp
 import kotlinx.android.parcel.Parcelize
 
 /**
@@ -15,8 +16,24 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 open class MessageDbo(var userId : String, val sender : String?, val receiver: String?
                       ,val message : String, val send: Boolean = false
-                      , val messageType : Int, var dateTime : String?
+                      , val messageType : Int, var dateTime : String
                       ,val senderName : String?) : Parcelable {
     @PrimaryKey(autoGenerate = true)
     var id: Long = 0
+
+    fun senderId(): String?{
+        return if(send) receiver else sender
+    }
+
+    fun toMessageResp(): MessageResp{
+        var resp = MessageResp(senderId(),senderName,message,send,messageType)
+        resp.dateTime = dateTime
+        return resp
+    }
+
+    override fun toString(): String {
+        return "MessageDbo(userId='$userId', sender=$sender, receiver=$receiver, message='$message', send=$send, messageType=$messageType, dateTime=$dateTime, senderName=$senderName, id=$id)"
+    }
+
+
 }

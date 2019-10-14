@@ -46,5 +46,20 @@ class App : BaseApplication() {
             .inject(this)
     }
 
+    fun isLogin(): Boolean{
+        return loginResp != null
+    }
+
+    fun getToken(): String?{
+        return loginResp?.token
+    }
+
+    fun getUserId(): String{
+        return loginResp?.userId!!
+    }
+
+    fun getUsername(): String ?{
+        return loginResp?.userName
+    }
 
 }
