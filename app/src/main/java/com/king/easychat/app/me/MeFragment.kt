@@ -2,6 +2,7 @@ package com.king.easychat.app.me
 
 import android.os.Bundle
 import android.view.View
+import com.king.easychat.BR
 import com.king.easychat.R
 import com.king.easychat.app.base.BaseFragment
 import com.king.easychat.databinding.MeFragmentBinding
@@ -21,6 +22,9 @@ class MeFragment : BaseFragment<MeViewModel,MeFragmentBinding>(),View.OnClickLis
 
     override fun initData(savedInstanceState: Bundle?) {
         tvTitle.setText(R.string.menu_me)
+        getApp().loginResp?.let {
+            mBinding.setVariable(BR.data,it)
+        }
 
         clUser.setOnClickListener(this)
         tvPassword.setOnClickListener(this)
