@@ -11,4 +11,8 @@ class Result<T> {
 
     var data : T? = null
 
+    fun isSuccess(): Boolean{
+        return "0" == code
+    }
+
 }

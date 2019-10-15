@@ -57,8 +57,8 @@ class FriendFragment : BaseFragment<FriendViewModel,FriendFragmentBinding>(), Vi
     }
 
     fun clickItem(data: User){
-        val intent = Intent(context,ChatActivity::class.java)
-        intent.putExtra(Constants.KEY_BEAN,data)
+        val intent = newIntent(data.getShowName(),ChatActivity::class.java)
+        intent.putExtra(Constants.KEY_ID,data.userId)
         startActivity(intent)
     }
 

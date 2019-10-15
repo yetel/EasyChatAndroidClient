@@ -41,6 +41,7 @@
             android:layout_marginTop="@dimen/size_8dp"
             android:layout_below="@+id/tvTime"
             android:layout_toLeftOf="@+id/ivAvatar"
+            android:layout_marginLeft="@dimen/size_50dp"
             android:layout_marginRight="@dimen/size_6dp"
             android:textSize="@dimen/size_16sp"
             android:textColor="@color/text_white"

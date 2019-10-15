@@ -1,5 +1,6 @@
 package com.king.easychat.bean
 
+import com.king.base.util.StringUtils
 import com.king.easychat.util.AES
 
 /**
@@ -36,6 +37,10 @@ class Message {
             return AES.decrypt(it, "${dateTime}ab")
         }
        return null
+    }
+    
+    fun getShowName(): String?{
+        return if(StringUtils.isNotBlank(name)) name else id
     }
 
 }

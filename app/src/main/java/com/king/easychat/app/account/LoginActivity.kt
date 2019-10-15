@@ -5,7 +5,6 @@ import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
 import android.view.View
-import com.king.base.util.SharedPreferencesUtils
 import com.king.easychat.R
 import com.king.easychat.app.Constants
 import com.king.easychat.app.base.BaseActivity
@@ -42,7 +41,7 @@ class LoginActivity : BaseActivity<LoginViewModel, LoginActivityBinding>(), View
         })
 
         username = intent.getStringExtra(Constants.KEY_USERNAME)
-        username ?: SharedPreferencesUtils.getString(context,Constants.KEY_USERNAME)
+        username ?: Cache.getUsername(context)
 
         etUsername.setText(username)
 

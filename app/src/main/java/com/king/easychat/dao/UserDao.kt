@@ -27,6 +27,9 @@ interface UserDao {
     @Query("DELETE FROM User")
     fun delateAll()
 
+    @Query("DELETE FROM User WHERE userId = :userId")
+    fun delate(userId: String)
+
     /**
      * 查询所有用户列表
      */

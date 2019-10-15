@@ -30,7 +30,7 @@ interface GroupMessageDao {
     /**
      * 获取所有的群聊id
      */
-    @Query(value = "select groupId from GroupMessageDbo where  userId = :userId  group by groupId")
+    @Query("select groupId from GroupMessageDbo where  userId = :userId  group by groupId")
     fun queryAllGroups(userId : String) : List<String>
 
     /**
@@ -42,6 +42,6 @@ interface GroupMessageDao {
     /**
      * 根据群id获取好友的最近几条聊天记录
      */
-    @Query(value = "select * from GroupMessageDbo where  userId = :userId and sender = :groupId order by dateTime desc limit :currentPage, :pageSize")
-    fun getGroupMessageByGroupId(userId : String, groupId : String, currentPage : Int, pageSize : Int) : List<GroupMessageDbo>
+    @Query("select * from GroupMessageDbo where  userId = :userId and groupId = :groupId order by dateTime desc limit :start, :pageSize")
+    fun getGroupMessageByGroupId(userId : String, groupId : String, start : Int, pageSize : Int) : List<GroupMessageDbo>
 }

@@ -21,7 +21,9 @@ class GroupMessageDbo(val userId : String, val groupId: String, val sender : Str
     var id: Long = 0
 
     fun toGroupMessageResp(): GroupMessageResp {
-        return GroupMessageResp(sender,senderName,message,groupId,messageType,userId == sender)
+        val resp = GroupMessageResp(sender,senderName,message,groupId,messageType,userId == sender)
+        resp.dateTime  = dateTime
+        return resp
     }
 
 }

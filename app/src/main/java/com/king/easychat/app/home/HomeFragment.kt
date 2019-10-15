@@ -1,7 +1,7 @@
 package com.king.easychat.app.home
 
-import android.content.Intent
 import android.os.Bundle
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.king.base.adapter.divider.DividerItemDecoration
@@ -13,8 +13,15 @@ import com.king.easychat.app.chat.ChatActivity
 import com.king.easychat.app.chat.GroupChatActivity
 import com.king.easychat.bean.Message
 import com.king.easychat.databinding.HomeFragmentBinding
+import com.king.easychat.netty.packet.Packet
+import com.king.easychat.netty.packet.PacketType
+import kotlinx.android.synthetic.main.chat_activity.*
 import kotlinx.android.synthetic.main.group_fragment.*
+import kotlinx.android.synthetic.main.group_fragment.rv
+import kotlinx.android.synthetic.main.group_fragment.srl
 import kotlinx.android.synthetic.main.home_toolbar.*
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 /**
  * @author <a href="mailto:jenly1314@gmail.com">Jenly</a>
@@ -44,6 +51,30 @@ class HomeFragment : BaseFragment<HomeViewModel,HomeFragmentBinding>(){
         }
 
         mBinding.viewModel = mViewModel
+
+        mViewModel.lastMessageLiveData.observe(this, Observer {
+            mAdapter.replaceData(it)
+        })
+
+        registerSingleLiveEvent {
+            when(it.what){
+                Constants.REFRESH_SUCCESS -> srl.isRefreshing = false
+            }
+        }
+
+        requestData()
+    }
+
+    fun requestData(){
+        mViewModel.retry()
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onMessageEvent(event: Packet){
+        when(event.packetType()){
+            PacketType.SEND_MESSAGE_RESP -> requestData()
+            PacketType.GROUP_MESSAGE_RESP -> requestData()
+        }
     }
 
     fun clickItem(data: Message){
@@ -55,14 +86,14 @@ class HomeFragment : BaseFragment<HomeViewModel,HomeFragmentBinding>(){
     }
 
     fun startChatActivity(data: Message){
-        val intent = Intent(context, ChatActivity::class.java)
-//        intent.putExtra(Constants.KEY_BEAN,data)
+        val intent = newIntent(data.getShowName()!!,ChatActivity::class.java)
+        intent.putExtra(Constants.KEY_ID,data.id)
         startActivity(intent)
     }
 
     fun startGroupChatActivity(data: Message){
-        val intent = Intent(context, GroupChatActivity::class.java)
-//        intent.putExtra(Constants.KEY_BEAN,data)
+        val intent = newIntent(data.getShowName()!!,GroupChatActivity::class.java)
+        intent.putExtra(Constants.KEY_ID,data.id)
         startActivity(intent)
     }
 

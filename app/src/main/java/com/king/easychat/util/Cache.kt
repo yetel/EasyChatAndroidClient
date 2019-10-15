@@ -19,6 +19,10 @@ object Cache {
 
     }
 
+    fun getUsername(context: Context): String?{
+        return SharedPreferencesUtils.getString(context,Constants.KEY_USERNAME)
+    }
+
     fun getLoginReq(context: Context): LoginReq?{
         var loginReq : LoginReq? = null
         SharedPreferencesUtils.getSharedPreferences(context).run {

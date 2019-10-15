@@ -27,6 +27,7 @@ class MeFragment : BaseFragment<MeViewModel,MeFragmentBinding>(),View.OnClickLis
             mBinding.setVariable(BR.data,it)
         }
 
+        srl.setColorSchemeResources(R.color.colorAccent)
         mViewModel.userLiveData.observe(this, Observer {
             mBinding.user = it
         })

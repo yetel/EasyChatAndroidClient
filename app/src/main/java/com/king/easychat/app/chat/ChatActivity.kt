@@ -8,6 +8,7 @@ import android.view.View
 import android.view.animation.AnimationUtils
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import androidx.vectordrawable.graphics.drawable.AnimationUtilsCompat
 import com.king.base.adapter.divider.DividerItemDecoration
 import com.king.easychat.R
@@ -27,7 +28,6 @@ import org.greenrobot.eventbus.ThreadMode
  */
 class ChatActivity : BaseActivity<ChatViewModel, ChatActivityBinding>(){
 
-    var user : User? = null
     var friendId : String = ""
 
     val mAdapter by lazy { ChatAdapter() }
@@ -36,10 +36,17 @@ class ChatActivity : BaseActivity<ChatViewModel, ChatActivityBinding>(){
 
     var curPage = 1
 
+    var isAutoScroll = true
+
     override fun initData(savedInstanceState: Bundle?) {
 
-        srl.setColorSchemeResources(R.color.colorAccent)
         tvSend.visibility = View.GONE
+        srl.setColorSchemeResources(R.color.colorAccent)
+        srl.setOnRefreshListener {
+            isAutoScroll = false
+            mViewModel.queryMessageByFriendId(getApp().getUserId(),friendId,curPage,Constants.PAGE_SIZE)
+        }
+
 
         etContent.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
@@ -68,22 +75,46 @@ class ChatActivity : BaseActivity<ChatViewModel, ChatActivityBinding>(){
         rv.addItemDecoration(DividerItemDecoration(context,DividerItemDecoration.VERTICAL,R.drawable.line_drawable_xh_none))
         rv.adapter = mAdapter
 
-        mViewModel.messageLiveData.observe(this, Observer {
-            if(curPage == 1){
-                mAdapter.replaceData(it)
-            }else if(it.size >= Constants.PAGE_SIZE){
-                mAdapter.addData(0,it)
-                curPage++
+        rv.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+                var layoutManager = recyclerView.layoutManager
+                if(layoutManager is LinearLayoutManager){
+                    var lastPosition = layoutManager.findLastVisibleItemPosition()
+
+                    if(lastPosition == layoutManager.itemCount - 1){
+                        isAutoScroll = true
+                    }
+                }
+
+            }
+
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+
             }
         })
 
-        user = intent.getParcelableExtra(Constants.KEY_BEAN)
-        user?.let {
-            tvTitle.text = it.getShowName()
-            friendId = it.userId
-            mViewModel.queryMessageByFriendId(getApp().getUserId(),friendId,curPage,Constants.PAGE_SIZE)
+        mViewModel.messageLiveData.observe(this, Observer {
+            if(curPage == 1){
+                mAdapter.replaceData(it)
+            }else if(curPage>1){
+                mAdapter.addData(0,it)
+            }
 
-        }
+            if(mAdapter.itemCount >= (curPage-1) * Constants.PAGE_SIZE){
+                curPage++
+            }
+
+            etContent.text = null
+            if(isAutoScroll){
+                rv.scrollToPosition(mAdapter.itemCount - 1)
+            }
+        })
+
+        tvTitle.text = intent.getStringExtra(Constants.KEY_TITLE)
+        friendId = intent.getStringExtra(Constants.KEY_ID)
+        mViewModel.queryMessageByFriendId(getApp().getUserId(),friendId,curPage,Constants.PAGE_SIZE)
 
 
     }
@@ -119,6 +150,9 @@ class ChatActivity : BaseActivity<ChatViewModel, ChatActivityBinding>(){
         resp?.let {
             mAdapter.addData(it)
             mViewModel.saveMessage(getApp().getUserId(),friendId,resp)
+            if(isAutoScroll){
+                rv.scrollToPosition(mAdapter.itemCount - 1)
+            }
         }
 
     }

@@ -45,6 +45,7 @@ class FriendViewModel @Inject constructor(application: Application, model: Frien
                         updateStatus(StatusEvent.Status.SUCCESS)
                         friendsLiveData.postValue(it.data)
                     } ?: updateStatus(StatusEvent.Status.FAILURE)
+
                 }
 
                 override fun onError(call: Call<Result<MutableList<User>>>?, t: Throwable?) {

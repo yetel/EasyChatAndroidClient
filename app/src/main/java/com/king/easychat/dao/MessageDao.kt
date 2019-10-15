@@ -30,19 +30,19 @@ interface MessageDao {
     /**
      * 获取所有的聊天好友id
      */
-    @Query(value = "select sender from MessageDbo where userId = :userId group by sender")
+    @Query("select sender from MessageDbo where userId = :userId group by sender")
     fun queryAllFriends(userId : String) : List<String>
 
     /**
      * 根据时间倒序查询最近聊天的几个用户
      */
-    @Query("select * from MessageDbo where  userId = :userId and (sender = :sender or receiver = :sender) order by dateTime desc limit 1")
-    fun getLastMessageBySenderId(userId : String, sender: String): MessageDbo
+    @Query("select * from MessageDbo where  userId = :userId and (sender = :sender or receiver = :receiver) order by dateTime desc limit 1")
+    fun getLastMessageBySenderId(userId : String, sender: String,receiver: String): MessageDbo
 
     /**
      * 根据好友id获取好友的最近几条聊天记录
      */
-    @Query(value = "select * from MessageDbo where userId = :userId and (sender = :senderId or receiver = :receiver) order by dateTime desc limit :currentPage, :pageSize")
-    fun getMessageBySenderId(userId : String, senderId : String,receiver : String, currentPage : Int, pageSize : Int) : List<MessageDbo>
+    @Query("select * from MessageDbo where userId = :userId and (sender = :senderId or receiver = :receiver) order by dateTime desc limit :start, :pageSize")
+    fun getMessageBySenderId(userId : String, senderId : String,receiver : String, start : Int, pageSize : Int) : List<MessageDbo>
 
 }

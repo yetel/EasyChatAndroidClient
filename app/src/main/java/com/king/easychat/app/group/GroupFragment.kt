@@ -61,8 +61,8 @@ class GroupFragment : BaseFragment<GroupViewModel,GroupFragmentBinding>(){
     }
 
     fun clickItem(data: Group){
-        val intent = Intent(context, GroupChatActivity::class.java)
-        intent.putExtra(Constants.KEY_BEAN,data)
+        val intent = newIntent(data.groupName,GroupChatActivity::class.java)
+        intent.putExtra(Constants.KEY_ID,data.groupId)
         startActivity(intent)
     }
 

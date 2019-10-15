@@ -68,14 +68,14 @@ open class MessageModel @Inject constructor(repository: IDataRepository?) : Base
      * 根据好友id获取聊天记录
      */
     fun queryMessageByFriendId(userId : String, friendId : String, currentPage : Int, pageSize: Int) : List<MessageDbo> {
-        return getMessageDao().getMessageBySenderId(userId, friendId,friendId, currentPage, pageSize).sortedBy { it.dateTime }
+        return getMessageDao().getMessageBySenderId(userId, friendId,friendId, (currentPage-1) * pageSize, pageSize).sortedBy { it.dateTime }
     }
 
     /**
      * 根据群聊id获取聊天记录
      */
     fun queryMessageByGroupId(userId : String, groupId : String, currentPage : Int, pageSize : Int) : List<GroupMessageDbo> {
-        return getGroupMessageDao().getGroupMessageByGroupId(userId, groupId, currentPage, pageSize).sortedBy { it.dateTime }
+        return getGroupMessageDao().getGroupMessageByGroupId(userId, groupId, (currentPage-1) * pageSize, pageSize).sortedBy { it.dateTime }
     }
 
     /**
@@ -90,8 +90,8 @@ open class MessageModel @Inject constructor(repository: IDataRepository?) : Base
         val messageLists = ArrayList<Message>()
 
 
-        for (v in friends) {
-            val messageResp = messageDao.getLastMessageBySenderId(userId, v)
+        for (friendId in friends) {
+            val messageResp = messageDao.getLastMessageBySenderId(userId, friendId,friendId)
             val messageList = Message()
             messageList.id = messageResp.sender
             messageList.dateTime = messageResp.dateTime
@@ -103,8 +103,8 @@ open class MessageModel @Inject constructor(repository: IDataRepository?) : Base
             messageLists.add(messageList)
         }
 
-        for (v in groups) {
-            val groupMessageResp = groupMessageDao.getLastMessageByGroupId(userId, v)
+        for (groupId in groups) {
+            val groupMessageResp = groupMessageDao.getLastMessageByGroupId(userId, groupId)
             val messageList = Message()
             messageList.id = groupMessageResp.groupId
             messageList.dateTime = groupMessageResp.dateTime
@@ -120,7 +120,12 @@ open class MessageModel @Inject constructor(repository: IDataRepository?) : Base
         }
 
         messageLists.sortByDescending { it.dateTime }
-        return messageLists.subList(0, count)
+
+        if(count < messageLists.size){
+            return messageLists.subList(0, count)
+        }
+
+        return messageLists
     }
 
 }

@@ -38,6 +38,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/size_8dp"
+            android:layout_marginRight="@dimen/size_50dp"
             android:layout_below="@+id/tvTime"
             android:layout_toRightOf="@+id/ivAvatar"
             android:layout_marginLeft="@dimen/size_6dp"
