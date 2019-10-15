@@ -18,6 +18,9 @@ interface UserDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(user: User)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insert(users: List<User>)
+
     @Delete
     fun delete(user: User)
 
@@ -25,16 +28,19 @@ interface UserDao {
      * 删除所有
      */
     @Query("DELETE FROM User")
-    fun delateAll()
+    fun deleteAll()
 
     @Query("DELETE FROM User WHERE userId = :userId")
-    fun delate(userId: String)
+    fun delete(userId: String)
 
     /**
      * 查询所有用户列表
      */
     @Query("SELECT * FROM User")
     fun getAllUsers(): LiveData<List<User>>
+
+    @Query("SELECT * FROM User")
+    fun getUsers(): List<User>
 
     /**
      * 查询用户列表

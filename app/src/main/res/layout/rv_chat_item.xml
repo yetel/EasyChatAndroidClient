@@ -4,6 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
     <data>
+        <import
+            type="android.view.View" />
         <variable
             name="data"
             type="com.king.easychat.netty.packet.resp.MessageResp" />
@@ -46,6 +48,22 @@
             android:textColor="@color/text_6"
             android:text="@{data.msg}"
             tools:text="我用双手成就你的梦想"
+            android:visibility="@{data.image ? View.GONE : View.VISIBLE}"
+            android:background="@drawable/ec_chat_bubble_left"/>
+        <ImageView
+            android:id="@+id/ivContent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minWidth="@dimen/size_80dp"
+            android:minHeight="@dimen/size_80dp"
+            android:maxHeight="300dp"
+            android:layout_marginTop="@dimen/size_8dp"
+            android:layout_marginRight="@dimen/size_50dp"
+            android:layout_below="@+id/tvTime"
+            android:layout_toRightOf="@+id/ivAvatar"
+            android:layout_marginLeft="@dimen/size_6dp"
+            bind:imageUrl="@{data.message}"
+            android:visibility="@{data.image ? View.VISIBLE : View.GONE}"
             android:background="@drawable/ec_chat_bubble_left"/>
     </RelativeLayout>
 

@@ -1,9 +1,7 @@
 package com.king.easychat.dao
 
-import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.king.easychat.bean.MessageDbo
-import com.king.easychat.netty.packet.resp.MessageResp
 
 /**
  * @author Zed

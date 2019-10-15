@@ -3,16 +3,14 @@ package com.king.easychat.app.base
 import com.king.easychat.bean.GroupMessageDbo
 import com.king.easychat.bean.Message
 import com.king.easychat.bean.MessageDbo
-import com.king.easychat.dao.AppDatabase
-import com.king.easychat.dao.GroupMessageDao
-import com.king.easychat.dao.MessageDao
-import com.king.easychat.dao.UserDao
+import com.king.easychat.dao.*
 import com.king.easychat.netty.packet.req.GroupMessageReq
 import com.king.easychat.netty.packet.req.MessageReq
 import com.king.easychat.netty.packet.resp.GroupMessageResp
 import com.king.easychat.netty.packet.resp.MessageResp
 import com.king.frame.mvvmframe.base.BaseModel
 import com.king.frame.mvvmframe.data.IDataRepository
+import timber.log.Timber
 import javax.inject.Inject
 
 /**
@@ -24,6 +22,11 @@ open class MessageModel @Inject constructor(repository: IDataRepository?) : Base
     fun getUserDao(): UserDao{
         return getRoomDatabase(AppDatabase::class.java)
             .userDao()
+    }
+
+    fun getGroupDao(): GroupDao{
+        return getRoomDatabase(AppDatabase::class.java)
+            .groupDao()
     }
 
     fun getGroupMessageDao(): GroupMessageDao {
@@ -84,38 +87,57 @@ open class MessageModel @Inject constructor(repository: IDataRepository?) : Base
     fun queryMessageList(userId : String, count: Int) : List<Message> {
         val messageDao = getMessageDao()
         val groupMessageDao = getGroupMessageDao()
-        val friends = messageDao.queryAllFriends(userId)
-        val groups = groupMessageDao.queryAllGroups(userId)
+        val friendIds = messageDao.queryAllFriends(userId)
+        val groupIDs = groupMessageDao.queryAllGroups(userId)
 
+        val users = getUserDao().getUsers()
+        val groups = getGroupDao().getGroups()
+
+        Timber.d("users:$users")
         val messageLists = ArrayList<Message>()
 
 
-        for (friendId in friends) {
+        for (friendId in friendIds) {
             val messageResp = messageDao.getLastMessageBySenderId(userId, friendId,friendId)
+
             val messageList = Message()
-            messageList.id = messageResp.sender
-            messageList.dateTime = messageResp.dateTime
-            messageList.messageMode = Message.userMode
-            messageList.senderId = messageResp.sender
-            messageList.message = messageResp.message
-            messageList.messageType = messageResp.messageType
-            messageList.name = messageResp.senderName
+            with(messageList){
+                id = messageResp.sender
+                dateTime = messageResp.dateTime
+                messageMode = Message.userMode
+                senderId = messageResp.sender
+                message = messageResp.message
+                messageType = messageResp.messageType
+                name = if (messageResp.send) messageResp.receiver else messageResp.sender
+
+                for(user in users){
+                    if(user.userId == name){
+                        name = user.getShowName()
+                        avatar = user.avatar
+                    }
+                }
+            }
+
             messageLists.add(messageList)
         }
 
-        for (groupId in groups) {
+        for (groupId in groupIDs) {
             val groupMessageResp = groupMessageDao.getLastMessageByGroupId(userId, groupId)
             val messageList = Message()
-            messageList.id = groupMessageResp.groupId
-            messageList.dateTime = groupMessageResp.dateTime
-            messageList.messageMode = Message.groupMode
-            if (groupMessageResp.send) {
-                messageList.senderId =  userId
-            } else {
-                messageList.senderId =  groupMessageResp.sender
+            with(messageList){
+                id = groupMessageResp.groupId
+                dateTime = groupMessageResp.dateTime
+                messageMode = Message.groupMode
+                senderId =  groupMessageResp.sender
+                message = groupMessageResp.message
+                messageType = groupMessageResp.messageType
+                for(group in groups){
+                    if(group.groupId == groupId){
+                        name = group.groupName
+                    }
+                }
             }
-            messageList.message = groupMessageResp.message
-            messageList.messageType = groupMessageResp.messageType
+
             messageLists.add(messageList)
         }
 

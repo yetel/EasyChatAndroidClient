@@ -1,17 +1,14 @@
 package com.king.easychat.app.group
 
 import android.app.Application
-import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.Observer
 import com.king.easychat.App
-import com.king.easychat.api.ApiService
-import com.king.easychat.bean.Result
+import com.king.easychat.R
 import com.king.easychat.bean.Group
-import com.king.frame.mvvmframe.base.BaseModel
 import com.king.frame.mvvmframe.base.BaseViewModel
-import com.king.frame.mvvmframe.base.DataViewModel
-import com.king.frame.mvvmframe.base.livedata.StatusEvent
-import com.king.frame.mvvmframe.http.callback.ApiCallback
-import retrofit2.Call
+import com.king.frame.mvvmframe.bean.Resource
 import javax.inject.Inject
 
 /**
@@ -19,7 +16,9 @@ import javax.inject.Inject
  */
 class GroupViewModel @Inject constructor(application: Application, model: GroupModel?) : BaseViewModel<GroupModel>(application, model){
 
-    var groupsLiveData = MutableLiveData<MutableList<Group>>()
+    var groupsLiveData = MediatorLiveData<List<Group>>()
+
+    var source : LiveData<Resource<List<Group>>>? = null
 
     override fun onCreate() {
         super.onCreate()
@@ -30,29 +29,29 @@ class GroupViewModel @Inject constructor(application: Application, model: GroupM
         getGroups()
     }
 
-
     /**
-     * 获取好友列表
+     * 获取群组列表
      */
     fun getGroups(){
-        updateStatus(StatusEvent.Status.LOADING)
         val token = getApplication<App>().loginResp?.token
-        mModel.getRetrofitService(ApiService::class.java)
-            .getGroups(token!!)
-            .enqueue(object : ApiCallback<Result<MutableList<Group>>>(){
-                override fun onResponse(call: Call<Result<MutableList<Group>>>?, result: Result<MutableList<Group>>?) {
-                    result?.let {
-                        updateStatus(StatusEvent.Status.SUCCESS)
-                        groupsLiveData.postValue(it.data)
-                    } ?: updateStatus(StatusEvent.Status.FAILURE)
+        mModel.getGroups(token!!)
+        source?.let {
+            groupsLiveData.removeSource(it)
+        }
+        source = mModel.groupResource
+        groupsLiveData.addSource(source!!, Observer{
+            if(it.isSuccess){
+                groupsLiveData.postValue(it.data)
+            }else {
+                if(it.isFailure){
+                    sendMessage(it.message)
+                }else{
+                    sendMessage(R.string.result_failure)
                 }
-
-                override fun onError(call: Call<Result<MutableList<Group>>>?, t: Throwable?) {
-                    updateStatus(StatusEvent.Status.ERROR)
-                    sendMessage(t?.message)
-                }
-
-            })
+                groupsLiveData.addSource(mModel.getGroups(), Observer {groupsLiveData::postValue})
+            }
+        })
 
     }
+
 }

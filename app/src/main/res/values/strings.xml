@@ -32,6 +32,8 @@
     <string name="result_empty_error">系统繁忙，请稍后再试。</string>
     <string name="result_network_unavailable_error">网络不给力，请检查网络。</string>
 
+    <string name="result_failure">获取失败</string>
+
 
     <!-- Home -->
     <string name="menu_message">消息</string>

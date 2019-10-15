@@ -32,6 +32,8 @@ class Message {
 
     var name : String? = null
 
+    var avatar: String? = null
+
     fun getMsg() : String? {
         message?.let {
             return AES.decrypt(it, "${dateTime}ab")

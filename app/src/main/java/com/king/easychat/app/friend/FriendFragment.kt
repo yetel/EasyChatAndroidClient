@@ -1,6 +1,5 @@
 package com.king.easychat.app.friend
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.Observer
@@ -33,7 +32,7 @@ class FriendFragment : BaseFragment<FriendViewModel,FriendFragmentBinding>(), Vi
     override fun initData(savedInstanceState: Bundle?) {
         tvTitle.setText(R.string.menu_friend)
         ivRight.setOnClickListener(this)
-
+        View.VISIBLE
         srl.setColorSchemeResources(R.color.colorAccent)
 
         rv.layoutManager = LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false)
@@ -47,7 +46,7 @@ class FriendFragment : BaseFragment<FriendViewModel,FriendFragmentBinding>(), Vi
 
         mBinding.viewModel = mViewModel
 
-        mViewModel.friendsLiveData.observe(this, Observer<MutableList<User>>{
+        mViewModel.friendsLiveData.observe(this, Observer<List<User>>{
             it?.let {
                 mAdapter.replaceData(it)
             }
@@ -59,6 +58,7 @@ class FriendFragment : BaseFragment<FriendViewModel,FriendFragmentBinding>(), Vi
     fun clickItem(data: User){
         val intent = newIntent(data.getShowName(),ChatActivity::class.java)
         intent.putExtra(Constants.KEY_ID,data.userId)
+        intent.putExtra(Constants.KEY_IMAGE_URL,data.avatar)
         startActivity(intent)
     }
 

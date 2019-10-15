@@ -24,6 +24,7 @@ object Constants {
     const val KEY_PASSWORD = "key_password"
 
     const val KEY_ID = "key_id"
+    const val KEY_IMAGE_URL = "key_image_url"
 
 
     //---------------------------------------------

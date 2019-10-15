@@ -23,13 +23,13 @@ interface ApiService {
      * 获取好友列表
      */
     @GET("users")
-    fun getFriends(@Header("token")token : String): Call<Result<MutableList<User>>>
+    fun getFriends(@Header("token")token : String): Call<Result<List<User>>>
 
     /**
      * 获取群列表
      */
     @GET("groups")
-    fun getGroups(@Header("token")token : String): Call<Result<MutableList<Group>>>
+    fun getGroups(@Header("token")token : String): Call<Result<List<Group>>>
 
 
     @GET("image/upload")

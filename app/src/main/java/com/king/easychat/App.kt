@@ -62,4 +62,8 @@ class App : BaseApplication() {
         return loginResp?.userName
     }
 
+    fun getAvatar(): String ?{
+        return null
+    }
+
 }

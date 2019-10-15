@@ -1,8 +1,6 @@
 package com.king.easychat.app.group
 
-import android.content.Intent
 import android.os.Bundle
-import android.view.View
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.chad.library.adapter.base.BaseQuickAdapter
@@ -11,11 +9,8 @@ import com.king.easychat.R
 import com.king.easychat.app.Constants
 import com.king.easychat.app.adapter.BindingAdapter
 import com.king.easychat.app.base.BaseFragment
-import com.king.easychat.app.chat.ChatActivity
 import com.king.easychat.app.chat.GroupChatActivity
-import com.king.easychat.app.friend.FriendFragment
 import com.king.easychat.bean.Group
-import com.king.easychat.bean.User
 import com.king.easychat.databinding.GroupFragmentBinding
 import kotlinx.android.synthetic.main.group_fragment.*
 import kotlinx.android.synthetic.main.home_toolbar.*
@@ -51,7 +46,7 @@ class GroupFragment : BaseFragment<GroupViewModel,GroupFragmentBinding>(){
 
         mBinding.viewModel = mViewModel
 
-        mViewModel.groupsLiveData.observe(this, Observer<MutableList<Group>>{
+        mViewModel.groupsLiveData.observe(this, Observer<List<Group>>{
             it?.let {
                 mAdapter.replaceData(it)
             }

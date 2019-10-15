@@ -60,4 +60,8 @@ class MessageResp(val sender : String?,val senderName : String?,val message : St
         return data
     }
 
+    fun isImage():Boolean{
+        return messageType == 1
+    }
+
 }
