@@ -98,8 +98,11 @@ open class MessageModel @Inject constructor(repository: IDataRepository?) : Base
 
 
         for (friendId in friendIds) {
-            val messageResp = messageDao.getLastMessageBySenderId(userId, friendId,friendId)
 
+            val messageResp = messageDao.getLastMessageBySenderId(userId, friendId,friendId)
+            if(friendId == userId && messageResp.send && messageResp.sender == userId){
+                continue
+            }
             val messageList = Message()
             with(messageList){
                 id = messageResp.sender
@@ -120,6 +123,7 @@ open class MessageModel @Inject constructor(repository: IDataRepository?) : Base
 
             messageLists.add(messageList)
         }
+
 
         for (groupId in groupIDs) {
             val groupMessageResp = groupMessageDao.getLastMessageByGroupId(userId, groupId)

@@ -56,13 +56,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/size_8dp"
+            android:minWidth="@dimen/size_100dp"
+            android:minHeight="@dimen/size_100dp"
+            android:maxWidth="300dp"
+            android:maxHeight="400dp"
             android:layout_below="@+id/tvTime"
             android:layout_toLeftOf="@+id/ivAvatar"
             android:layout_marginLeft="@dimen/size_50dp"
             android:layout_marginRight="@dimen/size_6dp"
-            bind:imageUrl="@{data.message}"
-            android:visibility="@{data.image ?  View.VISIBLE : View.GONE}"
-            android:background="@drawable/ec_chat_bubble_right"/>
+            bind:imageUrl="@{data.msg}"
+            android:visibility="@{data.image ?  View.VISIBLE : View.GONE}" />
     </RelativeLayout>
 
 

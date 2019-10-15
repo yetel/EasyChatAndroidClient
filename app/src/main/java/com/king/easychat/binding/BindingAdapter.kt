@@ -7,6 +7,7 @@ import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.king.base.util.TimeUtils
 import com.king.easychat.R
+import com.king.easychat.glide.GlideApp
 import de.hdodenhof.circleimageview.CircleImageView
 
 /**
@@ -27,7 +28,7 @@ fun TextView.dateFormat(time: String?){
 @BindingAdapter(value = ["imageUrl"])
 fun ImageView.imageUrl(imageUrl: String?){
     imageUrl?.run {
-        Glide.with(this@imageUrl).load(imageUrl).into(this@imageUrl)
+        GlideApp.with(context).load(imageUrl).into(this@imageUrl)
     }
 
 }
@@ -35,7 +36,7 @@ fun ImageView.imageUrl(imageUrl: String?){
 @BindingAdapter(value = ["avatar"])
 fun ImageView.avatar(imageUrl: String?){
     imageUrl?.run {
-        Glide.with(this@avatar).load(imageUrl).into(this@avatar).onLoadFailed(ContextCompat.getDrawable(this@avatar.context,R.drawable.default_avatar))
+        GlideApp.with(context).load(imageUrl).into(this@avatar).onLoadFailed(ContextCompat.getDrawable(context,R.drawable.default_avatar))
     }
 
 }
@@ -43,7 +44,7 @@ fun ImageView.avatar(imageUrl: String?){
 @BindingAdapter(value = ["avatar"])
 fun CircleImageView.avatar(avatar: String?){
     avatar?.run {
-        Glide.with(this@avatar).load(avatar).into(this@avatar).onLoadFailed(ContextCompat.getDrawable(this@avatar.context,R.drawable.default_avatar))
+        GlideApp.with(context).load(avatar).into(this@avatar).onLoadFailed(ContextCompat.getDrawable(context,R.drawable.default_avatar))
     }
 
 }

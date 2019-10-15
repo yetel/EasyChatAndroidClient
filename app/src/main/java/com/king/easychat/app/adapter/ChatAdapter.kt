@@ -20,8 +20,8 @@ class ChatAdapter(var friendImageUrl : String?,var myImageUrl : String?): BaseMu
     override fun convert(helper: BindingHolder, item: MessageResp?) {
         helper.mBinding?.let {
             when(item?.itemType){
-                MessageResp.Left -> ImageLoader.displayImage(helper.getView(R.id.ivAvatar),friendImageUrl,R.drawable.default_avatar)
-                MessageResp.Right -> ImageLoader.displayImage(helper.getView(R.id.ivAvatar),myImageUrl,R.drawable.default_avatar)
+                MessageResp.Left -> ImageLoader.displayImage(mContext,helper.getView(R.id.ivAvatar),friendImageUrl,R.drawable.default_avatar)
+                MessageResp.Right -> ImageLoader.displayImage(mContext,helper.getView(R.id.ivAvatar),myImageUrl,R.drawable.default_avatar)
             }
             it.setVariable(BR.data,item)
             it.executePendingBindings()

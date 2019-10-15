@@ -88,12 +88,14 @@ class HomeFragment : BaseFragment<HomeViewModel,HomeFragmentBinding>(){
     fun startChatActivity(data: Message){
         val intent = newIntent(data.getShowName()!!,ChatActivity::class.java)
         intent.putExtra(Constants.KEY_ID,data.id)
+        intent.putExtra(Constants.KEY_IMAGE_URL,data.avatar)
         startActivity(intent)
     }
 
     fun startGroupChatActivity(data: Message){
         val intent = newIntent(data.getShowName()!!,GroupChatActivity::class.java)
         intent.putExtra(Constants.KEY_ID,data.id)
+        intent.putExtra(Constants.KEY_IMAGE_URL,data.avatar)
         startActivity(intent)
     }
 

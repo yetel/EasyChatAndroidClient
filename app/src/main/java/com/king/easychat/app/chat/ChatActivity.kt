@@ -29,9 +29,8 @@ import org.greenrobot.eventbus.ThreadMode
 class ChatActivity : BaseActivity<ChatViewModel, ChatActivityBinding>(){
 
     var friendId : String = ""
-    var imageUrl : String? = null
 
-    val mAdapter by lazy { ChatAdapter(imageUrl,getApp().getAvatar()) }
+    val mAdapter by lazy { ChatAdapter(intent.getStringExtra(Constants.KEY_IMAGE_URL),getApp().getAvatar()) }
 
     var message : String? = null
 
@@ -72,7 +71,6 @@ class ChatActivity : BaseActivity<ChatViewModel, ChatActivityBinding>(){
             }
         }
 
-        imageUrl = intent.getStringExtra(Constants.KEY_IMAGE_URL)
         rv.layoutManager = LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false)
         rv.addItemDecoration(DividerItemDecoration(context,DividerItemDecoration.VERTICAL,R.drawable.line_drawable_xh_none))
         rv.adapter = mAdapter
