@@ -62,6 +62,8 @@
     <dimen name="size_80dp">80dp</dimen>
     <dimen name="size_90dp">90dp</dimen>
     <dimen name="size_100dp">100dp</dimen>
+    <dimen name="size_110dp">110dp</dimen>
+    <dimen name="size_120dp">120dp</dimen>
 
 
 </resources>

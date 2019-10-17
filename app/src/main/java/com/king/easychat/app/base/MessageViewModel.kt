@@ -1,112 +1,208 @@
 package com.king.easychat.app.base
 
 import android.app.Application
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
+import android.text.TextUtils
 import com.king.easychat.App
+import com.king.easychat.R
 import com.king.easychat.app.Constants
-import com.king.easychat.bean.Message
-import com.king.easychat.bean.MessageDbo
-import com.king.easychat.netty.packet.req.LoginReq
+import com.king.easychat.bean.Result
+import com.king.easychat.netty.NettyClient
+import com.king.easychat.netty.packet.MessageType
+import com.king.easychat.netty.packet.req.GroupMessageReq
 import com.king.easychat.netty.packet.req.MessageReq
-import com.king.easychat.netty.packet.resp.GroupMessageResp
-import com.king.easychat.netty.packet.resp.LoginResp
-import com.king.easychat.netty.packet.resp.MessageResp
+import com.king.easychat.util.FileUtil
 import com.king.frame.mvvmframe.base.BaseViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+import com.king.frame.mvvmframe.http.callback.ApiCallback
+import kotlinx.coroutines.*
+import retrofit2.Call
+import retrofit2.await
 import timber.log.Timber
+import top.zibin.luban.Luban
+import top.zibin.luban.OnCompressListener
+import java.io.File
+import java.lang.Exception
 import javax.inject.Inject
+import kotlin.coroutines.resume
+import kotlin.coroutines.resumeWithException
+import kotlin.coroutines.suspendCoroutine
+
 
 /**
  * @author <a href="mailto:jenly1314@gmail.com">Jenly</a>
  */
-open class MessageViewModel @Inject constructor(application: Application, model: MessageModel?) : BaseViewModel<MessageModel>(application, model){
+open class MessageViewModel<M :MessageModel> @Inject constructor(application: Application, model: M?) : BaseViewModel<M>(application, model){
 
-    var messageLiveData = MutableLiveData<List<MessageResp>>()
-    var groupMessageLiveData = MutableLiveData<List<GroupMessageResp>>()
-    var lastMessageLiveData = MutableLiveData<List<Message>>()
+
+    var messageReq : MessageReq? = null
+
+    var groupMessageReq : GroupMessageReq? = null
+
 
     fun getApp(): App{
         return getApplication()
     }
 
-    fun saveMessage(loginResp: LoginResp?,friendId: String?,data: MessageReq){
-        loginResp?.let {
-            GlobalScope.launch(Dispatchers.IO) {
-                mModel.saveMessage(it.userId,it.userName,friendId,data)
-                Timber.d("save:" + data)
+    suspend fun <T> Call<T>.await(): T {
+        return suspendCoroutine { continuation ->
+            enqueue(object : ApiCallback<T>() {
+                override fun onResponse(call: Call<T>?, result: T) {
+                    if (result != null) continuation.resume(result)
+                    else continuation.resumeWithException(RuntimeException("result is null"))
+                }
+
+                override fun onError(call: Call<T>?, t: Throwable) {
+                    continuation.resumeWithException(t)
+                }
+
+            })
+        }
+    }
+
+    /**
+     * 协程上传图片
+     */
+    private suspend fun uploadImage(file: File): Result<String>?{
+        var token = getApp().getToken()
+        var filename = file.absolutePath
+        val suffix = filename.substring(filename.lastIndexOf("."))
+        return withContext(Dispatchers.IO){
+            val filename = Luban.with(getApp())
+                .load(file)
+                .ignoreBy(80)
+                .setTargetDir(getApp().getPath())
+                .filter { path -> !(TextUtils.isEmpty(path) || path.toLowerCase().endsWith(".gif")) }
+                .get(file.absolutePath)
+            Timber.d("file:$filename")
+            val imageBase64 = FileUtil.imageToBase64(filename)
+            mModel.updateImage(token!!,imageBase64,suffix).await()
+        }
+
+//        Luban.with(getApp())
+//            .load(file)
+//            .ignoreBy(80)
+//            .setTargetDir(getApp().getPath())
+//            .filter { path -> !(TextUtils.isEmpty(path) || path.toLowerCase().endsWith(".gif")) }
+//            .setCompressListener(object : OnCompressListener {
+//                override fun onStart() {
+//                    Timber.d("Start compressing...")
+//                }
+//
+//                override fun onSuccess(file: File) {
+//                    Timber.d("file:" + file.absolutePath)
+//                    GlobalScope.launch(Dispatchers.Main){
+//                        val imageBase64 = withContext(Dispatchers.IO){
+//                            FileUtil.imageToBase64(file)
+//                            mModel.updateImage(token!!,imageBase64,suffix).execute().body()
+//                        }
+//
+//                        mModel.updateImage(token!!,imageBase64,suffix).enqueue(object: ApiCallback<Result<String>>(){
+//
+//                            override fun onResponse(call: Call<Result<String>>?, result: Result<String>?) {
+//                                result?.let {
+//                                    if(it.isSuccess()){
+//
+//                                        try{
+//                                            if(isGroup){
+//                                                sendGroupMessage(receiver,it.data!!,MessageType.IMAGE)
+//                                            }else{
+//                                                sendGroupMessage(receiver,it.data!!,MessageType.IMAGE)
+//                                            }
+//                                        }catch (e: Exception){
+//                                            Timber.e(e)
+//                                        }
+//
+//                                    }else{
+//                                        sendMessage(it.desc)
+//                                    }
+//                                }
+//                            }
+//
+//                            override fun onError(call: Call<Result<String>>?, t: Throwable?) {
+//                                sendMessage(t?.message)
+//                            }
+//
+//                        })
+//                    }
+//
+//                }
+//
+//                override fun onError(e: Throwable) {
+//                    Timber.e(e)
+//                }
+//            }).launch()
+
+    }
+
+    private fun getUploadImageUrl(result: Result<String>?): String?{
+        var url : String? = null
+        result?.let { it ->
+            if(it.isSuccess()){
+                url = it.data
+                Timber.d("url:$url")
+            }else{
+                sendMessage(it.desc)
+            }
+        } ?: run{
+            sendMessage(R.string.result_failure)
+        }
+
+        return url
+    }
+
+    /**
+     * 发送消息
+     */
+    fun sendMessage(receiver: String,message: String,messageType: Int){
+        GlobalScope.launch(Dispatchers.Main){
+            if(messageType == MessageType.IMAGE){
+                var result = uploadImage(File(message))
+                var url = getUploadImageUrl(result)
+                url?.let {
+                    messageReq = MessageReq(receiver,it,messageType)
+                }
+
+            }else{
+                messageReq = MessageReq(receiver,message,messageType)
+            }
+
+            messageReq?.let {
+                NettyClient.INSTANCE.sendMessage(it)
+
+                if(NettyClient.INSTANCE.isConnected()){
+                    sendSingleLiveEvent(Constants.EVENT_SUCCESS)
+                }
+
+            }
+
+        }
+    }
+
+
+    /**
+     * 发送群消息
+     */
+    fun sendGroupMessage(groupId: String,message: String,messageType: Int){
+        GlobalScope.launch(Dispatchers.Main) {
+            if (messageType == MessageType.IMAGE) {
+                var result = uploadImage(File(message))
+                var url = getUploadImageUrl(result)
+                url?.let {
+                    groupMessageReq = GroupMessageReq(groupId, url, messageType)
+                }
+            } else {
+                groupMessageReq = GroupMessageReq(groupId, message, messageType)
+            }
+
+            groupMessageReq?.let {
+                NettyClient.INSTANCE.sendMessage(it)
+
+                if (NettyClient.INSTANCE.isConnected()) {
+                    sendSingleLiveEvent(Constants.EVENT_SUCCESS)
+                }
+
             }
         }
 
     }
 
-    /**
-     * 保存消息记录
-     */
-    fun saveMessage(userId: String,friendId: String?,data: MessageResp){
-        GlobalScope.launch(Dispatchers.IO) {
-            mModel.saveMessage(userId,friendId,data)
-            Timber.d("save:" + data)
-        }
-    }
-
-
-    /**
-     *保存群聊消息
-     */
-    fun saveGroupMessage(userId: String,resp : GroupMessageResp){
-        GlobalScope.launch(Dispatchers.IO) {
-            mModel.saveGroupMessage(userId,resp)
-        }
-    }
-
-    /**
-     * 根据好友id获取聊天记录
-     */
-    fun queryMessageByFriendId(userId : String, friendId : String, currentPage : Int, pageSize: Int) {
-//        source?.let {
-//            messageLiveData.removeSource(it)
-//        }
-//        source = mModel.queryMessageByFriendId(userId,friendId,currentPage,pageSize)
-//        messageLiveData.addSource(source!!, Observer {
-//            val list = ArrayList<MessageResp>()
-//            for (msg in it){
-//                list.add(msg.toMessageResp())
-//            }
-//           messageLiveData.value = list
-//        })
-        GlobalScope.launch(Dispatchers.IO) {
-            var list = mModel.queryMessageByFriendId(userId,friendId,currentPage,pageSize)
-
-           messageLiveData.postValue(list.map { it.toMessageResp() })
-        }
-        sendSingleLiveEvent(Constants.REFRESH_SUCCESS)
-
-    }
-
-    /**
-     * 查询群组聊天记录
-     */
-    fun queryMessageByGroupId(userId : String, groupId : String, currentPage : Int, pageSize : Int){
-        GlobalScope.launch(Dispatchers.IO) {
-            var list = mModel.queryMessageByGroupId(userId,groupId,currentPage,pageSize)
-            groupMessageLiveData.postValue(list.map { it.toGroupMessageResp() })
-        }
-        sendSingleLiveEvent(Constants.REFRESH_SUCCESS)
-    }
-
-    /**
-     * 查询最近聊天记录
-     */
-    fun queryMessageList(userId : String, currentPage : Int, pageSize : Int){
-        GlobalScope.launch(Dispatchers.IO) {
-            var list = mModel.queryMessageList(userId,pageSize)
-            lastMessageLiveData.postValue(list)
-        }
-        sendSingleLiveEvent(Constants.REFRESH_SUCCESS)
-    }
 }

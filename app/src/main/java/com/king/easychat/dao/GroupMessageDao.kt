@@ -37,7 +37,7 @@ interface GroupMessageDao {
      * 根据时间倒序查询最近聊天的几个用户
      */
     @Query("select * from GroupMessageDbo where userId = :userId and groupId = :groupId order by dateTime desc limit 1")
-    fun getLastMessageByGroupId(userId : String, groupId: String): GroupMessageDbo
+    fun getLastMessageByGroupId(userId : String, groupId: String): GroupMessageDbo?
 
     /**
      * 根据群id获取好友的最近几条聊天记录

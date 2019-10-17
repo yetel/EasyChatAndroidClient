@@ -15,7 +15,7 @@ import kotlinx.android.parcel.Parcelize
  */
 @Entity(indices = [Index(value = ["groupId"])])
 @Parcelize
-class GroupMessageDbo(val userId : String, val groupId: String, val sender : String?, val senderName : String?,val message : String,
+class GroupMessageDbo(val userId : String, val groupId: String, val sender : String, val senderName : String?,val message : String,
                       val send: Boolean = false, val messageType : Int, var dateTime : String) : Parcelable {
     @PrimaryKey(autoGenerate = true)
     var id: Long = 0

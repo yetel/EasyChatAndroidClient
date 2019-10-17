@@ -27,7 +27,7 @@ class GroupMessageReq(val groupId : String, @Expose val msg : String, val messag
     }
 
     fun toGroupMessageResp(loginResp: LoginResp?, isSender: Boolean): GroupMessageResp {
-        val data = GroupMessageResp(loginResp?.userId,loginResp?.userName,message,groupId,messageType,isSender)
+        val data = GroupMessageResp(loginResp?.userId!!,loginResp?.userName,message,groupId,messageType,isSender)
         data.dateTime = dateTime
         return data
     }

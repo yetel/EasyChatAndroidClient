@@ -26,6 +26,12 @@ object Constants {
     const val KEY_ID = "key_id"
     const val KEY_IMAGE_URL = "key_image_url"
 
+    const val KEY_LIST = "key_list"
+
+
+    //---------------------------------------------
+
+    const val REQ_SELECT_PHOTO = 0x01
 
     //---------------------------------------------
 
@@ -34,5 +40,7 @@ object Constants {
 
 
     const val PAGE_SIZE = 20
+
+    const val DEFAULT_DIR =  ".EasyChat/"
 
 }

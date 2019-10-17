@@ -8,6 +8,7 @@ import androidx.room.PrimaryKey
 import com.chad.library.adapter.base.entity.MultiItemEntity
 import com.king.easychat.bean.GroupMessageDbo
 import com.king.easychat.bean.MessageDbo
+import com.king.easychat.netty.packet.MessageType
 import com.king.easychat.netty.packet.Packet
 import com.king.easychat.netty.packet.PacketType
 import com.king.easychat.util.AES
@@ -20,7 +21,7 @@ import kotlinx.android.parcel.Parcelize
  */
 @Entity(indices = [Index(value = ["groupId"])])
 @Parcelize
-class GroupMessageResp(val sender : String?,val senderName : String?,val message : String,val groupId: String, val messageType : Int = 0, val isSender: Boolean = false) : Packet(), MultiItemEntity,
+class GroupMessageResp(val sender : String,val senderName : String?,val message : String,val groupId: String, val messageType : Int = 0, val isSender: Boolean = false) : Packet(), MultiItemEntity,
     Parcelable {
 
     @PrimaryKey(autoGenerate = true)
@@ -59,6 +60,10 @@ class GroupMessageResp(val sender : String?,val senderName : String?,val message
         val data = GroupMessageDbo(userId,groupId,sender,senderName,message,isSender,messageType,dateTime)
         data.dateTime = dateTime
         return data
+    }
+
+    fun isImage():Boolean{
+        return messageType == MessageType.IMAGE
     }
 
 }

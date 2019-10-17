@@ -6,6 +6,7 @@ import com.king.easychat.api.ApiService
 import com.king.easychat.app.base.MessageModel
 import com.king.easychat.bean.Result
 import com.king.easychat.bean.Group
+import com.king.easychat.dao.GroupDao
 import com.king.frame.mvvmframe.base.BaseModel
 import com.king.frame.mvvmframe.bean.Resource
 import com.king.frame.mvvmframe.data.IDataRepository
@@ -23,6 +24,7 @@ class GroupModel @Inject constructor(repository: IDataRepository?): MessageModel
 
 
     val groupResource = MutableLiveData<Resource<List<Group>>>()
+
 
     fun getGroups(token: String){
         groupResource.value = Resource.loading()

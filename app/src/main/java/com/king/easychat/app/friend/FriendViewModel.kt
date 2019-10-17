@@ -33,7 +33,7 @@ class FriendViewModel @Inject constructor(application: Application, model: Frien
      * 获取好友列表
      */
     fun getFriends(){
-        val token = getApplication<App>().loginResp?.token
+        val token = getApplication<App>().getToken()
         mModel.getFriends(token!!)
         source?.let {
             friendsLiveData.removeSource(it)

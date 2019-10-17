@@ -27,6 +27,7 @@ class MeViewModel @Inject constructor(application: Application, model: BaseModel
         getUser()
     }
 
+
     /**
      * 获取好友列表
      */
@@ -51,5 +52,9 @@ class MeViewModel @Inject constructor(application: Application, model: BaseModel
 
             })
 
+    }
+
+    fun retry(){
+        getUser()
     }
 }

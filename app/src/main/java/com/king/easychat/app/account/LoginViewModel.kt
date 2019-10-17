@@ -32,22 +32,22 @@ class LoginViewModel @Inject constructor(application: Application, model: BaseMo
     override fun onCreate() {
         super.onCreate()
 
+
         NettyClient.INSTANCE.setOnConnectListener(object: Netty.OnConnectListener{
             override fun onSuccess() {
                 NettyClient.INSTANCE.addListener(genericFutureListener)
             }
 
             override fun onFailed() {
-
+                hideLoading()
             }
 
             override fun onError(e: Exception?) {
-
+                hideLoading()
             }
 
         })
 
-        NettyClient.INSTANCE.connect()
     }
 
     override fun onDestroy() {
@@ -57,6 +57,9 @@ class LoginViewModel @Inject constructor(application: Application, model: BaseMo
 
     fun login(username: String,password: String){
         showLoading()
+        if(!NettyClient.INSTANCE.isConnected()){
+            NettyClient.INSTANCE.connect()
+        }
         loginReq = LoginReq(username,password)
         NettyClient.INSTANCE.sendMessage(loginReq!!)
     }

@@ -6,6 +6,7 @@ import com.king.easychat.api.ApiService
 import com.king.easychat.app.base.MessageModel
 import com.king.easychat.bean.Result
 import com.king.easychat.bean.User
+import com.king.easychat.dao.UserDao
 import com.king.frame.mvvmframe.bean.Resource
 import com.king.frame.mvvmframe.data.IDataRepository
 import com.king.frame.mvvmframe.http.callback.ApiCallback
@@ -19,6 +20,7 @@ import javax.inject.Inject
 class FriendModel @Inject constructor(repository: IDataRepository?) : MessageModel(repository){
 
     val friendResource = MutableLiveData<Resource<List<User>>>()
+
 
     fun getFriends(token: String){
         friendResource.value = Resource.loading()

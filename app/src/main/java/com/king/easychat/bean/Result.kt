@@ -15,4 +15,9 @@ class Result<T> {
         return "0" == code
     }
 
+    override fun toString(): String {
+        return "Result(code=$code, desc=$desc, data=$data)"
+    }
+
+
 }

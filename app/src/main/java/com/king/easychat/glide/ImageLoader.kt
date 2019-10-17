@@ -14,7 +14,7 @@ object ImageLoader {
 
     fun displayImage(iv: ImageView,url: String?,defaultImage: Int){
         url?.let {
-            GlideApp.with(iv).load(url).into(iv).onLoadFailed(ContextCompat.getDrawable(iv.context,defaultImage))
+            GlideApp.with(iv).load(url).error(defaultImage).into(iv)
         } ?: run {
             iv.setImageResource(defaultImage)
         }
@@ -22,7 +22,7 @@ object ImageLoader {
 
     fun displayImage(context: Context,iv: ImageView,url: String?,defaultImage: Int){
         url?.let {
-            GlideApp.with(context).load(url).into(iv).onLoadFailed(ContextCompat.getDrawable(context,defaultImage))
+            GlideApp.with(context).load(url).error(defaultImage).into(iv)
         } ?: run {
             iv.setImageResource(defaultImage)
         }
@@ -30,7 +30,7 @@ object ImageLoader {
 
     fun displayImage(fragment: Fragment,iv: ImageView,url: String?,defaultImage: Int){
         url?.let {
-            GlideApp.with(fragment).load(url).into(iv).onLoadFailed(ContextCompat.getDrawable(iv.context,defaultImage))
+            GlideApp.with(fragment).load(url).error(defaultImage).into(iv)
         } ?: run {
             iv.setImageResource(defaultImage)
         }
@@ -38,7 +38,7 @@ object ImageLoader {
 
     fun displayImage(activity: Activity,iv: ImageView,url: String?,defaultImage: Int){
         url?.let {
-            GlideApp.with(activity).load(url).into(iv).onLoadFailed(ContextCompat.getDrawable(activity,defaultImage))
+            GlideApp.with(activity).load(url).error(defaultImage).into(iv)
         } ?: run {
             iv.setImageResource(defaultImage)
         }

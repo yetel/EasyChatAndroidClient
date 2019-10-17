@@ -9,6 +9,7 @@ import com.orhanobut.logger.AndroidLogAdapter
 import com.orhanobut.logger.Logger
 import com.orhanobut.logger.PrettyFormatStrategy
 import timber.log.Timber
+import java.io.File
 
 /**
  * @author <a href="mailto:jenly1314@gmail.com">Jenly</a>
@@ -55,7 +56,8 @@ class App : BaseApplication() {
     }
 
     fun getUserId(): String{
-        return loginResp?.userId!!
+
+        return loginResp?.userId ?: ""
     }
 
     fun getUsername(): String ?{
@@ -64,6 +66,16 @@ class App : BaseApplication() {
 
     fun getAvatar(): String ?{
         return null
+    }
+
+    fun getPath(): String{
+        val path = getExternalFilesDir("app_external_files_path")?.absolutePath + "/" +  Constants.DEFAULT_DIR
+        val file = File(path)
+        if(!file.exists()){
+            file.mkdirs()
+        }
+        Timber.d("path:$path")
+        return path
     }
 
 }

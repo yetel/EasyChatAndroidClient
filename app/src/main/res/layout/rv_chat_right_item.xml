@@ -30,7 +30,7 @@
             android:id="@+id/ivAvatar"
             android:layout_width="@dimen/size_40dp"
             android:layout_height="@dimen/size_40dp"
-            android:src="@drawable/default_avatar"
+            tools:src="@drawable/default_avatar"
             android:layout_alignParentRight="true"
             android:layout_marginTop="@dimen/size_2dp"
             android:layout_below="@+id/tvTime"

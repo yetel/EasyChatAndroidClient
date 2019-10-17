@@ -7,6 +7,7 @@ import com.king.easychat.BR
 import com.king.easychat.R
 import com.king.easychat.app.base.BaseFragment
 import com.king.easychat.databinding.MeFragmentBinding
+import com.king.frame.mvvmframe.base.livedata.StatusEvent
 import kotlinx.android.synthetic.main.home_toolbar.*
 import kotlinx.android.synthetic.main.me_fragment.*
 
@@ -34,6 +35,15 @@ class MeFragment : BaseFragment<MeViewModel,MeFragmentBinding>(),View.OnClickLis
         clUser.setOnClickListener(this)
         tvPassword.setOnClickListener(this)
         tvAbout.setOnClickListener(this)
+
+        registerStatusEvent {
+            when(it){
+                StatusEvent.Status.SUCCESS -> srl.isRefreshing = false
+                StatusEvent.Status.FAILURE -> srl.isRefreshing = false
+                StatusEvent.Status.ERROR -> srl.isRefreshing = false
+
+            }
+        }
     }
 
     override fun getLayoutId(): Int {

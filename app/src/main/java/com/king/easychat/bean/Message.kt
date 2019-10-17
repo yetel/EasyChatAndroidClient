@@ -35,6 +35,9 @@ class Message {
     var avatar: String? = null
 
     fun getMsg() : String? {
+        if(messageType ==1){
+            return "[图片消息]"
+        }
         message?.let {
             return AES.decrypt(it, "${dateTime}ab")
         }

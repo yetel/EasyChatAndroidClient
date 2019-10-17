@@ -6,6 +6,8 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <!--允许程序设置内置sd卡的写权限-->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!--允许程序读取内置sd卡的写权限-->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <!--允许程序获取网络状态-->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <!--允许程序访问WiFi网络信息-->
@@ -16,6 +18,8 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <!--允许程序访问 精确定位 -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+
+    <uses-permission android:name="android.permission.CAMERA"/>
 
     <application
         android:name=".App"
@@ -52,11 +56,28 @@
         <activity android:name=".app.chat.GroupChatActivity"
             android:screenOrientation="portrait" />
 
+        <activity android:name=".app.photo.PhotoViewActivity"
+            android:screenOrientation="portrait" />
+
         <service android:name=".app.service.HeartBeatService"/>
 
+        <activity android:name="com.zhihu.matisse.ui.MatisseActivity"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait"
+            android:theme="@style/Matisse.Zhihu"/>
 
         <meta-data android:name="com.king.easychat.config.ConfigModule"
             android:value="FrameConfigModule"/>
+
+        <provider
+            android:name="com.king.app.updater.provider.AppUpdaterFileProvider"
+            android:authorities="${applicationId}.fileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/app_updater_paths"/>
+        </provider>
 
     </application>
 

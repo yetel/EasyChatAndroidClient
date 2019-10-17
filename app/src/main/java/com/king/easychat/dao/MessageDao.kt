@@ -35,7 +35,7 @@ interface MessageDao {
      * 根据时间倒序查询最近聊天的几个用户
      */
     @Query("select * from MessageDbo where  userId = :userId and (sender = :sender or receiver = :receiver) order by dateTime desc limit 1")
-    fun getLastMessageBySenderId(userId : String, sender: String,receiver: String): MessageDbo
+    fun getLastMessageBySenderId(userId : String, sender: String,receiver: String): MessageDbo?
 
     /**
      * 根据好友id获取好友的最近几条聊天记录

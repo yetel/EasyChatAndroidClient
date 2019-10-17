@@ -3,6 +3,7 @@ package com.king.easychat.di.module
 import androidx.lifecycle.ViewModel
 import com.king.easychat.app.account.LoginViewModel
 import com.king.easychat.app.account.RegisterViewModel
+import com.king.easychat.app.base.MessageModel
 import com.king.easychat.app.base.MessageViewModel
 import com.king.easychat.app.chat.ChatViewModel
 import com.king.easychat.app.chat.GroupChatViewModel
@@ -11,6 +12,9 @@ import com.king.easychat.app.group.GroupViewModel
 import com.king.easychat.app.home.HomeViewModel
 import com.king.easychat.app.me.MeViewModel
 import com.king.easychat.app.splash.SplashViewModel
+import com.king.easychat.temp.TempViewModel
+import com.king.frame.mvvmframe.base.BaseModel
+import com.king.frame.mvvmframe.base.BaseViewModel
 import com.king.frame.mvvmframe.di.scope.ViewModelKey
 import dagger.Binds
 import dagger.Module
@@ -67,9 +71,12 @@ abstract class ViewModelModule {
     @ViewModelKey(GroupChatViewModel::class)
     abstract fun bindGroupChatViewModel(viewModel: GroupChatViewModel) : ViewModel
 
-
     @Binds
     @IntoMap
-    @ViewModelKey(MessageViewModel::class)
-    abstract fun bindMessageViewModel(viewModel: MessageViewModel) : ViewModel
+    @ViewModelKey(TempViewModel::class)
+    abstract fun bindTempViewModel(viewModel: TempViewModel) : ViewModel
+//    @Binds
+//    @IntoMap
+//    @ViewModelKey(MessageViewModel::class)
+//    abstract fun bindMessageViewModel(viewModel: MessageViewModel<out MessageModel>) : ViewModel
 }

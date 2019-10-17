@@ -17,6 +17,7 @@ class GroupChatAdapter: BaseMultiItemQuickAdapter<GroupMessageResp, BindingHolde
 
     override fun convert(helper: BindingHolder, item: GroupMessageResp?) {
         helper.mBinding?.let {
+            helper.addOnClickListener(R.id.ivContent)
             it.setVariable(BR.data,item)
             it.executePendingBindings()
         }

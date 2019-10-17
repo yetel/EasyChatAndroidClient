@@ -6,6 +6,8 @@ import androidx.room.Index
 import androidx.room.PrimaryKey
 import com.chad.library.adapter.base.entity.MultiItemEntity
 import com.king.easychat.bean.MessageDbo
+import com.king.easychat.bean.RecentChat
+import com.king.easychat.netty.packet.MessageType
 import com.king.easychat.netty.packet.Packet
 import com.king.easychat.netty.packet.PacketType
 import com.king.easychat.util.AES
@@ -60,8 +62,9 @@ class MessageResp(val sender : String?,val senderName : String?,val message : St
         return data
     }
 
+
     fun isImage():Boolean{
-        return messageType == 1
+        return messageType == MessageType.IMAGE
     }
 
 }
