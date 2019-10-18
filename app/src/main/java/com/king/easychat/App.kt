@@ -2,6 +2,7 @@ package com.king.easychat
 
 import android.content.Context
 import com.king.easychat.app.Constants
+import com.king.easychat.bean.User
 import com.king.easychat.di.component.DaggerApplicationComponent
 import com.king.easychat.netty.packet.resp.LoginResp
 import com.king.frame.mvvmframe.base.BaseApplication
@@ -17,6 +18,8 @@ import java.io.File
 class App : BaseApplication() {
 
     var loginResp: LoginResp? = null
+
+    var user: User? = null
 
     override fun attachBaseContext(base: Context?) {
         //初始化打印日志
@@ -51,8 +54,8 @@ class App : BaseApplication() {
         return loginResp != null
     }
 
-    fun getToken(): String?{
-        return loginResp?.token
+    fun getToken(): String{
+        return loginResp?.token ?: ""
     }
 
     fun getUserId(): String{

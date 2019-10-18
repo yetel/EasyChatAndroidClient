@@ -3,9 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
     <data>
-        <variable
-            name="viewModel"
-            type="com.king.frame.mvvmframe.base.BaseViewModel" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -13,6 +10,7 @@
         android:background="@color/black">
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/vp"
+            android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
         <TextView

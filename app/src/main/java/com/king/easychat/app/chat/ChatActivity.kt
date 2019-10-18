@@ -1,9 +1,7 @@
 package com.king.easychat.app.chat
 
-import android.Manifest
 import android.app.Activity
 import android.content.Intent
-import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -21,13 +19,9 @@ import com.king.easychat.app.adapter.ChatAdapter
 import com.king.easychat.app.base.BaseActivity
 import com.king.easychat.app.photo.PhotoViewActivity
 import com.king.easychat.databinding.ChatActivityBinding
-import com.king.easychat.glide.GlideEngine
 import com.king.easychat.netty.packet.MessageType
 import com.king.easychat.netty.packet.resp.MessageResp
-import com.tbruyelle.rxpermissions2.RxPermissions
 import com.zhihu.matisse.Matisse
-import com.zhihu.matisse.MimeType
-import com.zhihu.matisse.internal.entity.CaptureStrategy
 import kotlinx.android.synthetic.main.chat_activity.*
 import kotlinx.android.synthetic.main.toolbar.*
 import org.greenrobot.eventbus.Subscribe
@@ -49,8 +43,6 @@ class ChatActivity : BaseActivity<ChatViewModel, ChatActivityBinding>(){
     var curPage = 1
 
     var isAutoScroll = true
-
-    val rxPermission by lazy { RxPermissions(this@ChatActivity) }
 
     override fun initData(savedInstanceState: Bundle?) {
 
@@ -142,16 +134,16 @@ class ChatActivity : BaseActivity<ChatViewModel, ChatActivityBinding>(){
 
     }
 
-    fun startPhotoViewActivity(imgUrl: String,v: View){
+    private fun startPhotoViewActivity(imgUrl: String,v: View){
         val intent = Intent(context,PhotoViewActivity::class.java)
         var list = ArrayList<String>()
         list.add(imgUrl)
         intent.putStringArrayListExtra(Constants.KEY_LIST,list)
-        val optionsCompat = ActivityOptionsCompat.makeScaleUpAnimation(v,v.width/2,v.height/2,0,0)
+        val optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(this,v,PhotoViewActivity.IMAGE)
         startActivity(intent, optionsCompat.toBundle())
     }
 
-    fun updateBtnStatus(isEmpty: Boolean){
+    private fun updateBtnStatus(isEmpty: Boolean){
         if(isEmpty){
             if(tvSend.visibility == View.VISIBLE){
                 tvSend.visibility = View.GONE
@@ -208,31 +200,12 @@ class ChatActivity : BaseActivity<ChatViewModel, ChatActivityBinding>(){
     }
 
 
-    fun selectPhoto(){
-        Matisse.from(this)
-            .choose(MimeType.ofImage())
-            .capture(true)
-            .captureStrategy(CaptureStrategy(true, "$packageName.fileProvider"))
-            .maxSelectable(1)
-            .gridExpectedSize(resources.getDimensionPixelSize(R.dimen.size_120dp))
-            .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
-            .thumbnailScale(0.85f)
-            .imageEngine(GlideEngine())
-            .forResult(Constants.REQ_SELECT_PHOTO)
+
+    private fun clickAdd(){
+        selectPhoto()
     }
 
-
-    fun clickAdd(){
-        rxPermission.request(Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.READ_EXTERNAL_STORAGE)
-            .subscribe{
-                if(it){
-                    selectPhoto()
-                }
-            }
-
-    }
-
-    fun clickSend(){
+    private fun clickSend(){
         message = etContent.text.toString()
         message?.let {
             mViewModel.sendMessage(friendId,it,MessageType.TEXT)

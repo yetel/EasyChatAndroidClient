@@ -30,6 +30,11 @@ class HomeActivity : BaseActivity<HomeViewModel, HomeActivityBinding>() {
 
      var meFragment : MeFragment? = null
 
+    companion object{
+        const val CHANGE_NICKNAME = 0
+        const val CHANGE_SIGNATURE = 1
+    }
+
     override fun initData(savedInstanceState: Bundle?) {
 
         showHomeFragment()

@@ -28,10 +28,22 @@ object Constants {
 
     const val KEY_LIST = "key_list"
 
+    const val KEY_TYPE = "key_type"
+
+    const val KEY_TIPS = "key_tips"
+
+    const val KEY_MAX = "key_max"
+
+    const val KEY_CONTENT = "key_content"
+
 
     //---------------------------------------------
 
     const val REQ_SELECT_PHOTO = 0x01
+
+    const val REQ_CROP_PHOTO = 0x02
+
+    const val REQ_CHANGE_USER_INFO = 0x03
 
     //---------------------------------------------
 

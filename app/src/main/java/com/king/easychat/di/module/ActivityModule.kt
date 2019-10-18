@@ -5,6 +5,8 @@ import com.king.easychat.app.account.RegisterActivity
 import com.king.easychat.app.chat.ChatActivity
 import com.king.easychat.app.chat.GroupChatActivity
 import com.king.easychat.app.home.HomeActivity
+import com.king.easychat.app.me.user.ChangeUserInfoActivity
+import com.king.easychat.app.me.user.UserInfoActivity
 import com.king.easychat.app.photo.PhotoViewActivity
 import com.king.easychat.app.splash.SplashActivity
 import com.king.easychat.temp.TempActivity
@@ -41,5 +43,12 @@ abstract class ActivityModule {
 
     @ContributesAndroidInjector
     abstract fun contributePhotoViewActivity(): PhotoViewActivity
+
+    @ContributesAndroidInjector
+    abstract fun contributeUserInfoActivity(): UserInfoActivity
+
+
+    @ContributesAndroidInjector
+    abstract fun contributeChangeUserInfoActivity(): ChangeUserInfoActivity
 
 }

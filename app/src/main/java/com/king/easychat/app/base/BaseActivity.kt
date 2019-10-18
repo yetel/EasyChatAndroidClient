@@ -1,7 +1,10 @@
 package com.king.easychat.app.base
 
+import android.Manifest
 import android.content.Intent
+import android.content.pm.ActivityInfo
 import android.os.Bundle
+import android.os.PersistableBundle
 import android.text.InputType
 import android.text.TextUtils
 import android.view.MotionEvent
@@ -21,17 +24,56 @@ import com.king.easychat.R
 import com.king.easychat.app.Constants
 import com.king.easychat.app.account.LoginActivity
 import com.king.easychat.app.home.HomeActivity
+import com.king.easychat.glide.GlideEngine
 import com.king.easychat.util.Event
 import com.king.frame.mvvmframe.base.BaseActivity
 import com.king.frame.mvvmframe.base.BaseModel
 import com.king.frame.mvvmframe.base.BaseViewModel
+import com.king.frame.mvvmframe.base.livedata.MessageEvent
+import com.tbruyelle.rxpermissions2.RxPermissions
+import com.zhihu.matisse.Matisse
+import com.zhihu.matisse.MimeType
+import com.zhihu.matisse.internal.entity.CaptureStrategy
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+import timber.log.Timber
 
 /**
  * @author <a href="mailto:jenly1314@gmail.com">Jenly</a>
  */
 abstract class BaseActivity<VM : BaseViewModel<out BaseModel>,VDB : ViewDataBinding> : BaseActivity<VM,VDB>(){
+
+    val rxPermission by lazy { RxPermissions(this@BaseActivity) }
+
+    fun selectPhoto(){
+        rxPermission.request(
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.CAMERA)
+            .subscribe{
+                if(it){
+                    Matisse.from(this)
+                        .choose(MimeType.ofImage())
+                        .capture(true)
+                        .captureStrategy(CaptureStrategy(true, "$packageName.fileProvider"))
+                        .maxSelectable(1)
+                        .gridExpectedSize(resources.getDimensionPixelSize(R.dimen.size_120dp))
+                        .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
+                        .thumbnailScale(0.85f)
+                        .imageEngine(GlideEngine())
+                        .forResult(Constants.REQ_SELECT_PHOTO)
+                }
+            }
+
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
+        super.onCreate(savedInstanceState, persistentState)
+        registerMessageEvent{
+            Timber.d("sendMessage:$it")
+            showToast(it)
+        }
+    }
 
     open fun useEvent(): Boolean {
         return true

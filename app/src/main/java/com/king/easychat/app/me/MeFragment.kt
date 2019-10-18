@@ -6,6 +6,7 @@ import androidx.lifecycle.Observer
 import com.king.easychat.BR
 import com.king.easychat.R
 import com.king.easychat.app.base.BaseFragment
+import com.king.easychat.app.me.user.UserInfoActivity
 import com.king.easychat.databinding.MeFragmentBinding
 import com.king.frame.mvvmframe.base.livedata.StatusEvent
 import kotlinx.android.synthetic.main.home_toolbar.*
@@ -31,6 +32,7 @@ class MeFragment : BaseFragment<MeViewModel,MeFragmentBinding>(),View.OnClickLis
         srl.setColorSchemeResources(R.color.colorAccent)
         mViewModel.userLiveData.observe(this, Observer {
             mBinding.user = it
+            getApp().user = it
         })
         clUser.setOnClickListener(this)
         tvPassword.setOnClickListener(this)
@@ -51,7 +53,7 @@ class MeFragment : BaseFragment<MeViewModel,MeFragmentBinding>(),View.OnClickLis
     }
 
     fun clickUser(){
-
+        startActivity(UserInfoActivity::class.java)
     }
 
     fun clickPassword(){

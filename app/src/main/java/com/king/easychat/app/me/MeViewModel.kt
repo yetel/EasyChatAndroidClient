@@ -33,10 +33,10 @@ class MeViewModel @Inject constructor(application: Application, model: BaseModel
      */
     fun getUser(){
         updateStatus(StatusEvent.Status.LOADING)
-        val token = getApplication<App>().loginResp?.token
-        val userId = getApplication<App>().loginResp?.userId
+        val token = getApplication<App>().getToken()
+        val userId = getApplication<App>().getUserId()
         mModel.getRetrofitService(ApiService::class.java)
-            .getUser(token!!,userId = userId!!)
+            .getUser(token,userId)
             .enqueue(object : ApiCallback<Result<User>>(){
                 override fun onResponse(call: Call<Result<User>>?, result: Result<User>?) {
                     result?.let {

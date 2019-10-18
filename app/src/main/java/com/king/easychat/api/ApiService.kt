@@ -38,7 +38,8 @@ interface ApiService {
     /**
      * 修改用户信息
      */
+    @FormUrlEncoded
     @PUT("user/update")
-    fun updateUserInfo(@Header("token")token : String,@Body params: Map<String,String>): Call<Result<User>>
+    fun updateUserInfo(@Header("token")token : String,@FieldMap params: Map<String,String>): Call<Result<User>>
 
 }

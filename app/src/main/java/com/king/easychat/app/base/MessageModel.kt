@@ -50,8 +50,6 @@ open class MessageModel constructor(repository: IDataRepository?) : BaseModel(re
     }
 
 
-
-
     fun updateImage(token: String,imageBase64: String,suffix: String): Call<Result<String>> {
         val params = HashMap<String,String>()
         params["picBase64"] = imageBase64

@@ -31,6 +31,7 @@ import com.king.frame.mvvmframe.base.BaseViewModel
 import kotlinx.android.synthetic.main.toolbar.*
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+import timber.log.Timber
 
 /**
  * @author <a href="mailto:jenly1314@gmail.com">Jenly</a>
@@ -49,6 +50,14 @@ abstract class BaseFragment<VM : BaseViewModel<out BaseModel>,VDB : ViewDataBind
     ): View? {
         if(useEvent()) Event.registerEvent(this)
         return super.onCreateView(inflater, container, savedInstanceState)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        registerMessageEvent{
+            Timber.d("sendMessage:$it")
+            showToast(it)
+        }
     }
 
 

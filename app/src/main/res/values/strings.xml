@@ -13,10 +13,17 @@
     <string name="forgot_password">忘记密码</string>
 
 
-    <string name="tips_username_is_empty">请输入用户名，老铁。</string>
-    <string name="tips_password_is_empty">请输入密码，老铁。</string>
-    <string name="tips_confirm_password_is_empty">请输入确认密码，老铁。</string>
-    <string name="tips_password_is_different">密码和确认密码不一致。</string>
+    <string name="tips_username_is_empty">请输入用户名，老铁</string>
+    <string name="tips_password_is_empty">请输入密码，老铁</string>
+    <string name="tips_confirm_password_is_empty">请输入确认密码，老铁</string>
+    <string name="tips_password_is_different">密码和确认密码不一致</string>
+
+    <string name="tips_nickname_is_empty">请输入昵称</string>
+    <string name="tips_signature_is_empty">请输入个性签名</string>
+
+    <string name="tips_change_nickname">好的昵称能让你朋友更容易记住你</string>
+    <string name="tips_change_signature">有签名才个性</string>
+
 
     <string name="register_u"><u>注册</u></string>
     <string name="register">注册</string>
@@ -42,13 +49,19 @@
     <string name="menu_me">我的</string>
 
     <!-- Chat -->
-
     <string name="send">发送</string>
 
-
-
+    <!-- Me -->
     <string name="modify_password">修改密码</string>
     <string name="about">关于</string>
+
+    <!-- User information -->
+    <string name="user_info_title">个人信息</string>
+    <string name="avatar">头像</string>
+    <string name="nickname">昵称</string>
+    <string name="username">用户名</string>
+    <string name="signature">个性签名</string>
+    <string name="qrcode">二维码</string>
 
 
 </resources>

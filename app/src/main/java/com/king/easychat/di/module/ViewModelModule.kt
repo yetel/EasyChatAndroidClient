@@ -11,6 +11,8 @@ import com.king.easychat.app.friend.FriendViewModel
 import com.king.easychat.app.group.GroupViewModel
 import com.king.easychat.app.home.HomeViewModel
 import com.king.easychat.app.me.MeViewModel
+import com.king.easychat.app.me.user.ChangeUserInfoViewModel
+import com.king.easychat.app.me.user.UserInfoViewModel
 import com.king.easychat.app.splash.SplashViewModel
 import com.king.easychat.temp.TempViewModel
 import com.king.frame.mvvmframe.base.BaseModel
@@ -26,10 +28,16 @@ import dagger.multibindings.IntoMap
 @Module
 abstract class ViewModelModule {
 
+
     @Binds
     @IntoMap
     @ViewModelKey(SplashViewModel::class)
     abstract fun bindSplashViewModel(viewModel: SplashViewModel) : ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(TempViewModel::class)
+    abstract fun bindTempViewModel(viewModel: TempViewModel) : ViewModel
 
     @Binds
     @IntoMap
@@ -73,8 +81,15 @@ abstract class ViewModelModule {
 
     @Binds
     @IntoMap
-    @ViewModelKey(TempViewModel::class)
-    abstract fun bindTempViewModel(viewModel: TempViewModel) : ViewModel
+    @ViewModelKey(UserInfoViewModel::class)
+    abstract fun bindUserInfoViewModel(viewModel: UserInfoViewModel) : ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(ChangeUserInfoViewModel::class)
+    abstract fun bindChangeUserInfoViewModel(viewModel: ChangeUserInfoViewModel) : ViewModel
+
+
 //    @Binds
 //    @IntoMap
 //    @ViewModelKey(MessageViewModel::class)
