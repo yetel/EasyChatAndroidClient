@@ -9,8 +9,8 @@ import javax.crypto.spec.SecretKeySpec
  * @author <a href="mailto:jenly1314@gmail.com">Jenly</a>
  */
 object AES {
-    private val IV_STRING = "ABCD1234EFGH5678"
-    private val charset = "UTF-8"
+    private const val IV_STRING = "ABCD1234EFGH5678"
+    private const val charset = "UTF-8"
 
     fun encrypt(content: String, key: String): String? {
         try {

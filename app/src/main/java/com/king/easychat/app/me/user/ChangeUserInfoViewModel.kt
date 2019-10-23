@@ -82,30 +82,28 @@ class ChangeUserInfoViewModel @Inject constructor(application: Application, mode
                 .updateUserInfo(token,params)
                 .enqueue(object: ApiCallback<Result<User>>(){
                     override fun onResponse(call: Call<Result<User>>?, result: Result<User>?) {
+                        hideLoading()
                         result?.let {
                             if(it.isSuccess()){
                                 userLiveData.value = it.data
                                 app.user = it.data
-                                return
                             }else{
                                 sendMessage(it.desc)
                             }
-
                         } ?: run {
                             sendMessage(R.string.result_failure)
                         }
 
-                        hideLoading()
                     }
 
                     override fun onError(call: Call<Result<User>>?, t: Throwable) {
-                        sendMessage(t.message)
                         hideLoading()
+                        sendMessage(t.message)
                     }
 
                 })
         }
-
-
     }
+
+
 }

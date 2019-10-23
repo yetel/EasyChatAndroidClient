@@ -30,7 +30,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".app.splash.SplashActivity">
+        <activity android:name=".app.splash.SplashActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -50,6 +51,10 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateVisible|adjustPan"/>
 
+        <activity android:name=".app.account.UpdatePwdActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateVisible|adjustPan"/>
+
         <activity android:name=".app.chat.ChatActivity"
             android:screenOrientation="portrait" />
 
@@ -63,6 +68,19 @@
             android:screenOrientation="portrait" />
 
         <activity android:name=".app.me.user.ChangeUserInfoActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateVisible|adjustPan"/>
+
+        <activity android:name=".app.me.about.AboutActivity"
+            android:screenOrientation="portrait" />
+
+        <activity android:name=".app.friend.UserProfileActivity"
+            android:screenOrientation="portrait" />
+
+        <activity android:name=".app.group.GroupProfileActivity"
+            android:screenOrientation="portrait" />
+
+        <activity android:name=".app.search.SearchActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateVisible|adjustPan"/>
 

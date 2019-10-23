@@ -1,33 +1,41 @@
 package com.king.easychat.util
 
-import android.content.Context
-import com.king.base.util.SharedPreferencesUtils
 import com.king.base.util.StringUtils
 import com.king.easychat.app.Constants
 import com.king.easychat.netty.packet.req.LoginReq
+import com.king.easychat.netty.packet.req.RegisterReq
+import com.tencent.mmkv.MMKV
 
 /**
  * @author <a href="mailto:jenly1314@gmail.com">Jenly</a>
  */
 object Cache {
 
-    fun put(context: Context,data: LoginReq?){
+    fun put(data: RegisterReq?){
         data?.let {
-            SharedPreferencesUtils.put(context,Constants.KEY_USERNAME,it.userName)
-            SharedPreferencesUtils.put(context,Constants.KEY_PASSWORD,it.password)
+            MMKV.defaultMMKV().encode(Constants.KEY_USERNAME,it.userName)
+            MMKV.defaultMMKV().encode(Constants.KEY_PASSWORD,it.password)
         }
 
     }
 
-    fun getUsername(context: Context): String?{
-        return SharedPreferencesUtils.getString(context,Constants.KEY_USERNAME)
+    fun put(data: LoginReq?){
+        data?.let {
+            MMKV.defaultMMKV().encode(Constants.KEY_USERNAME,it.userName)
+            MMKV.defaultMMKV().encode(Constants.KEY_PASSWORD,it.password)
+        }
+
     }
 
-    fun getLoginReq(context: Context): LoginReq?{
+    fun getUsername(): String?{
+        return  MMKV.defaultMMKV().decodeString(Constants.KEY_USERNAME)
+    }
+
+    fun getLoginReq(): LoginReq?{
         var loginReq : LoginReq? = null
-        SharedPreferencesUtils.getSharedPreferences(context).run {
-            var username: String? = getString(Constants.KEY_USERNAME,null)
-            var password: String? = getString(Constants.KEY_PASSWORD,null)
+        MMKV.defaultMMKV().run {
+            var username: String? = decodeString(Constants.KEY_USERNAME)
+            var password: String? = decodeString(Constants.KEY_PASSWORD)
 
             if(StringUtils.isNotBlank(username) && StringUtils.isNotBlank(password)){
                 loginReq = LoginReq(username!!,password!!)

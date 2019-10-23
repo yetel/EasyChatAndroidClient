@@ -28,8 +28,8 @@ class MessageResp(val sender : String?,val senderName : String?,val message : St
     var id: Int = 0
 
     companion object{
-        val Left = 1
-        val Right = 2
+        const val Left = 1
+        const val Right = 2
     }
 
     override fun getItemType(): Int {

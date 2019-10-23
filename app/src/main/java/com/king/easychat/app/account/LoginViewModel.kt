@@ -1,7 +1,6 @@
 package com.king.easychat.app.account
 
 import android.app.Application
-import androidx.core.content.ContextCompat.startActivity
 import com.king.anetty.Netty
 import com.king.easychat.app.Constants
 import com.king.easychat.netty.NettyClient
@@ -9,8 +8,10 @@ import com.king.easychat.netty.packet.req.LoginReq
 import com.king.frame.mvvmframe.base.BaseModel
 import com.king.frame.mvvmframe.base.DataViewModel
 import io.netty.channel.ChannelFuture
-import io.netty.util.concurrent.Future
 import io.netty.util.concurrent.GenericFutureListener
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 /**
@@ -22,15 +23,16 @@ class LoginViewModel @Inject constructor(application: Application, model: BaseMo
 
     val genericFutureListener by lazy {
         GenericFutureListener<ChannelFuture> {
+            hideLoading()
             if(it.isSuccess){
                 sendSingleLiveEvent(Constants.EVENT_SUCCESS)
             }
-            hideLoading()
         }
     }
 
     override fun onCreate() {
         super.onCreate()
+
 
 
         NettyClient.INSTANCE.setOnConnectListener(object: Netty.OnConnectListener{
@@ -43,7 +45,9 @@ class LoginViewModel @Inject constructor(application: Application, model: BaseMo
             }
 
             override fun onError(e: Exception?) {
-                hideLoading()
+                GlobalScope.launch(Dispatchers.Main) {
+                    hideLoading()
+                }
             }
 
         })

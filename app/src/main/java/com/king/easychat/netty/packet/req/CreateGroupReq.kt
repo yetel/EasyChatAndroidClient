@@ -13,4 +13,8 @@ class CreateGroupReq(val groupName : String, val users : List<String>) : Packet(
         return PacketType.CREATE_GROUP_REQ
     }
 
+    override fun toString(): String {
+        return "CreateGroupReq(groupName='$groupName', users=$users)"
+    }
+
 }

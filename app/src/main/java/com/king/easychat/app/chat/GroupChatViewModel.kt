@@ -37,8 +37,14 @@ class GroupChatViewModel @Inject constructor(application: Application, model: Gr
         GlobalScope.launch(Dispatchers.IO) {
             mModel.saveGroupMessage(userId,data)
             // 保存最近聊天群组
-            val recentChat = RecentGroupChat(userId,groupId,groupName,null,data.dateTime)
-            mModel.saveRecentGroupChat(recentChat)
+            if(groupId == data.groupId){
+                val recentChat = RecentGroupChat(userId,groupId,groupName,null,data.dateTime)
+                mModel.saveRecentGroupChat(recentChat)
+            }else{
+                val recentChat = RecentGroupChat(userId,data.groupId,null,null,data.dateTime)
+                mModel.saveRecentGroupChat(recentChat)
+            }
+
         }
     }
 

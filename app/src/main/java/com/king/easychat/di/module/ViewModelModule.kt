@@ -3,11 +3,13 @@ package com.king.easychat.di.module
 import androidx.lifecycle.ViewModel
 import com.king.easychat.app.account.LoginViewModel
 import com.king.easychat.app.account.RegisterViewModel
-import com.king.easychat.app.base.MessageModel
-import com.king.easychat.app.base.MessageViewModel
+import com.king.easychat.app.account.UpdatePwdViewModel
 import com.king.easychat.app.chat.ChatViewModel
 import com.king.easychat.app.chat.GroupChatViewModel
 import com.king.easychat.app.friend.FriendViewModel
+import com.king.easychat.app.search.SearchViewModel
+import com.king.easychat.app.friend.UserProfileViewModel
+import com.king.easychat.app.group.GroupProfileViewModel
 import com.king.easychat.app.group.GroupViewModel
 import com.king.easychat.app.home.HomeViewModel
 import com.king.easychat.app.me.MeViewModel
@@ -15,8 +17,6 @@ import com.king.easychat.app.me.user.ChangeUserInfoViewModel
 import com.king.easychat.app.me.user.UserInfoViewModel
 import com.king.easychat.app.splash.SplashViewModel
 import com.king.easychat.temp.TempViewModel
-import com.king.frame.mvvmframe.base.BaseModel
-import com.king.frame.mvvmframe.base.BaseViewModel
 import com.king.frame.mvvmframe.di.scope.ViewModelKey
 import dagger.Binds
 import dagger.Module
@@ -89,9 +89,24 @@ abstract class ViewModelModule {
     @ViewModelKey(ChangeUserInfoViewModel::class)
     abstract fun bindChangeUserInfoViewModel(viewModel: ChangeUserInfoViewModel) : ViewModel
 
+    @Binds
+    @IntoMap
+    @ViewModelKey(UpdatePwdViewModel::class)
+    abstract fun bindUpdatePwdViewModel(viewModel: UpdatePwdViewModel) : ViewModel
 
-//    @Binds
-//    @IntoMap
-//    @ViewModelKey(MessageViewModel::class)
-//    abstract fun bindMessageViewModel(viewModel: MessageViewModel<out MessageModel>) : ViewModel
+    @Binds
+    @IntoMap
+    @ViewModelKey(SearchViewModel::class)
+    abstract fun bindSearchUserViewModel(viewModel: SearchViewModel) : ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(UserProfileViewModel::class)
+    abstract fun bindUserProfileViewModel(viewModel: UserProfileViewModel) : ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(GroupProfileViewModel::class)
+    abstract fun bindGroupProfileViewModel(viewModel: GroupProfileViewModel) : ViewModel
+
 }

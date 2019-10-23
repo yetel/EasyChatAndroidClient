@@ -20,8 +20,16 @@ class ChannelInitial : ChannelInitializer<SocketChannel>(){
                 .addLast(PacketEncoder())
                 .addLast(LoginRespHandler())
                 .addLast(MessageRespHandler())
+                .addLast(MessageSelfRespHandler())
                 .addLast(GroupMessageRespHandler())
                 .addLast(HeartBeatRespHandler())
+                .addLast(AddUserRespHandler())
+                .addLast(AddUserSelfRespHandler())
+                .addLast(AcceptRespHandler())
+                .addLast(CreateGroupRespHandler())
+                .addLast(InviteGroupRespHandler())
+                .addLast(InviteGroupSelfRespHandler())
+                .addLast(AcceptGroupRespHandler())
         }
     }
 

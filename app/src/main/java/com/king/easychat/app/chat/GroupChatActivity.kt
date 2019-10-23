@@ -1,9 +1,7 @@
 package com.king.easychat.app.chat
 
-import android.Manifest
 import android.app.Activity
 import android.content.Intent
-import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -19,15 +17,13 @@ import com.king.easychat.R
 import com.king.easychat.app.Constants
 import com.king.easychat.app.adapter.GroupChatAdapter
 import com.king.easychat.app.base.BaseActivity
+import com.king.easychat.app.friend.UserProfileActivity
+import com.king.easychat.app.me.user.UserInfoActivity
 import com.king.easychat.app.photo.PhotoViewActivity
 import com.king.easychat.databinding.GroupChatActivityBinding
-import com.king.easychat.glide.GlideEngine
 import com.king.easychat.netty.packet.MessageType
 import com.king.easychat.netty.packet.resp.GroupMessageResp
-import com.tbruyelle.rxpermissions2.RxPermissions
 import com.zhihu.matisse.Matisse
-import com.zhihu.matisse.MimeType
-import com.zhihu.matisse.internal.entity.CaptureStrategy
 import kotlinx.android.synthetic.main.chat_activity.*
 import kotlinx.android.synthetic.main.toolbar.*
 import org.greenrobot.eventbus.Subscribe
@@ -77,7 +73,11 @@ class GroupChatActivity : BaseActivity<GroupChatViewModel, GroupChatActivityBind
 
         registerSingleLiveEvent {
             when(it.what){
-                Constants.EVENT_SUCCESS -> handleMessageResp(mViewModel.groupMessageReq?.toGroupMessageResp(getApp().loginResp,true))
+                Constants.EVENT_SUCCESS -> {
+                    etContent.text = null
+                    handleMessageResp(mViewModel.groupMessageReq?.toGroupMessageResp(getApp().loginResp,true))
+                }
+
                 Constants.REFRESH_SUCCESS -> srl.isRefreshing = false
             }
         }
@@ -91,6 +91,7 @@ class GroupChatActivity : BaseActivity<GroupChatViewModel, GroupChatActivityBind
             BaseQuickAdapter.OnItemChildClickListener { adapter, view, position ->
                 when(view.id){
                     R.id.ivContent -> startPhotoViewActivity(mAdapter.getItem(position)?.getMsg()!!,view)
+                    R.id.ivAvatar -> clickUser(mAdapter.getItem(position)!!)
                 }
             }
 
@@ -115,6 +116,7 @@ class GroupChatActivity : BaseActivity<GroupChatViewModel, GroupChatActivityBind
         })
         mViewModel.groupMessageLiveData.observe(this, Observer {
             if(curPage == 1){
+                mAdapter.curTime = System.currentTimeMillis()
                 mAdapter.replaceData(it)
             }else if(curPage>1){
                 mAdapter.addData(0,it)
@@ -135,6 +137,17 @@ class GroupChatActivity : BaseActivity<GroupChatViewModel, GroupChatActivityBind
         groupId = intent.getStringExtra(Constants.KEY_ID)
         mViewModel.queryMessageByGroupId(getApp().getUserId(),groupId,curPage,Constants.PAGE_SIZE)
 
+    }
+
+    private fun clickUser(data: GroupMessageResp){
+        if(data.senderId == getApp().getUserId()){
+            startActivity(UserInfoActivity::class.java)
+        }else{
+            val intent = newIntent(UserProfileActivity::class.java)
+            intent.putExtra(Constants.KEY_ID,data.senderId)
+            intent.putExtra(Constants.KEY_TITLE,data.senderName)
+            startActivity(intent)
+        }
     }
 
 
@@ -175,11 +188,13 @@ class GroupChatActivity : BaseActivity<GroupChatViewModel, GroupChatActivityBind
 
     fun handleMessageResp(resp: GroupMessageResp?){
         resp?.let {
-            mAdapter.addData(it)
-            mViewModel.saveGroupMessage(getApp().getUserId(),groupId,showName,it)
-            if(isAutoScroll){
-                rv.scrollToPosition(mAdapter.itemCount - 1)
+            if(groupId == it.groupId){
+                mAdapter.addData(it)
+                if(isAutoScroll){
+                    rv.scrollToPosition(mAdapter.itemCount - 1)
+                }
             }
+            mViewModel.saveGroupMessage(getApp().getUserId(),groupId,showName,it)
         }
 
     }

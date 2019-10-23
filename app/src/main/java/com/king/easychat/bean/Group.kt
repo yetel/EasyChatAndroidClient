@@ -14,13 +14,28 @@ import kotlinx.android.parcel.Parcelize
  */
 @Entity(indices = [Index(value = ["groupId"], unique = true)])
 @Parcelize
-class Group(val groupId: String,var groupName: String,var mainUserId: String?) : Parcelable {
+class Group(val groupId: String,var groupName: String,var avatar: String?,var mainUserId: String?) : Parcelable {
 
     @PrimaryKey(autoGenerate = true)
     var id: Int = 0
 
     override fun toString(): String {
         return "Group(groupId=$groupId, groupName=$groupName, mainUserId=$mainUserId)"
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as Group
+
+        if (groupId != other.groupId) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        return groupId.hashCode()
     }
 
 

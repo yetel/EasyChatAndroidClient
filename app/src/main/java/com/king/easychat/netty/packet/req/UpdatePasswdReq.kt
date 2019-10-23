@@ -14,5 +14,9 @@ import com.king.easychat.netty.packet.PacketType
         return PacketType.UPDATE_PASSWD_REQ
     }
 
+    override fun toString(): String {
+        return "UpdatePasswdReq(oldPassword='$oldPassword', newPassword='$newPassword')"
+    }
+
 
 }

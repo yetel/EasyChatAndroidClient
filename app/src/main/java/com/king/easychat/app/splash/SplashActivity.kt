@@ -6,8 +6,6 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import com.king.anetty.Netty
 import com.king.easychat.R
-import com.king.easychat.app.account.LoginActivity
-import com.king.easychat.app.account.LoginViewModel
 import com.king.easychat.app.base.BaseActivity
 import com.king.easychat.app.service.HeartBeatService
 import com.king.easychat.databinding.SplashActivityBinding
@@ -18,7 +16,6 @@ import com.king.easychat.util.Cache
 import kotlinx.android.synthetic.main.splash_activity.*
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
-import java.lang.Exception
 
 /**
  * @author <a href="mailto:jenly1314@gmail.com">Jenly</a>
@@ -57,7 +54,7 @@ class SplashActivity : BaseActivity<SplashViewModel, SplashActivityBinding>(){
     }
 
     fun autoLogin(){
-        var loginReq: LoginReq?  = Cache.getLoginReq(context)
+        var loginReq: LoginReq?  = Cache.getLoginReq()
         loginReq?.let {
             mViewModel.login(loginReq)
         } ?: run{

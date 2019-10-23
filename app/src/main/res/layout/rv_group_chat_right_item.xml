@@ -9,6 +9,9 @@
         <variable
             name="data"
             type="com.king.easychat.netty.packet.resp.GroupMessageResp" />
+        <variable
+            name="curTime"
+            type="Long" />
     </data>
     <RelativeLayout
         android:layout_width="match_parent"
@@ -25,6 +28,7 @@
             android:textSize="@dimen/size_14sp"
             android:gravity="center_horizontal"
             bind:time="@{data.dateTime}"
+            bind:curTime="@{curTime}"
             tools:text="11:26"/>
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/ivAvatar"

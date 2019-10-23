@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <dimen name="fab_margin">0dp</dimen>
 
     <dimen name="title_height">56dp</dimen>
 
+    <dimen name="app_bar_height">260dp</dimen>
+
     <dimen name="size_line">0.5dp</dimen>
     <dimen name="size_space">8dp</dimen>
-
-    <dimen name="design_textinput_caption_translate_y">5dp</dimen>
 
     <dimen name="size_10sp">10sp</dimen>
     <dimen name="size_11sp">11sp</dimen>

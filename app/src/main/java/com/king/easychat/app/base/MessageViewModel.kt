@@ -8,6 +8,8 @@ import com.king.easychat.app.Constants
 import com.king.easychat.bean.Result
 import com.king.easychat.netty.NettyClient
 import com.king.easychat.netty.packet.MessageType
+import com.king.easychat.netty.packet.req.AcceptGroupReq
+import com.king.easychat.netty.packet.req.AcceptReq
 import com.king.easychat.netty.packet.req.GroupMessageReq
 import com.king.easychat.netty.packet.req.MessageReq
 import com.king.easychat.util.FileUtil
@@ -203,6 +205,14 @@ open class MessageViewModel<M :MessageModel> @Inject constructor(application: Ap
             }
         }
 
+    }
+
+    fun sendAcceptReq(receiver: String,accept: Boolean){
+        NettyClient.INSTANCE.sendMessage(AcceptReq(receiver,accept))
+    }
+
+    fun sendAcceptGroupReq(groupId: String,inviterId: String,accept: Boolean){
+        NettyClient.INSTANCE.sendMessage(AcceptGroupReq(groupId,inviterId,accept))
     }
 
 }

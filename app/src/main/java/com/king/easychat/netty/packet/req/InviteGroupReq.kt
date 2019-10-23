@@ -13,4 +13,8 @@ class InviteGroupReq(val groupId : String, val users : List<String>) : Packet(){
         return PacketType.INVITE_GROUP_REQ
     }
 
+    override fun toString(): String {
+        return "InviteGroupReq(groupId='$groupId', users=$users)"
+    }
+
 }

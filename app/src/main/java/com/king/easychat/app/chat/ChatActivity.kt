@@ -17,6 +17,8 @@ import com.king.easychat.R
 import com.king.easychat.app.Constants
 import com.king.easychat.app.adapter.ChatAdapter
 import com.king.easychat.app.base.BaseActivity
+import com.king.easychat.app.friend.UserProfileActivity
+import com.king.easychat.app.me.user.UserInfoActivity
 import com.king.easychat.app.photo.PhotoViewActivity
 import com.king.easychat.databinding.ChatActivityBinding
 import com.king.easychat.netty.packet.MessageType
@@ -26,6 +28,7 @@ import kotlinx.android.synthetic.main.chat_activity.*
 import kotlinx.android.synthetic.main.toolbar.*
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+import timber.log.Timber
 
 /**
  * @author <a href="mailto:jenly1314@gmail.com">Jenly</a>
@@ -72,7 +75,10 @@ class ChatActivity : BaseActivity<ChatViewModel, ChatActivityBinding>(){
 
         registerSingleLiveEvent {
             when(it.what){
-                Constants.EVENT_SUCCESS -> handleMessageResp(mViewModel.messageReq?.toMessageResp(getApp().loginResp,true))
+                Constants.EVENT_SUCCESS -> {
+                    etContent.text = null
+                    handleMessageResp(mViewModel.messageReq?.toMessageResp(getApp().loginResp,true))
+                }
                 Constants.REFRESH_SUCCESS -> srl.isRefreshing = false
             }
         }
@@ -86,6 +92,7 @@ class ChatActivity : BaseActivity<ChatViewModel, ChatActivityBinding>(){
             BaseQuickAdapter.OnItemChildClickListener { adapter, view, position ->
                 when(view.id){
                     R.id.ivContent -> startPhotoViewActivity(mAdapter.getItem(position)?.getMsg()!!,view)
+                    R.id.ivAvatar -> clickUser(mAdapter.getItem(position)!!)
                 }
             }
 
@@ -111,6 +118,7 @@ class ChatActivity : BaseActivity<ChatViewModel, ChatActivityBinding>(){
 
         mViewModel.messageLiveData.observe(this, Observer {
             if(curPage == 1){
+                mAdapter.curTime = System.currentTimeMillis()
                 mAdapter.replaceData(it)
             }else if(curPage>1){
                 mAdapter.addData(0,it)
@@ -132,6 +140,18 @@ class ChatActivity : BaseActivity<ChatViewModel, ChatActivityBinding>(){
 
         mViewModel.queryMessageByFriendId(getApp().getUserId(),friendId,curPage,Constants.PAGE_SIZE)
 
+    }
+
+    private fun clickUser(data: MessageResp){
+        Timber.d("sender:${data.sender}--userId:${getApp().getUserId()}")
+        if(data.sender == getApp().getUserId()){
+            startActivity(UserInfoActivity::class.java)
+        }else{
+            val intent = newIntent(UserProfileActivity::class.java)
+            intent.putExtra(Constants.KEY_ID,data.sender)
+            intent.putExtra(Constants.KEY_TITLE,data.senderName)
+            startActivity(intent)
+        }
     }
 
     private fun startPhotoViewActivity(imgUrl: String,v: View){
@@ -171,10 +191,14 @@ class ChatActivity : BaseActivity<ChatViewModel, ChatActivityBinding>(){
 
     fun handleMessageResp(resp: MessageResp?){
         resp?.let {
-            mAdapter.addData(it)
-            mViewModel.saveMessage(getApp().getUserId(),friendId,showName,avatar,resp)
-            if(isAutoScroll){
-                rv.scrollToPosition(mAdapter.itemCount - 1)
+            if(it.isSender || friendId == it.sender){
+                mAdapter.addData(it)
+                mViewModel.saveMessage(getApp().getUserId(),friendId,showName,avatar,resp)
+                if(isAutoScroll){
+                    rv.scrollToPosition(mAdapter.itemCount - 1)
+                }
+            }else{
+                mViewModel.saveMessage(getApp().getUserId(),it.sender!!,null,null,resp)
             }
         }
 

@@ -48,6 +48,9 @@ class Message {
         return if(StringUtils.isNotBlank(name)) name else id
     }
 
+    override fun toString(): String {
+        return "Message(id=$id, dateTime=$dateTime, messageMode=$messageMode, senderId=$senderId, message=$message, messageType=$messageType, name=$name, avatar=$avatar)"
+    }
 
 
 }

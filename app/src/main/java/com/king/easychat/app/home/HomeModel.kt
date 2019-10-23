@@ -83,6 +83,8 @@ class HomeModel @Inject constructor(repository: IDataRepository?): MessageModel(
 
         messageLists.sortByDescending { it.dateTime }
 
+        Timber.d("list:$messageLists")
+
         if(count < messageLists.size){
             return messageLists.subList(0, count)
         }

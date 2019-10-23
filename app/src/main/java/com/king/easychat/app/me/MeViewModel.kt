@@ -40,8 +40,13 @@ class MeViewModel @Inject constructor(application: Application, model: BaseModel
             .enqueue(object : ApiCallback<Result<User>>(){
                 override fun onResponse(call: Call<Result<User>>?, result: Result<User>?) {
                     result?.let {
-                        updateStatus(StatusEvent.Status.SUCCESS)
-                        userLiveData.postValue(it.data)
+                        if(it.isSuccess()){
+                            updateStatus(StatusEvent.Status.SUCCESS)
+                            userLiveData.postValue(it.data)
+                        }else{
+                            updateStatus(StatusEvent.Status.FAILURE)
+                        }
+
                     } ?: updateStatus(StatusEvent.Status.FAILURE)
                 }
 

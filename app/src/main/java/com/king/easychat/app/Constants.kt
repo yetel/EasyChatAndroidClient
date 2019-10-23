@@ -50,9 +50,16 @@ object Constants {
     const val EVENT_SUCCESS = 0x01
     const val REFRESH_SUCCESS = 0x02
 
+    //---------------------------------------------
 
     const val PAGE_SIZE = 20
 
     const val DEFAULT_DIR =  ".EasyChat/"
+
+    //---------------------------------------------
+
+    val AUTHOR = "Jenly"
+    val GMAIL = "jenly1314@gmail.com"
+    val QQ_GROUP_KEY = "5D3GQFxzrzGft-E7FyRujPoCYBOcczbQ"
 
 }

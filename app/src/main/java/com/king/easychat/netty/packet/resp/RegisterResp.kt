@@ -1,6 +1,5 @@
 package com.king.easychat.netty.packet.resp
 
-import com.king.easychat.netty.packet.Packet
 import com.king.easychat.netty.packet.PacketType
 
 /**
@@ -8,9 +7,8 @@ import com.king.easychat.netty.packet.PacketType
  * date: 2019/08/19.
  * description:
  */
-class RegisterResp : Packet() {
-    var success: Boolean = false
-    var reason: String? = null
+class RegisterResp constructor(userId: String,userName: String,token: String,success: Boolean,reason: String = "") : LoginResp(userId,userName,token,success,reason) {
+
 
     override fun packetType(): Int {
         return PacketType.REGISTER_RESP

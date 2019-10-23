@@ -13,4 +13,9 @@ class AddUserReq(val addUserId : String) : Packet(){
         return PacketType.ADD_FRIEND_REQ
     }
 
+    override fun toString(): String {
+        return "AddUserReq(addUserId='$addUserId')"
+    }
+
+
 }

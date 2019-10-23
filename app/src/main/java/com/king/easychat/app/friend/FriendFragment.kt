@@ -11,6 +11,7 @@ import com.king.easychat.app.Constants
 import com.king.easychat.app.adapter.BindingAdapter
 import com.king.easychat.app.base.BaseFragment
 import com.king.easychat.app.chat.ChatActivity
+import com.king.easychat.app.search.SearchActivity
 import com.king.easychat.bean.User
 import com.king.easychat.databinding.FriendFragmentBinding
 import kotlinx.android.synthetic.main.group_fragment.*
@@ -31,6 +32,7 @@ class FriendFragment : BaseFragment<FriendViewModel,FriendFragmentBinding>(), Vi
 
     override fun initData(savedInstanceState: Bundle?) {
         tvTitle.setText(R.string.menu_friend)
+        ivRight.setImageResource(R.drawable.btn_search_selector)
         ivRight.setOnClickListener(this)
         View.VISIBLE
         srl.setColorSchemeResources(R.color.colorAccent)
@@ -49,6 +51,7 @@ class FriendFragment : BaseFragment<FriendViewModel,FriendFragmentBinding>(), Vi
         mViewModel.friendsLiveData.observe(this, Observer<List<User>>{
             it?.let {
                 mAdapter.replaceData(it)
+                getApp().firends = it
             }
             srl.isRefreshing = false
         })
@@ -69,7 +72,7 @@ class FriendFragment : BaseFragment<FriendViewModel,FriendFragmentBinding>(), Vi
 
     override fun onClick(v: View) {
         when(v.id){
-            R.id.ivRight -> startActivity(ChatActivity::class.java)
+            R.id.ivRight -> { startActivity(SearchActivity::class.java)}
         }
     }
 

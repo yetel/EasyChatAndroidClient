@@ -12,7 +12,7 @@ import com.king.easychat.util.AES
  * date: 2019/10/09.
  * description:
  */
-class GroupMessageReq(val groupId : String, @Expose val msg : String, val messageType : Int = 0) : Packet(){
+class GroupMessageReq(val groupId : String, @Expose val msg : String, var messageType : Int) : Packet(){
 
     val message = AES.encrypt(msg,"${dateTime}ab").toString()
 

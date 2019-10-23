@@ -3,12 +3,8 @@ package com.king.easychat.app.group
 import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
 import com.king.easychat.App
-import com.king.easychat.R
 import com.king.easychat.bean.Group
-import com.king.easychat.netty.packet.resp.GroupMessageResp
 import com.king.frame.mvvmframe.base.BaseViewModel
 import com.king.frame.mvvmframe.bean.Resource
 import javax.inject.Inject
@@ -41,18 +37,16 @@ class GroupViewModel @Inject constructor(application: Application, model: GroupM
             groupsLiveData.removeSource(it)
         }
         source = mModel.groupResource
-        groupsLiveData.addSource(source!!, Observer{
+        groupsLiveData.addSource(source!!){
             if(it.isSuccess){
                 groupsLiveData.postValue(it.data)
             }else {
                 if(it.isFailure){
                     sendMessage(it.message)
-                }else{
-                    sendMessage(R.string.result_failure)
                 }
-                groupsLiveData.addSource(mModel.getGroups(), Observer {groupsLiveData::postValue})
+                groupsLiveData.addSource(mModel.getGroups()){groupsLiveData::postValue}
             }
-        })
+        }
 
     }
 

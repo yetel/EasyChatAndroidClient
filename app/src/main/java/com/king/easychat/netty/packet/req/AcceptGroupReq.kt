@@ -13,4 +13,9 @@ class AcceptGroupReq(val groupId : String, val inviterId : String, val accept : 
         return PacketType.ACCEPT_GROUP_REQ
     }
 
+    override fun toString(): String {
+        return "AcceptGroupReq(groupId='$groupId', inviterId='$inviterId', accept=$accept)"
+    }
+
+
 }

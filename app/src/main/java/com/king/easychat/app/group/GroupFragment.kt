@@ -49,6 +49,7 @@ class GroupFragment : BaseFragment<GroupViewModel,GroupFragmentBinding>(){
         mViewModel.groupsLiveData.observe(this, Observer<List<Group>>{
             it?.let {
                 mAdapter.replaceData(it)
+                getApp().groups = it
             }
             srl.isRefreshing = false
         })

@@ -11,6 +11,7 @@ import com.king.easychat.bean.User
 import com.king.easychat.util.FileUtil
 import com.king.frame.mvvmframe.base.BaseModel
 import com.king.frame.mvvmframe.base.DataViewModel
+import com.king.frame.mvvmframe.base.livedata.StatusEvent
 import com.king.frame.mvvmframe.http.callback.ApiCallback
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -36,7 +37,12 @@ open class UserInfoViewModel @Inject constructor(application: Application, model
     }
 
     fun retry(){
-        userLiveData.value = getApplication<App>().user
+        if(getApplication<App>().user == null){
+            getUser()
+        }else{
+            userLiveData.value = getApplication<App>().user
+        }
+
     }
 
     fun updateNickname(nickname: String){
@@ -51,6 +57,37 @@ open class UserInfoViewModel @Inject constructor(application: Application, model
         updateUserInfo(null,null,signature)
     }
 
+    /**
+     * 获取好友列表
+     */
+    fun getUser(){
+        updateStatus(StatusEvent.Status.LOADING)
+        val token = getApplication<App>().getToken()
+        val userId = getApplication<App>().getUserId()
+        mModel.getRetrofitService(ApiService::class.java)
+            .getUser(token,userId)
+            .enqueue(object : ApiCallback<Result<User>>(){
+                override fun onResponse(call: Call<Result<User>>?, result: Result<User>?) {
+                    result?.let {
+                        if(it.isSuccess()){
+                            updateStatus(StatusEvent.Status.SUCCESS)
+                            userLiveData.postValue(it.data)
+                        }else{
+                            sendMessage(it.desc)
+                            updateStatus(StatusEvent.Status.FAILURE)
+                        }
+
+                    } ?: updateStatus(StatusEvent.Status.FAILURE)
+                }
+
+                override fun onError(call: Call<Result<User>>?, t: Throwable?) {
+                    updateStatus(StatusEvent.Status.ERROR)
+                    sendMessage(t?.message)
+                }
+
+            })
+
+    }
 
     /**
      * 更新用户信息
@@ -91,7 +128,6 @@ open class UserInfoViewModel @Inject constructor(application: Application, model
                             if(it.isSuccess()){
                                 userLiveData.value = it.data
                                 app.user = it.data
-                                return
                             }else{
                                 sendMessage(it.desc)
                             }

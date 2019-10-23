@@ -1,11 +1,11 @@
 package com.king.easychat.app.me.user
 
-import android.app.Activity
 import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import com.king.easychat.R
 import com.king.easychat.app.Constants
@@ -40,8 +40,12 @@ class UserInfoActivity : BaseActivity<UserInfoViewModel, UserInfoActivityBinding
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if(resultCode == Activity.RESULT_OK){
+        if(resultCode == RESULT_OK){
             when(requestCode){
+                Constants.REQ_CHANGE_USER_INFO -> {
+                    mBinding.data = getApp().user
+                    setResult(RESULT_OK)
+                }
                 Constants.REQ_SELECT_PHOTO -> cropRawPhoto(obtainSelectPhoto(data))
                 Constants.REQ_CROP_PHOTO -> avatarFile?.let { mViewModel.updateAvatar(it) }
 
@@ -64,9 +68,10 @@ class UserInfoActivity : BaseActivity<UserInfoViewModel, UserInfoActivityBinding
             val options = UCrop.Options()
             //        options.setToolbarTitle("裁剪");
             // 修改标题栏颜色
-            options.setToolbarColor(resources.getColor(R.color.colorPrimary))
+            options.setToolbarColor(ContextCompat.getColor(context,R.color.colorPrimary))
+            options.setToolbarWidgetColor(ContextCompat.getColor(context,R.color.white))
             // 修改状态栏颜色
-            options.setStatusBarColor(resources.getColor(R.color.colorPrimaryDark))
+            options.setStatusBarColor(ContextCompat.getColor(context,R.color.colorPrimaryDark))
             // 隐藏底部工具
             options.setHideBottomControls(true)
             // 图片格式
@@ -109,7 +114,7 @@ class UserInfoActivity : BaseActivity<UserInfoViewModel, UserInfoActivityBinding
         val intent = newIntent(getString(R.string.signature),ChangeUserInfoActivity::class.java)
         intent.putExtra(Constants.KEY_TYPE,ChangeUserInfoActivity.CHANGE_SIGNATURE)
         intent.putExtra(Constants.KEY_TIPS,getString(R.string.tips_change_signature))
-        intent.putExtra(Constants.KEY_CONTENT,getApp().user?.getShowName())
+        intent.putExtra(Constants.KEY_CONTENT,getApp().user?.signature)
         intent.putExtra(Constants.KEY_MAX,resources.getInteger(R.integer.signature_max_length))
         startActivityForResult(intent,Constants.REQ_CHANGE_USER_INFO)
     }

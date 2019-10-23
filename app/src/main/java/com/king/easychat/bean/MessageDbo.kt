@@ -21,12 +21,8 @@ open class MessageDbo(var userId : String, val sender : String?, val receiver: S
     @PrimaryKey(autoGenerate = true)
     var id: Long = 0
 
-    fun senderId(): String?{
-        return if(send) receiver else sender
-    }
-
     fun toMessageResp(): MessageResp{
-        var resp = MessageResp(senderId(),senderName,message,send,messageType)
+        var resp = MessageResp(sender,senderName,message,send,messageType)
         resp.dateTime = dateTime
         return resp
     }

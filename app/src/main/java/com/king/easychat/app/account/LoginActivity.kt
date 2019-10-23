@@ -41,7 +41,6 @@ class LoginActivity : BaseActivity<LoginViewModel, LoginActivityBinding>(), View
         })
 
         username = intent.getStringExtra(Constants.KEY_USERNAME)
-        username ?: Cache.getUsername(context)
 
         etUsername.setText(username)
 
@@ -68,7 +67,7 @@ class LoginActivity : BaseActivity<LoginViewModel, LoginActivityBinding>(), View
         hideLoading()
         if(resp.success){
             getApp().loginResp = resp
-            Cache.put(context,mViewModel.loginReq)
+            Cache.put(mViewModel.loginReq)
             HeartBeatService.startHeartBeatService(context)
             startHomeActivity()
             finish()
@@ -100,7 +99,7 @@ class LoginActivity : BaseActivity<LoginViewModel, LoginActivityBinding>(), View
     }
 
     fun clickRegister(){
-        showTodo()
+        startActivity(RegisterActivity::class.java)
     }
 
     override fun onClick(v: View){

@@ -24,6 +24,7 @@ import com.king.easychat.R
 import com.king.easychat.app.Constants
 import com.king.easychat.app.account.LoginActivity
 import com.king.easychat.app.home.HomeActivity
+import com.king.easychat.util.Cache
 import com.king.easychat.util.Event
 import com.king.frame.mvvmframe.base.BaseFragment
 import com.king.frame.mvvmframe.base.BaseModel
@@ -219,7 +220,7 @@ abstract class BaseFragment<VM : BaseViewModel<out BaseModel>,VDB : ViewDataBind
         return intent
     }
 
-    fun startLoginActivity(username: String? = null){
+    fun startLoginActivity(username: String? = Cache.getUsername()){
         val intent = Intent(context,LoginActivity::class.java)
         intent.putExtra(Constants.KEY_USERNAME,username)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="viewModel"
+            type="com.king.easychat.app.account.UpdatePwdViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white">
+        <include android:id="@+id/include"
+            layout="@layout/toolbar"/>
+
+        <EditText
+            android:id="@+id/etOldPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/size_20dp"
+            android:layout_marginRight="@dimen/size_20dp"
+            android:layout_marginTop="@dimen/size_40dp"
+            android:drawablePadding="@dimen/size_6dp"
+            android:padding="@dimen/size_8dp"
+            android:gravity="center_vertical"
+            android:inputType="textPassword"
+            android:maxLength="@integer/password_max_length"
+            android:background="@drawable/edit_bg_line_selector"
+            android:drawableLeft="@drawable/ic_password"
+            android:drawableRight="@drawable/btn_clear_selector"
+            android:hint="@string/hint_old_password"
+            app:layout_constraintTop_toBottomOf="@+id/include"/>
+        <EditText
+            android:id="@+id/etNewPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/size_20dp"
+            android:layout_marginRight="@dimen/size_20dp"
+            android:layout_marginTop="@dimen/size_20dp"
+            android:drawablePadding="@dimen/size_6dp"
+            android:padding="@dimen/size_8dp"
+            android:gravity="center_vertical"
+            android:inputType="textPassword"
+            android:maxLength="@integer/password_max_length"
+            android:background="@drawable/edit_bg_line_selector"
+            android:drawableLeft="@drawable/ic_password"
+            android:drawableRight="@drawable/btn_clear_selector"
+            android:hint="@string/hint_new_password"
+            app:layout_constraintTop_toBottomOf="@+id/etOldPassword"
+            app:layout_constraintLeft_toLeftOf="parent"/>
+        <EditText
+            android:id="@+id/etConfirmPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/size_20dp"
+            android:layout_marginRight="@dimen/size_20dp"
+            android:layout_marginTop="@dimen/size_20dp"
+            android:drawablePadding="@dimen/size_6dp"
+            android:padding="@dimen/size_8dp"
+            android:gravity="center_vertical"
+            android:inputType="textPassword"
+            android:maxLength="@integer/password_max_length"
+            android:background="@drawable/edit_bg_line_selector"
+            android:drawableLeft="@drawable/ic_password"
+            android:drawableRight="@drawable/btn_clear_selector"
+            android:hint="@string/hint_confirm_new_password"
+            app:layout_constraintTop_toBottomOf="@+id/etNewPassword"
+            app:layout_constraintLeft_toLeftOf="parent"/>
+
+        <Button
+            android:id="@+id/btnModify"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/size_30dp"
+            android:layout_marginRight="@dimen/size_30dp"
+            android:layout_marginTop="@dimen/size_40dp"
+            android:textColor="@color/white"
+            android:text="@string/modify"
+            android:textSize="@dimen/size_16sp"
+            android:background="@drawable/btn_bg_selector"
+            app:layout_constraintTop_toBottomOf="@+id/etConfirmPassword"
+            style="?android:attr/borderlessButtonStyle"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

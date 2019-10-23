@@ -11,6 +11,8 @@ import com.king.easychat.netty.packet.resp.MessageResp
  */
 class ChatAdapter(var friendImageUrl : String?,var myImageUrl : String?): BaseMultiItemQuickAdapter<MessageResp, BindingHolder>(null) {
 
+    var curTime =  System.currentTimeMillis()
+
     init {
 
         addItemType(MessageResp.Left, R.layout.rv_chat_item)
@@ -24,6 +26,8 @@ class ChatAdapter(var friendImageUrl : String?,var myImageUrl : String?): BaseMu
                 MessageResp.Right -> ImageLoader.displayImage(mContext,helper.getView(R.id.ivAvatar),myImageUrl,R.drawable.default_avatar)
             }
             helper.addOnClickListener(R.id.ivContent)
+            helper.addOnClickListener(R.id.ivAvatar)
+            it.setVariable(BR.curTime,curTime)
             it.setVariable(BR.data,item)
             it.executePendingBindings()
         }

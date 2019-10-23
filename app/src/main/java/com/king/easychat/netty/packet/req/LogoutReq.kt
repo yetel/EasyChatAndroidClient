@@ -14,5 +14,9 @@ import com.king.easychat.netty.packet.PacketType
         return PacketType.LOGOUT_REQ
     }
 
+    override fun toString(): String {
+        return "LogoutReq(PacketType.LOGOUT_REQ)"
+    }
+
 
 }

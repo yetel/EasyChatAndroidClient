@@ -13,4 +13,8 @@ class AcceptReq(val receiver : String, val accept : Boolean) : Packet() {
         return PacketType.ACCEPT_REQ
     }
 
+    override fun toString(): String {
+        return "AcceptReq(receiver='$receiver', accept=$accept)"
+    }
+
 }

@@ -26,14 +26,18 @@ class ChangeUserInfoActivity : BaseActivity<ChangeUserInfoViewModel, ChangeUserI
     override fun initData(savedInstanceState: Bundle?) {
 
         ivRight.setImageResource(R.drawable.btn_save_selector)
-        tvTitle.text = intent.getStringExtra(Constants.KEY_TITLE)
+        val title = intent.getStringExtra(Constants.KEY_TITLE)
+        tvTitle.text = title
         changeType = intent.getIntExtra(Constants.KEY_TYPE,CHANGE_NICKNAME)
 
         tvTips.text = intent.getStringExtra(Constants.KEY_TIPS)
-//
+
+        etContent.hint = title
         etContent.maxEms = intent.getIntExtra(Constants.KEY_MAX,20)
         etContent.setText(intent.getStringExtra(Constants.KEY_CONTENT))
-//
+
+        etContent.setSelection(etContent.text?.length ?: 0)
+
         mViewModel.userLiveData.observe(this, Observer {
             it?.let {
                 setResult(Activity.RESULT_OK)

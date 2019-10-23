@@ -9,7 +9,7 @@ import com.king.easychat.netty.packet.resp.MessageResp
 /**
  * @author <a href="mailto:jenly1314@gmail.com">Jenly</a>
  */
-@Database(entities = [User::class, Group::class, MessageDbo::class,GroupMessageDbo::class, RecentChat::class,RecentGroupChat::class], version = 2,exportSchema = false)
+@Database(entities = [User::class, Group::class, MessageDbo::class,GroupMessageDbo::class, RecentChat::class,RecentGroupChat::class], version = 1,exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun userDao(): UserDao

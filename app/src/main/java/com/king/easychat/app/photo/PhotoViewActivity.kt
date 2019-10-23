@@ -34,6 +34,8 @@ class PhotoViewActivity : BaseActivity<DataViewModel, PhotoViewActivityBinding>(
             size = it.size
             if(it.size>1){
                 tvPage.visibility = View.VISIBLE
+            }else{
+                tvPage.visibility = View.GONE
             }
 
         }
@@ -41,7 +43,7 @@ class PhotoViewActivity : BaseActivity<DataViewModel, PhotoViewActivityBinding>(
         vp.registerOnPageChangeCallback(object: ViewPager2.OnPageChangeCallback(){
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
-                updatePage(position,size)
+                updatePage(position+1,size)
             }
         })
         mAdapter.onItemClickListener = BaseQuickAdapter.OnItemClickListener { adapter, view, position -> onBackPressed() }

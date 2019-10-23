@@ -9,14 +9,27 @@
     <string name="hint_password">密码</string>
     <string name="hint_confirm_password">确认密码</string>
 
+    <string name="hint_old_password">旧密码</string>
+    <string name="hint_new_password">新密码</string>
+    <string name="hint_confirm_new_password">确认新密码</string>
+
+    <string name="modify">修改</string>
+    <string name="submit">提交</string>
+
 
     <string name="forgot_password">忘记密码</string>
 
 
-    <string name="tips_username_is_empty">请输入用户名，老铁</string>
-    <string name="tips_password_is_empty">请输入密码，老铁</string>
-    <string name="tips_confirm_password_is_empty">请输入确认密码，老铁</string>
-    <string name="tips_password_is_different">密码和确认密码不一致</string>
+    <string name="tips_username_is_empty">请输入用户名</string>
+    <string name="tips_password_is_empty">请输入密码</string>
+    <string name="tips_confirm_password_is_empty">请输入确认密码</string>
+    <string name="tips_old_password_is_empty">请输入旧密码</string>
+    <string name="tips_new_password_is_empty">请输入新密码</string>
+    <string name="tips_confirm_new_password_is_empty">请再次输入新密码</string>
+    <string name="tips_password_is_different">两次密码不一致</string>
+
+
+    <string name="tips_password_matcher">密码至少包括6个字符，必须由字母、数字组成。</string>
 
     <string name="tips_nickname_is_empty">请输入昵称</string>
     <string name="tips_signature_is_empty">请输入个性签名</string>
@@ -25,6 +38,9 @@
     <string name="tips_change_signature">有签名才个性</string>
 
 
+    <string name="label_exist_account">已有账户，</string>
+    <string name="login_now">立即登录</string>
+
     <string name="register_u"><u>注册</u></string>
     <string name="register">注册</string>
     <string name="register_now">立即注册</string>
@@ -32,6 +48,7 @@
     <!-- success -->
     <string name="success_login">登录成功</string>
     <string name="success_register">注册成功</string>
+    <string name="success_modify">修改成功</string>
 
     <!-- Error -->
     <string name="result_connect_failed_error">服务器连接失败，请稍后再试。</string>
@@ -40,6 +57,9 @@
     <string name="result_network_unavailable_error">网络不给力，请检查网络。</string>
 
     <string name="result_failure">获取失败</string>
+
+    <string name="success_operator">操作成功</string>
+    <string name="operator_failed">操作失败，请稍后再试</string>
 
 
     <!-- Home -->
@@ -54,6 +74,9 @@
     <!-- Me -->
     <string name="modify_password">修改密码</string>
     <string name="about">关于</string>
+    <string name="check_version">版本检测</string>
+
+    <string name="tips_latest_version">已是最新版本</string>
 
     <!-- User information -->
     <string name="user_info_title">个人信息</string>
@@ -63,5 +86,46 @@
     <string name="signature">个性签名</string>
     <string name="qrcode">二维码</string>
 
+    <string name="group_name">群名称</string>
+    <string name="group_id">群名ID</string>
+
+    <string name="add_friend">添加好友</string>
+    <string name="invite_group">申请加群</string>
+
+    <!-- Search -->
+    <string name="hint_search">搜索用户或群</string>
+    <string name="tips_search_key_is_empty">请输入搜索内容</string>
+
+    <!-- About -->
+    <string name="menu_github">GitHub</string>
+    <string name="menu_source">开源地址</string>
+    <string name="menu_issue">提Issue</string>
+    <string name="menu_email">发E-mail</string>
+    <string name="menu_qq_group">加入QQ群</string>
+
+    <string name="tips_join_qq_group_exception">未安装手Q或安装的版本不支持</string>
+
+    <string name="about_desc">
+        1.只有飞速的旋转，才可以止住我的泪水，忘记你的模样。 -----不祥之刃\n
+        2.他们都说我是穿着东方盔甲的奇怪人，但我只想顶在最前面，用我的长枪保护我的朋友。-----德邦总管\n
+        3.一曲终了、繁花散尽、伊人已逝，只余一声空叹。----- 死亡歌颂者\n
+        4.妩媚倾城的面容 我蛊惑万千众生 孰不知 心里 早有了一个人 ..却只能无尽的思念 你送我的宝珠 我一直带着 只因为我能看见你的身影。-----九尾妖狐\n
+        5.我醒来了，但是我什么都不记得，我很害怕，我包裹住我的身体，然后独自在黑暗中哭泣。----殇之木乃伊\n
+        6.我只是部落遗子，你确是高贵公主，我愿把我生命的力量化为三刀为你而战，只为证明我－－配的上你… -----蛮族之王\n
+        7.我很想陪伴在你身边，只是你不允许，没关系，在你需要帮助时，我还是会出现在你身边。 -----暮光之眼\n
+        8.我一路种下了蘑菇、只为让你知道回家的路。 ----迅捷斥候\n
+        9.我一直急速前行 穿梭于人人之间 试图叫应接不暇的风景让我褪去对你的思念----无极剑圣\n
+        10.我蒙上自己的双眼，只想记住最后看你的那一眼。 我刺瞎自己的双眼 只为记住那逝去的红颜。-----盲僧\n
+        11.纵然前路迷茫，纵然天隔一方，纵然我手中的刀刃已然破碎，也无法阻挡我寻找你的道路。------放逐之刃\n
+        12.当黑色的玫瑰悄悄绽放，除了镜花水月，又有谁能够了解我的心？------诡术妖姬\n
+        13.我可以想去哪就去哪，但是我只想进入你的心里。 -----祖安狂人\n
+        14.你喜欢纯洁，于是我就将宝石制成了盔甲，只是，闪耀的光芒中，却已经映不出你的身影.-----宝石骑士\n
+        15.我对你的爱就如闪电，狂暴而剧烈，飞出的飞镖是向你传达的思念。------狂暴之心\n
+        16.亡命天涯，只是为了追寻你的足迹，却不想命运的捉弄，总是让你我天各一方。------法外狂徒\n
+        17.我来自深海，我没有朋友，大家都不和我玩，只有巨鲨是我的朋友，你愿意和它一起玩吗？-------潮汐海灵\n
+        18.你我的约定我一直记得，那一道道璀璨的光束，都是为你所亮 -------光辉女郎\n
+        19.我愚蠢的以为，头上的金箍圈可以圈住你所有的爱，可惜我手中的金箍棒改变不了那个开始，也决定不了这个结局，根本没有齐天大圣，我只是一只猴子。 -------齐天大圣\n
+        20.我总是那么让你担心，是不是你永远都会变成它，守护在我的身旁。 -------黑暗之女\n
+</string>
 
 </resources>

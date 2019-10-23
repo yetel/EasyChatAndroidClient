@@ -3,9 +3,7 @@ package com.king.easychat.app.friend
 import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.Observer
 import com.king.easychat.App
-import com.king.easychat.R
 import com.king.easychat.bean.User
 import com.king.frame.mvvmframe.base.BaseViewModel
 import com.king.frame.mvvmframe.bean.Resource
@@ -39,18 +37,17 @@ class FriendViewModel @Inject constructor(application: Application, model: Frien
             friendsLiveData.removeSource(it)
         }
         source = mModel.friendResource
-        friendsLiveData.addSource(source!!,Observer{
+        friendsLiveData.addSource(source!!) {
             if(it.isSuccess){
                 friendsLiveData.postValue(it.data)
             }else {
                 if(it.isFailure){
                     sendMessage(it.message)
-                }else{
-                    sendMessage(R.string.result_failure)
                 }
-                friendsLiveData.addSource(mModel.getUsers(), Observer {friendsLiveData::postValue})
+                friendsLiveData.addSource(mModel.getUsers()) {friendsLiveData::postValue}
             }
-        })
+
+        }
 
     }
 

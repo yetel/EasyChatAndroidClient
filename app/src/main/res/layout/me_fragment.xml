@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
     <data>
+        <variable
+            name="viewModel"
+            type="com.king.easychat.app.me.MeViewModel" />
         <variable
             name="user"
             type="com.king.easychat.bean.User" />
@@ -15,7 +19,8 @@
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:id="@+id/srl"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            bind:onRefreshListener="@{() -> viewModel.retry()}">
             <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
@@ -36,7 +41,8 @@
                             android:id="@+id/ivAvatar"
                             android:layout_width="@dimen/size_60dp"
                             android:layout_height="@dimen/size_60dp"
-                            android:src="@drawable/default_avatar"
+                            bind:avatar="@{user.avatar}"
+                            tools:src="@drawable/default_avatar"
                             app:civ_border_width="1dp"
                             app:civ_border_color="@color/line"
                             app:layout_constraintTop_toTopOf="parent"
@@ -113,6 +119,24 @@
                         android:textColor="@color/text_3"
                         android:textSize="@dimen/size_16sp"
                         android:drawableLeft="@drawable/ec_about"
+                        android:drawablePadding="@dimen/size_6dp"
+                        android:drawableRight="@drawable/ec_next"
+                        android:layout_marginBottom="@dimen/size_line"/>
+                    <TextView
+                        android:id="@+id/tvVersion"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/white_selector"
+                        android:layout_marginTop="@dimen/size_line"
+                        android:paddingLeft="@dimen/size_16dp"
+                        android:paddingRight="@dimen/size_16dp"
+                        android:paddingTop="@dimen/size_12dp"
+                        android:paddingBottom="@dimen/size_12dp"
+                        android:gravity="center_vertical"
+                        android:text="@string/check_version"
+                        android:textColor="@color/text_3"
+                        android:textSize="@dimen/size_16sp"
+                        android:drawableLeft="@drawable/ec_version"
                         android:drawablePadding="@dimen/size_6dp"
                         android:drawableRight="@drawable/ec_next"
                         android:layout_marginBottom="@dimen/size_line"/>
