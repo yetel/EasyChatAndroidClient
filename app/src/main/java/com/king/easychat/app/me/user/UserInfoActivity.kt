@@ -7,12 +7,15 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
+import com.king.app.dialog.AppDialog
+import com.king.app.dialog.AppDialogConfig
 import com.king.easychat.R
 import com.king.easychat.app.Constants
 import com.king.easychat.app.base.BaseActivity
 import com.king.easychat.databinding.UserInfoActivityBinding
 import com.yalantis.ucrop.UCrop
 import com.zhihu.matisse.Matisse
+import kotlinx.android.synthetic.main.user_info_activity.*
 import java.io.File
 
 /**
@@ -31,6 +34,22 @@ class UserInfoActivity : BaseActivity<UserInfoViewModel, UserInfoActivityBinding
             }
         })
 
+        btnLogout.setOnClickListener{
+            var config = AppDialogConfig()
+            with(config){
+                isHideTitle = true
+                content = getString(R.string.tips_logout)
+                ok = getString(R.string.confirm)
+                onClickOk = View.OnClickListener {
+                    AppDialog.INSTANCE.dismissDialog()
+                    getApp().logout(context)
+                    startLoginActivity()
+                    finish()
+                }
+            }
+
+            AppDialog.INSTANCE.showDialog(context,config)
+        }
     }
 
 

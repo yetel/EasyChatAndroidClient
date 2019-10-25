@@ -70,5 +70,8 @@ class ChatViewModel @Inject constructor(application: Application, model: ChatMod
 
     }
 
+    fun sendHeart(receiver: String){
+        NettyClient.INSTANCE.sendMessage(MessageReq(receiver,MessageType.HEART.toString(),MessageType.HEART))
+    }
 
 }

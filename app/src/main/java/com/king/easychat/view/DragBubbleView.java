@@ -21,6 +21,9 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
 
+import androidx.annotation.ColorRes;
+import androidx.core.content.ContextCompat;
+
 import com.king.base.util.DensityUtils;
 import com.king.easychat.R;
 
@@ -118,7 +121,7 @@ public class DragBubbleView extends View {
         super(context, attrs, defStyleAttr);
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.DragBubbleView, defStyleAttr, 0);
         mBubbleRadius = ta.getDimension(R.styleable.DragBubbleView_bubbleRadius, DensityUtils.dip2px(context, 12));
-        mBubbleColor = ta.getColor(R.styleable.DragBubbleView_bubbleColor, Color.RED);
+        mBubbleColor = ta.getColor(R.styleable.DragBubbleView_bubbleColor, ContextCompat.getColor(context,R.color.text_red));
         mText = ta.getString(R.styleable.DragBubbleView_text);
         mTextSize = ta.getDimension(R.styleable.DragBubbleView_textSize, DensityUtils.dip2px(context, 12));
         mTextColor = ta.getColor(R.styleable.DragBubbleView_textColor, Color.WHITE);
@@ -401,6 +404,16 @@ public class DragBubbleView extends View {
     public void setText(String text) {
         mText = text;
         invalidate();
+    }
+
+    public void setBubbleColor(int color){
+        mBubbleColor = color;
+        mBubblePaint.setColor(mBubbleColor);
+    }
+
+    public void setBubbleColorResource(@ColorRes int resId){
+        mBubbleColor = ContextCompat.getColor(getContext(),resId);
+        mBubblePaint.setColor(mBubbleColor);
     }
 
     /**

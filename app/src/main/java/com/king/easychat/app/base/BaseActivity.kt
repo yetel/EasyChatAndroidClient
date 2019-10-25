@@ -4,7 +4,6 @@ import android.Manifest
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.text.InputType
 import android.text.TextUtils
 import android.view.MotionEvent
@@ -16,7 +15,6 @@ import androidx.annotation.StringRes
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.content.ContextCompat
 import androidx.databinding.ViewDataBinding
-import androidx.lifecycle.Observer
 import com.king.app.dialog.AppDialog
 import com.king.app.dialog.AppDialogConfig
 import com.king.base.util.StringUtils
@@ -31,15 +29,12 @@ import com.king.easychat.netty.NettyClient
 import com.king.easychat.netty.packet.Packet
 import com.king.easychat.netty.packet.PacketType
 import com.king.easychat.netty.packet.resp.AddUserResp
-import com.king.easychat.netty.packet.resp.GroupMessageResp
 import com.king.easychat.netty.packet.resp.InviteGroupResp
-import com.king.easychat.netty.packet.resp.MessageResp
 import com.king.easychat.util.Cache
 import com.king.easychat.util.Event
 import com.king.frame.mvvmframe.base.BaseActivity
 import com.king.frame.mvvmframe.base.BaseModel
 import com.king.frame.mvvmframe.base.BaseViewModel
-import com.king.frame.mvvmframe.base.livedata.MessageEvent
 import com.tbruyelle.rxpermissions2.RxPermissions
 import com.zhihu.matisse.Matisse
 import com.zhihu.matisse.MimeType
@@ -74,6 +69,7 @@ abstract class BaseActivity<VM : BaseViewModel<out BaseModel>,VDB : ViewDataBind
     private fun handlerAddUserResp(data: AddUserResp){
         var config = AppDialogConfig()
         with(config){
+            isHideTitle = true
             content = String.format(getString(R.string.tips_accept_friend_),data.inviterId)
             ok = getString(R.string.accept)
             cancel = getString(R.string.ignore)
@@ -89,6 +85,7 @@ abstract class BaseActivity<VM : BaseViewModel<out BaseModel>,VDB : ViewDataBind
     private fun handlerInviteGroupResp(data: InviteGroupResp){
         var config = AppDialogConfig()
         with(config){
+            isHideTitle = true
             content = String.format(getString(R.string.tips_accept_group_),data.inviteId,data.groupName)
             ok = getString(R.string.accept)
             cancel = getString(R.string.ignore)
@@ -127,12 +124,13 @@ abstract class BaseActivity<VM : BaseViewModel<out BaseModel>,VDB : ViewDataBind
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        if(useEvent()) Event.registerEvent(this)
         super.onCreate(savedInstanceState)
         registerMessageEvent{
             Timber.d("sendMessage:$it")
             showToast(it)
         }
-        if(useEvent()) Event.registerEvent(this)
+
 
     }
 

@@ -61,10 +61,10 @@ fun TextView.count(count: Int){
 
 @BindingAdapter(value = ["count"])
 fun DragBubbleView.count(count: Int){
+    reCreate()
     if(count>0){
         setText(count.coerceAtMost(99).toString())
         visibility = View.VISIBLE
-        reCreate()
     }else{
         setText("")
         visibility = View.INVISIBLE

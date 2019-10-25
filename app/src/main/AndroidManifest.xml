@@ -31,7 +31,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".app.splash.SplashActivity"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:theme="@style/SplashAppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -41,15 +42,18 @@
 
 
         <activity android:name=".app.home.HomeActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/HomeAppTheme"/>
 
         <activity android:name=".app.account.LoginActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateVisible|adjustPan"/>
+            android:windowSoftInputMode="stateVisible|adjustPan"
+            android:theme="@style/WhiteAppTheme"/>
 
         <activity android:name=".app.account.RegisterActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateVisible|adjustPan"/>
+            android:windowSoftInputMode="stateVisible|adjustPan"
+            android:theme="@style/WhiteAppTheme"/>
 
         <activity android:name=".app.account.UpdatePwdActivity"
             android:screenOrientation="portrait"
@@ -82,7 +86,8 @@
 
         <activity android:name=".app.search.SearchActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateVisible|adjustPan"/>
+            android:windowSoftInputMode="stateVisible|adjustPan"
+            android:theme="@style/WhiteAppTheme"/>
 
         <service android:name=".app.service.HeartBeatService"/>
 

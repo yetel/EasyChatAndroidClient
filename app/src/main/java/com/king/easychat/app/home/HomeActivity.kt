@@ -18,7 +18,6 @@ import com.king.frame.mvvmframe.base.livedata.StatusEvent
 import kotlinx.android.synthetic.main.home_activity.*
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
-import timber.log.Timber
 
 /**
  * @author <a href="mailto:jenly1314@gmail.com">Jenly</a>
@@ -64,11 +63,7 @@ class HomeActivity : BaseActivity<HomeViewModel, HomeActivityBinding>() ,
 
         mViewModel.getUser()
 
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onMessageEvent(event: Int){
-        Timber.d("----------刷新$event")
+        mViewModel.syncMessageReq()
     }
 
     override fun getLayoutId(): Int {

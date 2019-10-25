@@ -27,8 +27,28 @@ object Cache {
 
     }
 
+    fun put(key: String,value: String){
+        MMKV.defaultMMKV().encode(key,value)
+
+    }
+
+    fun putToken(token : String){
+        token?.let {
+            put(Constants.KEY_TOKEN,it)
+        }
+
+    }
+
+    fun clearToken(){
+        MMKV.defaultMMKV().reKey(Constants.KEY_TOKEN)
+    }
+
     fun getUsername(): String?{
         return  MMKV.defaultMMKV().decodeString(Constants.KEY_USERNAME)
+    }
+
+    fun getToken(): String?{
+        return  MMKV.defaultMMKV().decodeString(Constants.KEY_TOKEN)
     }
 
     fun getLoginReq(): LoginReq?{

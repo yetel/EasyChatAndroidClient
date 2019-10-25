@@ -26,6 +26,12 @@
 
     <color name="text_theme">#4587f0</color>
 
+    <color name="white_50">#7fffffff</color>
+
+    <color name="black_50">#7f000000</color>
+
+    <color name="text_red">#D93F3C</color>
+
     <color name="bottom_menu_checked">#4587f0</color>
     <color name="bottom_menu_unchecked">#999999</color>
 

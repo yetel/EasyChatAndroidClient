@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <item name="textinput_counter" type="id"/>
-    <item name="textinput_error" type="id"/>
-    <item name="textinput_helper_text" type="id"/>
+    <item name="statusbar_view" type="id"/>
+    <item name="translucent_view" type="id"/>
+
 </resources>

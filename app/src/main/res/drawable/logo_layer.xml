@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@color/space_bg" />
+    <item>
+        <bitmap
+            android:alpha="0.6"
+            android:gravity="center"
+            android:scaleType="center"
+            android:src="@drawable/logo"
+            android:tileMode="disabled" />
+    </item>
+</layer-list>

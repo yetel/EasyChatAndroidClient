@@ -5,6 +5,7 @@ import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import com.king.anetty.Netty
+import com.king.base.util.StringUtils
 import com.king.easychat.R
 import com.king.easychat.app.base.BaseActivity
 import com.king.easychat.app.service.HeartBeatService
@@ -13,6 +14,7 @@ import com.king.easychat.netty.NettyClient
 import com.king.easychat.netty.packet.req.LoginReq
 import com.king.easychat.netty.packet.resp.LoginResp
 import com.king.easychat.util.Cache
+import com.king.easychat.util.SystemBarHelper
 import kotlinx.android.synthetic.main.splash_activity.*
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -55,13 +57,18 @@ class SplashActivity : BaseActivity<SplashViewModel, SplashActivityBinding>(){
     }
 
     fun autoLogin(){
-        var loginReq: LoginReq?  = Cache.getLoginReq()
-        loginReq?.let {
-            mViewModel.login(loginReq)
-        } ?: run{
-            isRequest = true
-            startActivity()
+        var cacheToken = Cache.getToken()
+        if(StringUtils.isNotBlank(cacheToken)){
+            var loginReq: LoginReq?  = Cache.getLoginReq()
+            if(loginReq != null){
+                mViewModel.login(loginReq)
+                return
+            }
         }
+
+        isRequest = true
+        startActivity()
+
     }
 
     override fun getLayoutId(): Int {

@@ -12,6 +12,7 @@ import com.king.easychat.R
 import com.king.easychat.app.Constants
 import com.king.easychat.app.base.BaseActivity
 import com.king.easychat.databinding.AboutActivityBinding
+import com.king.easychat.util.SystemBarHelper
 import com.king.frame.mvvmframe.base.DataViewModel
 import kotlinx.android.synthetic.main.about_activity.*
 
@@ -22,6 +23,8 @@ import kotlinx.android.synthetic.main.about_activity.*
 class AboutActivity : BaseActivity<DataViewModel,AboutActivityBinding>(){
 
     override fun initData(savedInstanceState: Bundle?) {
+        SystemBarHelper.immersiveStatusBar(this,0.0f)
+        SystemBarHelper.setHeightAndPadding(this,toolbar)
         setSupportActionBar(toolbar)
         supportActionBar?.setHomeButtonEnabled(true)
         toolbar.setNavigationOnClickListener{ onBackPressed() }

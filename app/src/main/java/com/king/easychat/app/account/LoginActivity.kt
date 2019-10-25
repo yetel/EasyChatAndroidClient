@@ -12,6 +12,7 @@ import com.king.easychat.app.service.HeartBeatService
 import com.king.easychat.databinding.LoginActivityBinding
 import com.king.easychat.netty.packet.resp.LoginResp
 import com.king.easychat.util.Cache
+import com.king.easychat.util.SystemBarHelper
 import kotlinx.android.synthetic.main.login_activity.*
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -24,7 +25,6 @@ class LoginActivity : BaseActivity<LoginViewModel, LoginActivityBinding>(), View
     var username : String? = null
 
     override fun initData(savedInstanceState: Bundle?) {
-
         etUsername.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
 
@@ -66,7 +66,7 @@ class LoginActivity : BaseActivity<LoginViewModel, LoginActivityBinding>(), View
     fun handleLoginResp(resp : LoginResp){
         hideLoading()
         if(resp.success){
-            getApp().loginResp = resp
+            getApp().login(resp)
             Cache.put(mViewModel.loginReq)
             HeartBeatService.startHeartBeatService(context)
             startHomeActivity()

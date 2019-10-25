@@ -10,6 +10,8 @@ import com.king.easychat.app.base.MessageViewModel
 import com.king.easychat.bean.Message
 import com.king.easychat.bean.Result
 import com.king.easychat.bean.User
+import com.king.easychat.netty.NettyClient
+import com.king.easychat.netty.packet.req.SyncMessageReq
 import com.king.frame.mvvmframe.base.livedata.StatusEvent
 import com.king.frame.mvvmframe.http.callback.ApiCallback
 import kotlinx.coroutines.Dispatchers
@@ -34,7 +36,9 @@ class HomeViewModel @Inject constructor(application: Application, model: HomeMod
         super.onCreate()
     }
 
-
+    fun syncMessageReq(){
+        NettyClient.INSTANCE.sendMessage(SyncMessageReq())
+    }
 
     fun retry(){
         queryMessageList(getApp().getUserId(),1,Constants.PAGE_SIZE,0)

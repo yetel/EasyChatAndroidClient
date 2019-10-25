@@ -35,6 +35,7 @@ object PacketType {
     const val MESSAGE_SELF_RESP = 25
     const val HEART_BEAT_REQ = 26
     const val HEART_BEAT_RESP = 27
+    const val SYNC_MESSAGE_REQ = 28
 
 
 }

@@ -164,6 +164,9 @@ open class MessageViewModel<M :MessageModel> @Inject constructor(application: Ap
      * 保存消息记录
      */
     fun saveMessage(userId: String,friendId: String,showName: String?,avatar: String?,read: Boolean,data: MessageResp){
+        if(data.messageType >= MessageType.NORMAL){
+            return
+        }
         GlobalScope.launch {
             val recentChat = withContext(Dispatchers.IO){
                 Timber.d("save:$data")
@@ -189,6 +192,9 @@ open class MessageViewModel<M :MessageModel> @Inject constructor(application: Ap
      *保存群聊消息
      */
     fun saveGroupMessage(userId: String,groupId: String,groupName: String?,read: Boolean,data : GroupMessageResp){
+        if(data.messageType >= MessageType.NORMAL){
+            return
+        }
         GlobalScope.launch(Dispatchers.IO) {
             mModel.saveGroupMessage(userId,read,data)
             // 保存最近聊天群组

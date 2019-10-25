@@ -85,7 +85,7 @@ class HomeFragment : BaseFragment<HomeViewModel,HomeFragmentBinding>(){
 
     fun requestData(){
         if(isRefresh){
-            mViewModel.delay(200)
+            mViewModel.delay(100)
         }
 
     }

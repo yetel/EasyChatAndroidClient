@@ -11,18 +11,30 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <include layout="@layout/toolbar"/>
-        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-            android:id="@+id/srl"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1">
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv"
+            <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+                android:id="@+id/srl"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:background="@color/space_bg"/>
-        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+                android:layout_height="match_parent">
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:background="@color/space_bg"/>
+            </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+            <com.king.view.flutteringlayout.FlutteringLayout
+                android:id="@+id/fl"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/size_20dp"
+                android:layout_marginRight="@dimen/size_20dp"
+                android:layout_centerHorizontal="true"/>
+        </RelativeLayout>
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

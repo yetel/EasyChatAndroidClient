@@ -192,10 +192,16 @@ class ChatActivity : BaseActivity<ChatViewModel, ChatActivityBinding>(){
     fun handleMessageResp(resp: MessageResp?){
         resp?.let {
             if(it.isSender || friendId == it.sender){
-                mAdapter.addData(it)
-                mViewModel.saveMessage(getApp().getUserId(),friendId,showName,avatar,true,resp)
-                if(isAutoScroll){
-                    rv.scrollToPosition(mAdapter.itemCount - 1)
+                if(it.messageType >= MessageType.NORMAL){
+                    when(it.messageType){
+                        MessageType.HEART -> fl.addHeart()
+                    }
+                }else{
+                    mAdapter.addData(it)
+                    mViewModel.saveMessage(getApp().getUserId(),friendId,showName,avatar,true,resp)
+                    if(isAutoScroll){
+                        rv.scrollToPosition(mAdapter.itemCount - 1)
+                    }
                 }
             }
         }
@@ -222,6 +228,11 @@ class ChatActivity : BaseActivity<ChatViewModel, ChatActivityBinding>(){
     }
 
 
+    private fun clickSmile(){
+        fl.addHeart()
+        mViewModel.sendHeart(friendId)
+    }
+
 
     private fun clickAdd(){
         selectPhoto()
@@ -244,6 +255,7 @@ class ChatActivity : BaseActivity<ChatViewModel, ChatActivityBinding>(){
     override fun onClick(v: View){
         super.onClick(v)
         when(v.id){
+            R.id.ivSmile -> clickSmile()
             R.id.ivAdd -> clickAdd()
             R.id.tvSend -> clickSend()
         }

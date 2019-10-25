@@ -8,6 +8,7 @@ import com.king.easychat.bean.User
 import com.king.easychat.di.component.DaggerApplicationComponent
 import com.king.easychat.netty.NettyClient
 import com.king.easychat.netty.packet.resp.LoginResp
+import com.king.easychat.util.Cache
 import com.king.frame.mvvmframe.base.BaseApplication
 import com.orhanobut.logger.AndroidLogAdapter
 import com.orhanobut.logger.Logger
@@ -66,7 +67,7 @@ class App : BaseApplication() {
     }
 
     fun getToken(): String{
-        return loginResp?.token ?: ""
+        return loginResp?.token ?: Cache.getToken() ?: ""
     }
 
     fun getUserId(): String{
@@ -93,22 +94,38 @@ class App : BaseApplication() {
     }
 
 
-    fun logout(){
-        loginResp = null
-        user = null
-        stopHeartBeatService()
+    fun login(loginResp: LoginResp?){
+        loginResp?.let {
+            this.loginResp = it
+            Cache.putToken(it.token)
+        }
+
+    }
+
+    fun logout(context: Context){
+        clear()
+        Cache.clearToken()
+        stopHeartBeatService(context)
         NettyClient.INSTANCE.disconnect()
 
     }
 
-    private fun stopHeartBeatService(){
-        HeartBeatService.stopHeartBeatService(this)
+    private fun clear(){
+        loginResp = null
+        user = null
+        firends = null
+        groups = null
+    }
+
+    private fun stopHeartBeatService(context: Context){
+        HeartBeatService.stopHeartBeatService(context)
     }
 
     override fun onTerminate() {
         super.onTerminate()
-        stopHeartBeatService()
+        stopHeartBeatService(this)
         NettyClient.INSTANCE.disconnect()
+        clear()
     }
 
 }

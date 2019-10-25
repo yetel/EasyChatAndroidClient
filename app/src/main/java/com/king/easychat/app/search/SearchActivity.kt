@@ -22,8 +22,11 @@ import com.king.easychat.bean.Search
 import com.king.easychat.bean.User
 import com.king.easychat.databinding.SearchUserActivityBinding
 import com.king.easychat.netty.packet.resp.MessageResp
+import com.king.easychat.util.SystemBarHelper
 import com.king.frame.mvvmframe.base.livedata.StatusEvent
+import kotlinx.android.synthetic.main.about_activity.*
 import kotlinx.android.synthetic.main.search_user_activity.*
+import kotlinx.android.synthetic.main.search_user_activity.toolbar
 import timber.log.Timber
 
 /**
@@ -38,7 +41,6 @@ class SearchActivity : BaseActivity<SearchViewModel,SearchUserActivityBinding>()
     var keyword: String? = null
 
     override fun initData(savedInstanceState: Bundle?) {
-
         mBinding.viewModel = mViewModel
 
 

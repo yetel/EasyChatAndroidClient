@@ -9,6 +9,7 @@ import com.king.easychat.databinding.RegisterActivityBinding
 import com.king.easychat.netty.packet.resp.RegisterResp
 import com.king.easychat.util.Cache
 import com.king.easychat.util.CheckUtil
+import com.king.easychat.util.SystemBarHelper
 import kotlinx.android.synthetic.main.login_activity.etPassword
 import kotlinx.android.synthetic.main.login_activity.etUsername
 import kotlinx.android.synthetic.main.register_activity.*
@@ -22,7 +23,6 @@ class RegisterActivity : BaseActivity<RegisterViewModel, RegisterActivityBinding
     var username : String? = null
 
     override fun initData(savedInstanceState: Bundle?) {
-
         btnRegister.setOnClickListener(this)
     }
 
@@ -38,7 +38,7 @@ class RegisterActivity : BaseActivity<RegisterViewModel, RegisterActivityBinding
     fun handleRegisterResp(resp : RegisterResp){
         hideLoading()
         if(resp.success){
-            getApp().loginResp = resp
+            getApp().login(resp)
             Cache.put(mViewModel.registerReq)
             HeartBeatService.startHeartBeatService(context)
             startHomeActivity()

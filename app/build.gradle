@@ -6,10 +6,6 @@ apply plugin: 'kotlin-android-extensions'
 
 apply plugin: 'kotlin-kapt'
 
-//使用生成文件
-kapt {
-    generateStubs = true
-}
 
 androidExtensions {
     experimental = true
@@ -150,6 +146,8 @@ dependencies {
     //app-dialog
     implementation 'com.king.app:app-dialog:1.0.5-androidx'
 
+    implementation 'com.king.view:flutteringlayout:1.1.1'
+
     implementation 'com.orhanobut:logger:2.2.0'
     implementation 'androidx.recyclerview:recyclerview:1.0.0+'
 
@@ -175,7 +173,5 @@ dependencies {
     implementation 'com.github.lzyzsd:jsbridge:1.0.4'
 
     implementation 'com.tencent:mmkv:1.0.23'
-
-
 
 }

@@ -48,6 +48,12 @@
     <string name="register">注册</string>
     <string name="register_now">立即注册</string>
 
+    <string name="logout">退出登录</string>
+
+    <string name="tips_logout">您确定要退出登录？</string>
+
+    <string name="confirm">确定</string>
+
     <!-- success -->
     <string name="success_login">登录成功</string>
     <string name="success_register">注册成功</string>

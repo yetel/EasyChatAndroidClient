@@ -16,9 +16,17 @@
         <item name="textInputStyle">@style/Widget.Design.TextInputLayout</item>
     </style>
 
+    <style name="HomeAppTheme" parent="AppTheme">
+        <item name="android:windowBackground">@drawable/logo_layer</item>
+    </style>
 
     <style name="SplashAppTheme" parent="AppTheme">
-        <item name="android:windowBackground">@color/colorPrimaryDark</item>
+        <item name="android:windowBackground">@drawable/splash_layer</item>
+        <item name="android:windowFullscreen">true</item>
+    </style>
+
+    <style name="WhiteAppTheme" parent="AppTheme">
+        <item name="colorPrimaryDark">@color/white_50</item>
     </style>
 
     <style name="ToolbarTheme" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
