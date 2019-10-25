@@ -75,7 +75,7 @@ class GroupChatActivity : BaseActivity<GroupChatViewModel, GroupChatActivityBind
             when(it.what){
                 Constants.EVENT_SUCCESS -> {
                     etContent.text = null
-                    handleMessageResp(mViewModel.groupMessageReq?.toGroupMessageResp(getApp().loginResp,true))
+                    handleMessageResp(mViewModel.groupMessageReq?.toGroupMessageResp(getApp().loginResp,getApp().getAvatar(),true))
                 }
 
                 Constants.REFRESH_SUCCESS -> srl.isRefreshing = false
@@ -135,6 +135,7 @@ class GroupChatActivity : BaseActivity<GroupChatViewModel, GroupChatActivityBind
         showName = intent.getStringExtra(Constants.KEY_TITLE)
         tvTitle.text = showName
         groupId = intent.getStringExtra(Constants.KEY_ID)
+        getApp().groupId = groupId
         mViewModel.queryMessageByGroupId(getApp().getUserId(),groupId,curPage,Constants.PAGE_SIZE)
 
     }
@@ -194,7 +195,9 @@ class GroupChatActivity : BaseActivity<GroupChatViewModel, GroupChatActivityBind
                     rv.scrollToPosition(mAdapter.itemCount - 1)
                 }
             }
-            mViewModel.saveGroupMessage(getApp().getUserId(),groupId,showName,it)
+            if(it.isSender){
+                mViewModel.saveGroupMessage(getApp().getUserId(),groupId,showName,true,it)
+            }
         }
 
     }
@@ -225,6 +228,12 @@ class GroupChatActivity : BaseActivity<GroupChatViewModel, GroupChatActivityBind
             mViewModel.sendGroupMessage(groupId,it, MessageType.TEXT)
         }
 
+    }
+
+    override fun onBackPressed() {
+        mViewModel.updateGroupMessageRead(getApp().getUserId(),groupId)
+        getApp().groupId = null
+        super.onBackPressed()
     }
 
     override fun onClick(v: View){

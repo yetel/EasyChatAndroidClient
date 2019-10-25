@@ -1,33 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto">
     <data>
         <variable
             name="viewModel"
             type="com.king.easychat.app.home.HomeViewModel" />
+        <variable
+            name="data"
+            type="Integer" />
     </data>
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/space_bg">
+        android:background="@color/space_bg"
+        android:clipChildren="false">
         <FrameLayout
             android:id="@+id/fragmentContent"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"/>
-        <LinearLayout
-            android:id="@+id/llMenu"
+            android:layout_weight="1"
+            android:clipChildren="false"/>
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:background="@drawable/white_layer"
-            android:orientation="vertical">
+            android:clipChildren="false">
             <RadioGroup
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:checkedButton="@+id/rb1"
-                android:orientation="horizontal">
-
+                android:orientation="horizontal"
+                android:background="@drawable/white_layer">
                 <RadioButton
                     android:id="@+id/rb1"
                     android:layout_width="0dp"
@@ -88,8 +93,17 @@
                     android:textColor="@color/bottom_menu_selector"
                     android:textSize="12sp"
                     style="@style/OnClick"/>
-
             </RadioGroup>
-        </LinearLayout>
+            <com.king.easychat.view.DragBubbleView
+                android:id="@+id/dbvCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:textSize="@dimen/size_13sp"
+                app:textColor="@color/white"
+                app:bubbleRadius="@dimen/size_10dp"
+                bind:count="@{data}"
+                android:layout_marginTop="@dimen/size_2dp"
+                android:layout_marginLeft="54dp" />
+        </RelativeLayout>
     </LinearLayout>
 </layout>

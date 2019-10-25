@@ -2,6 +2,7 @@ package com.king.easychat
 
 import android.content.Context
 import com.king.easychat.app.Constants
+import com.king.easychat.app.service.HeartBeatService
 import com.king.easychat.bean.Group
 import com.king.easychat.bean.User
 import com.king.easychat.di.component.DaggerApplicationComponent
@@ -26,6 +27,9 @@ class App : BaseApplication() {
 
     var firends: List<User>? = null
     var groups: List<Group>? = null
+
+    var friendId: String? = null
+    var groupId: String? = null
 
     override fun attachBaseContext(base: Context?) {
         //初始化打印日志
@@ -92,8 +96,19 @@ class App : BaseApplication() {
     fun logout(){
         loginResp = null
         user = null
+        stopHeartBeatService()
         NettyClient.INSTANCE.disconnect()
 
+    }
+
+    private fun stopHeartBeatService(){
+        HeartBeatService.stopHeartBeatService(this)
+    }
+
+    override fun onTerminate() {
+        super.onTerminate()
+        stopHeartBeatService()
+        NettyClient.INSTANCE.disconnect()
     }
 
 }

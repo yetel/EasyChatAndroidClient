@@ -20,14 +20,14 @@ class GroupMessageReq(val groupId : String, @Expose val msg : String, var messag
         return PacketType.GROUP_MESSAGE_REQ
     }
 
-    fun toGroupMessageResp(userId: String,userName: String?, isSender: Boolean): GroupMessageResp {
-        val data = GroupMessageResp(userId,userName,message,groupId,messageType,isSender)
+    fun toGroupMessageResp(userId: String,userName: String?,avatar: String?, isSender: Boolean): GroupMessageResp {
+        val data = GroupMessageResp(userId,userName,avatar,message,groupId,messageType,isSender)
         data.dateTime = dateTime
         return data
     }
 
-    fun toGroupMessageResp(loginResp: LoginResp?, isSender: Boolean): GroupMessageResp {
-        val data = GroupMessageResp(loginResp?.userId!!,loginResp?.userName,message,groupId,messageType,isSender)
+    fun toGroupMessageResp(loginResp: LoginResp?,avatar: String?, isSender: Boolean): GroupMessageResp {
+        val data = GroupMessageResp(loginResp?.userId!!,loginResp?.userName,avatar,message,groupId,messageType,isSender)
         data.dateTime = dateTime
         return data
     }

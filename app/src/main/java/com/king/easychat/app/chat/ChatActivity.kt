@@ -48,7 +48,6 @@ class ChatActivity : BaseActivity<ChatViewModel, ChatActivityBinding>(){
     var isAutoScroll = true
 
     override fun initData(savedInstanceState: Bundle?) {
-
         tvSend.visibility = View.GONE
         srl.setColorSchemeResources(R.color.colorAccent)
         srl.setOnRefreshListener {
@@ -137,6 +136,7 @@ class ChatActivity : BaseActivity<ChatViewModel, ChatActivityBinding>(){
         showName = intent.getStringExtra(Constants.KEY_TITLE)
         tvTitle.text = showName
         friendId = intent.getStringExtra(Constants.KEY_ID)
+        getApp().friendId = friendId
 
         mViewModel.queryMessageByFriendId(getApp().getUserId(),friendId,curPage,Constants.PAGE_SIZE)
 
@@ -193,12 +193,10 @@ class ChatActivity : BaseActivity<ChatViewModel, ChatActivityBinding>(){
         resp?.let {
             if(it.isSender || friendId == it.sender){
                 mAdapter.addData(it)
-                mViewModel.saveMessage(getApp().getUserId(),friendId,showName,avatar,resp)
+                mViewModel.saveMessage(getApp().getUserId(),friendId,showName,avatar,true,resp)
                 if(isAutoScroll){
                     rv.scrollToPosition(mAdapter.itemCount - 1)
                 }
-            }else{
-                mViewModel.saveMessage(getApp().getUserId(),it.sender!!,null,null,resp)
             }
         }
 
@@ -235,6 +233,12 @@ class ChatActivity : BaseActivity<ChatViewModel, ChatActivityBinding>(){
             mViewModel.sendMessage(friendId,it,MessageType.TEXT)
         }
 
+    }
+
+    override fun onBackPressed() {
+        mViewModel.updateMessageRead(getApp().getUserId(),friendId)
+        getApp().friendId = null
+        super.onBackPressed()
     }
 
     override fun onClick(v: View){

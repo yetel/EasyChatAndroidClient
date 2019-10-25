@@ -14,6 +14,8 @@
 
     <color name="line">#f2f3f6</color>
 
+    <color name="bubble_color">#bbbbbb</color>
+
     <color name="text_3">#333333</color>
     <color name="text_6">#666666</color>
     <color name="text_9">#999999</color>

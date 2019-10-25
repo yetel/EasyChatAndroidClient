@@ -16,12 +16,16 @@ import androidx.room.PrimaryKey
  */
 @Entity(indices = [Index(value = ["userId"], unique = true)])
 @Parcelize
-class User(val userId: String,val userName: String,var nickName: String?,var avatar: String?,var signature: String?) : Parcelable {
+class User(val userId: String,val userName: String,var nickName: String?,var avatar: String?,var signature: String?,
+           var remark: String? = null) : Parcelable {
 
     @PrimaryKey(autoGenerate = true)
     var id: Int = 0
 
     fun getShowName(): String {
+        remark?.let {
+            return it
+        }
         nickName?.let {
             return it
         }

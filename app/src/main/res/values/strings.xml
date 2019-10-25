@@ -31,11 +31,14 @@
 
     <string name="tips_password_matcher">密码至少包括6个字符，必须由字母、数字组成。</string>
 
+    <string name="change_remark">修改备注</string>
+
     <string name="tips_nickname_is_empty">请输入昵称</string>
     <string name="tips_signature_is_empty">请输入个性签名</string>
 
     <string name="tips_change_nickname">好的昵称能让你朋友更容易记住你</string>
     <string name="tips_change_signature">有签名才个性</string>
+    <string name="tips_change_remark">修改好友备注名称</string>
 
 
     <string name="label_exist_account">已有账户，</string>
@@ -91,6 +94,11 @@
 
     <string name="add_friend">添加好友</string>
     <string name="invite_group">申请加群</string>
+
+    <string name="tips_accept_friend_">"ID为[%1$s]的用户向您发送了好友申请？"</string>
+    <string name="tips_accept_group_">"ID为[%1$s]的用户邀请您加入群[%2$s]？"</string>
+    <string name="accept">接受</string>
+    <string name="ignore">忽略</string>
 
     <!-- Search -->
     <string name="hint_search">搜索用户或群</string>

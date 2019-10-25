@@ -19,7 +19,6 @@ import kotlinx.android.parcel.Parcelize
  * date: 2019/08/19.
  * description:
  */
-@Entity(indices = [Index(value = ["sender"])])
 @Parcelize
 class MessageResp(val sender : String?,val senderName : String?,val message : String, val isSender: Boolean = false, val messageType : Int) : Packet(), MultiItemEntity,
     Parcelable {
@@ -55,9 +54,9 @@ class MessageResp(val sender : String?,val senderName : String?,val message : St
     }
 
 
-    fun toMessageDbo(userId: String,friendId: String?): MessageDbo{
+    fun toMessageDbo(userId: String,friendId: String?,read: Boolean): MessageDbo{
         var receiver = if(isSender) friendId else sender
-        var data = MessageDbo(userId,sender,receiver,message,isSender,messageType,dateTime,senderName)
+        var data = MessageDbo(userId,sender,receiver,message,isSender,messageType,dateTime,senderName,read)
         data.dateTime = dateTime
         return data
     }

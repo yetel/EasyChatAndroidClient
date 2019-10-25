@@ -46,6 +46,37 @@
                 app:layout_constraintBottom_toBottomOf="@+id/tvLabelAvatar"
                 />
             <TextView
+                android:id="@+id/tvLabelRemark"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/nickname"
+                android:textColor="@color/text_6"
+                android:gravity="center_vertical"
+                android:layout_marginTop="@dimen/size_line"
+                android:paddingTop="@dimen/size_12dp"
+                android:paddingBottom="@dimen/size_12dp"
+                android:paddingLeft="@dimen/size_16dp"
+                android:paddingRight="@dimen/size_16dp"
+                android:drawablePadding="@dimen/size_4dp"
+                android:drawableRight="@drawable/ec_next"
+                android:background="@drawable/white_selector"
+                app:layout_constraintTop_toBottomOf="@+id/tvLabelAvatar"
+                style="@style/OnClick"
+                android:visibility="gone"/>
+            <TextView
+                android:id="@+id/tvRemark"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/size_40dp"
+                android:textColor="@color/text_80"
+                android:gravity="center_vertical"
+                android:text="@{data.remark}"
+                tools:text="托儿索"
+                app:layout_constraintTop_toBottomOf="@+id/tvLabelAvatar"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintBottom_toBottomOf="@+id/tvLabelRemark"
+                android:visibility="gone"/>
+            <TextView
                 android:id="@+id/tvLabelNickname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -59,7 +90,7 @@
                 android:paddingRight="@dimen/size_16dp"
                 android:drawablePadding="@dimen/size_4dp"
                 android:background="@drawable/white_selector"
-                app:layout_constraintTop_toBottomOf="@+id/tvLabelAvatar"
+                app:layout_constraintTop_toBottomOf="@+id/tvLabelRemark"
                 style="@style/OnClick"/>
             <TextView
                 android:id="@+id/tvNickname"
@@ -70,7 +101,7 @@
                 android:gravity="center_vertical"
                 android:text="@{data.showName}"
                 tools:text="亚索"
-                app:layout_constraintTop_toBottomOf="@+id/tvLabelAvatar"
+                app:layout_constraintTop_toBottomOf="@+id/tvLabelRemark"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintBottom_toBottomOf="@+id/tvLabelNickname"/>
             <TextView

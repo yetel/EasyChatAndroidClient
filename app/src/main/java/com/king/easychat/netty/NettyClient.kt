@@ -2,6 +2,8 @@ package com.king.easychat.netty
 
 import com.king.anetty.ANetty
 import com.king.anetty.Netty
+import com.king.easychat.netty.packet.req.AcceptGroupReq
+import com.king.easychat.netty.packet.req.AcceptReq
 import io.netty.channel.ChannelFuture
 import io.netty.util.concurrent.GenericFutureListener
 import timber.log.Timber
@@ -94,5 +96,21 @@ class NettyClient {
 
   fun getChannelFuture(): ChannelFuture? {
     return netty.channelFuture
+  }
+
+  //----------------------------
+
+  /**
+   * 接收好友申请-同意/拒绝
+   */
+  fun sendAcceptReq(receiver: String,accept: Boolean){
+    sendMessage(AcceptReq(receiver,accept))
+  }
+
+  /**
+   * 接收邀请加群-同意/拒绝
+   */
+  fun sendAcceptGroupReq(groupId: String,inviterId: String,accept: Boolean){
+    sendMessage(AcceptGroupReq(groupId,inviterId,accept))
   }
 }

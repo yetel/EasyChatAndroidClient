@@ -4,5 +4,6 @@
     <integer name="password_max_length">30</integer>
     <integer name="search_max_length">26</integer>
     <integer name="nickname_max_length">20</integer>
+    <integer name="remark_max_length">20</integer>
     <integer name="signature_max_length">30</integer>
 </resources>

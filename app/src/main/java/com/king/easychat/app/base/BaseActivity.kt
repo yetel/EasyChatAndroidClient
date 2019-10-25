@@ -17,6 +17,8 @@ import androidx.core.app.ActivityOptionsCompat
 import androidx.core.content.ContextCompat
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
+import com.king.app.dialog.AppDialog
+import com.king.app.dialog.AppDialogConfig
 import com.king.base.util.StringUtils
 import com.king.base.util.ToastUtils
 import com.king.easychat.App
@@ -25,6 +27,13 @@ import com.king.easychat.app.Constants
 import com.king.easychat.app.account.LoginActivity
 import com.king.easychat.app.home.HomeActivity
 import com.king.easychat.glide.GlideEngine
+import com.king.easychat.netty.NettyClient
+import com.king.easychat.netty.packet.Packet
+import com.king.easychat.netty.packet.PacketType
+import com.king.easychat.netty.packet.resp.AddUserResp
+import com.king.easychat.netty.packet.resp.GroupMessageResp
+import com.king.easychat.netty.packet.resp.InviteGroupResp
+import com.king.easychat.netty.packet.resp.MessageResp
 import com.king.easychat.util.Cache
 import com.king.easychat.util.Event
 import com.king.frame.mvvmframe.base.BaseActivity
@@ -45,6 +54,51 @@ import timber.log.Timber
 abstract class BaseActivity<VM : BaseViewModel<out BaseModel>,VDB : ViewDataBinding> : BaseActivity<VM,VDB>(){
 
     val rxPermission by lazy { RxPermissions(this@BaseActivity) }
+
+    var isStop = true
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    open fun onMessageEvent(event: Packet){
+        Timber.d("event:${event.packetType()}")
+        if(!isStop){
+            when(event.packetType()){
+                PacketType.ADD_FRIEND_RESP -> handlerAddUserResp(event as AddUserResp)
+                PacketType.INVITE_GROUP_RESP -> handlerInviteGroupResp(event as InviteGroupResp)
+            }
+        }
+    }
+
+    /**
+     * 处理添加好友
+     */
+    private fun handlerAddUserResp(data: AddUserResp){
+        var config = AppDialogConfig()
+        with(config){
+            content = String.format(getString(R.string.tips_accept_friend_),data.inviterId)
+            ok = getString(R.string.accept)
+            cancel = getString(R.string.ignore)
+            onClickOk =  View.OnClickListener {
+                NettyClient.INSTANCE.sendAcceptReq(data.inviterId,true)
+                AppDialog.INSTANCE.dismissDialog()
+            }
+
+        }
+        AppDialog.INSTANCE.showDialog(context,config)
+    }
+
+    private fun handlerInviteGroupResp(data: InviteGroupResp){
+        var config = AppDialogConfig()
+        with(config){
+            content = String.format(getString(R.string.tips_accept_group_),data.inviteId,data.groupName)
+            ok = getString(R.string.accept)
+            cancel = getString(R.string.ignore)
+            onClickOk =  View.OnClickListener {
+                NettyClient.INSTANCE.sendAcceptGroupReq(data.groupId!!,data.inviteId!!,true)
+                AppDialog.INSTANCE.dismissDialog()
+            }
+        }
+        AppDialog.INSTANCE.showDialog(context,config)
+    }
 
     fun selectPhoto(){
         rxPermission.request(
@@ -85,6 +139,16 @@ abstract class BaseActivity<VM : BaseViewModel<out BaseModel>,VDB : ViewDataBind
     override fun onDestroy() {
         if(useEvent()) Event.unregisterEvent(this)
         super.onDestroy()
+    }
+
+    override fun onResume() {
+        isStop = false
+        super.onResume()
+    }
+
+    override fun onStop() {
+        isStop = true
+        super.onStop()
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

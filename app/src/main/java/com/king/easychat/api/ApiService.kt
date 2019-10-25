@@ -62,5 +62,12 @@ interface ApiService {
     @GET("fuzzy/allQuery")
     fun search(@Header("token")token : String,@Query("key")keyword: String,@Query("currentPage")currentPage : Int, @Query("pageSize")pageSize: Int): Call<Result<List<Search>>>
 
+    /**
+     * 修改好友备注名称
+     */
+    @FormUrlEncoded
+    @PUT("update/friend/remark")
+    fun updateFriendRemark(@Header("token")token : String,@Field("friendId")friendId : String,@Field("remark")remark : String): Call<Result<User>>
+
 
 }

@@ -17,7 +17,7 @@ import kotlinx.android.parcel.Parcelize
 open class MessageDbo(var userId : String, val sender : String?, val receiver: String?
                       ,val message : String, val send: Boolean = false
                       , val messageType : Int, var dateTime : String
-                      ,val senderName : String?) : Parcelable {
+                      ,val senderName : String?,var read: Boolean = false) : Parcelable {
     @PrimaryKey(autoGenerate = true)
     var id: Long = 0
 
@@ -28,7 +28,7 @@ open class MessageDbo(var userId : String, val sender : String?, val receiver: S
     }
 
     override fun toString(): String {
-        return "MessageDbo(userId='$userId', sender=$sender, receiver=$receiver, message='$message', send=$send, messageType=$messageType, dateTime=$dateTime, senderName=$senderName, id=$id)"
+        return "MessageDbo(userId='$userId', sender=$sender, receiver=$receiver, message='$message', send=$send, messageType=$messageType, dateTime='$dateTime', senderName=$senderName, read=$read, id=$id)"
     }
 
 

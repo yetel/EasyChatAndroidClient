@@ -1,5 +1,6 @@
 package com.king.easychat.binding
 
+import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
@@ -9,6 +10,7 @@ import com.github.chrisbanes.photoview.PhotoView
 import com.king.base.util.TimeUtils
 import com.king.easychat.R
 import com.king.easychat.glide.GlideApp
+import com.king.easychat.view.DragBubbleView
 import de.hdodenhof.circleimageview.CircleImageView
 
 /**
@@ -28,17 +30,44 @@ fun TextView.dateFormat(time: String?){
 
 @BindingAdapter(value = ["time","curTime"])
 fun TextView.dateFormat(time: String?,curTime: Long){
+    dateFormat(time,curTime,false)
+}
+
+@BindingAdapter(value = ["time","curTime","showDate"])
+fun TextView.dateFormat(time: String?,curTime: Long,showDate: Boolean){
     time?.run {
         val date = TimeUtils.formatDate(time,TimeUtils.FORMAT_Y_TO_D)
         val curDate = TimeUtils.formatDate(curTime,TimeUtils.FORMAT_Y_TO_D)
         if(curDate == date){
             text = TimeUtils.formatDate(time,TimeUtils.FORMAT_H_TO_MIN)
         }else{
-            text = TimeUtils.formatDate(time,TimeUtils.FORMAT_Y_TO_M_EN)
+            text = TimeUtils.formatDate(time,if(showDate) "MM-dd" else TimeUtils.FORMAT_Y_TO_M_EN)
         }
 
     } ?: run {
         text = ""
+    }
+}
+
+@BindingAdapter(value = ["count"])
+fun TextView.count(count: Int){
+    if(count>0){
+        text = count.toString()
+    }else{
+        text = ""
+    }
+
+}
+
+@BindingAdapter(value = ["count"])
+fun DragBubbleView.count(count: Int){
+    if(count>0){
+        setText(count.coerceAtMost(99).toString())
+        visibility = View.VISIBLE
+        reCreate()
+    }else{
+        setText("")
+        visibility = View.INVISIBLE
     }
 
 }

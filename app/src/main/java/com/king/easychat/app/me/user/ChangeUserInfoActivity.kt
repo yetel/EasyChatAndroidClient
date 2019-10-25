@@ -1,6 +1,7 @@
 package com.king.easychat.app.me.user
 
 import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.Observer
@@ -18,9 +19,12 @@ class ChangeUserInfoActivity : BaseActivity<ChangeUserInfoViewModel, ChangeUserI
 
     var changeType = CHANGE_NICKNAME
 
+    var friendId : String? = null
+
     companion object{
         const val CHANGE_NICKNAME = 0
         const val CHANGE_SIGNATURE = 1
+        const val CHANGE_REMARK = 2
     }
 
     override fun initData(savedInstanceState: Bundle?) {
@@ -29,6 +33,10 @@ class ChangeUserInfoActivity : BaseActivity<ChangeUserInfoViewModel, ChangeUserI
         val title = intent.getStringExtra(Constants.KEY_TITLE)
         tvTitle.text = title
         changeType = intent.getIntExtra(Constants.KEY_TYPE,CHANGE_NICKNAME)
+
+        if(changeType == CHANGE_REMARK){
+            friendId = intent.getStringExtra(Constants.KEY_ID)
+        }
 
         tvTips.text = intent.getStringExtra(Constants.KEY_TIPS)
 
@@ -40,7 +48,13 @@ class ChangeUserInfoActivity : BaseActivity<ChangeUserInfoViewModel, ChangeUserI
 
         mViewModel.userLiveData.observe(this, Observer {
             it?.let {
-                setResult(Activity.RESULT_OK)
+                if(changeType == CHANGE_REMARK){
+                    val data = Intent()
+                    data.putExtra(Constants.KEY_BEAN,it)
+                    setResult(Activity.RESULT_OK,data)
+                }else{
+                    setResult(Activity.RESULT_OK)
+                }
                 onBackPressed()
             }
         })
@@ -55,6 +69,7 @@ class ChangeUserInfoActivity : BaseActivity<ChangeUserInfoViewModel, ChangeUserI
         when(changeType){
             CHANGE_NICKNAME ->  clickNickname()
             CHANGE_SIGNATURE -> clickSignature()
+            CHANGE_REMARK -> clickRemark()
         }
     }
 
@@ -68,6 +83,15 @@ class ChangeUserInfoActivity : BaseActivity<ChangeUserInfoViewModel, ChangeUserI
     private fun clickSignature(){
         if(checkInput(etContent)){
             mViewModel.updateSignature(etContent.text.toString().trim())
+        }
+    }
+
+    private fun clickRemark(){
+        if(checkInput(etContent)){
+            friendId?.let {
+                mViewModel.updateFriendRemark(it,etContent.text.toString().trim())
+            }
+
         }
     }
 

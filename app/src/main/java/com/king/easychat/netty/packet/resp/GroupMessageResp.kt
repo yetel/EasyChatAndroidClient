@@ -19,9 +19,8 @@ import kotlinx.android.parcel.Parcelize
  * date: 2019/08/19.
  * description:
  */
-@Entity(indices = [Index(value = ["groupId"])])
 @Parcelize
-class GroupMessageResp(val senderId : String,val senderName : String?,val message : String,val groupId: String, val messageType : Int, val isSender: Boolean = false) : Packet(), MultiItemEntity,
+class GroupMessageResp(val senderId : String,val senderName : String?,var avatar: String?,val message : String,val groupId: String, val messageType : Int, val isSender: Boolean = false) : Packet(), MultiItemEntity,
     Parcelable {
 
     @PrimaryKey(autoGenerate = true)
@@ -56,8 +55,8 @@ class GroupMessageResp(val senderId : String,val senderName : String?,val messag
     }
 
 
-    fun toGroupMessageDbo(userId: String): GroupMessageDbo{
-        val data = GroupMessageDbo(userId,groupId,senderId,senderName,message,isSender,messageType,dateTime)
+    fun toGroupMessageDbo(userId: String,read: Boolean): GroupMessageDbo{
+        val data = GroupMessageDbo(userId,groupId,senderId,senderName,avatar,message,isSender,messageType,dateTime,read)
         data.dateTime = dateTime
         return data
     }

@@ -52,6 +52,10 @@ class HeartBeatService : Service(){
         fun bindHeartBeatService(context : Context){
             context.applicationContext?.bindService(Intent(context,HeartBeatService::class.java),serviceConnection,Context.BIND_AUTO_CREATE)
         }
+
+        fun stopHeartBeatService(context: Context){
+            context.stopService(Intent(context,HeartBeatService::class.java))
+        }
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {

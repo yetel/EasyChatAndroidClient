@@ -7,6 +7,9 @@
         <variable
             name="data"
             type="com.king.easychat.bean.Message" />
+        <variable
+            name="curTime"
+            type="Long" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -15,6 +18,7 @@
         android:paddingRight="@dimen/size_16dp"
         android:paddingTop="@dimen/size_10dp"
         android:paddingBottom="@dimen/size_10dp"
+        android:clipChildren="false"
         android:background="@drawable/white_selector">
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/ivAvatar"
@@ -51,5 +55,31 @@
             android:layout_marginTop="@dimen/size_4dp"
             app:layout_constraintTop_toBottomOf="@+id/tvName"
             app:layout_constraintLeft_toRightOf="@+id/ivAvatar"/>
+        <TextView
+            android:id="@+id/tvTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/text_9"
+            android:textSize="@dimen/size_13sp"
+            android:gravity="center_horizontal"
+            bind:time="@{data.dateTime}"
+            bind:curTime="@{curTime}"
+            bind:showDate="@{true}"
+            tools:text="11:26"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintRight_toRightOf="parent"/>
+        <com.king.easychat.view.DragBubbleView
+            android:id="@+id/dbvCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="3"
+            app:bubbleRadius="@dimen/size_10dp"
+            app:bubbleColor="@color/bubble_color"
+            app:textSize="@dimen/size_13sp"
+            app:textColor="@color/white"
+            bind:count="@{data.count}"
+            app:layout_constraintTop_toBottomOf="@+id/tvTime"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

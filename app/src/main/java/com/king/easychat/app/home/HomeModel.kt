@@ -14,6 +14,7 @@ import javax.inject.Inject
  */
 class HomeModel @Inject constructor(repository: IDataRepository?): MessageModel(repository){
 
+    var totalCount = 0
 
 
     /**
@@ -25,16 +26,18 @@ class HomeModel @Inject constructor(repository: IDataRepository?): MessageModel(
         val recentChats = getRecentChatDao().getRecentChats(userId)
         val recentGroupChats = getRecentGroupChatDao().getRecentGroupChats(userId)
 
-//        val users = getUserDao().getUsers()
-//        val groups = getGroupDao().getGroups()
+        val users = getUserDao().getUsers()
+        val groups = getGroupDao().getGroups()
 
         val messageLists = ArrayList<Message>()
-
+        totalCount = 0
         for (recentChat in recentChats) {
 
             val messageResp = messageDao.getLastMessageBySenderId(userId, recentChat.chatId,recentChat.chatId)
-
+            val count = messageDao.getUnreadNumBySenderId1(userId,recentChat.chatId).size
+            totalCount += count
             val messageList = Message()
+            messageList.count = count
             with(messageList){
                 id = recentChat.chatId
                 name = recentChat.showName
@@ -48,6 +51,15 @@ class HomeModel @Inject constructor(repository: IDataRepository?): MessageModel(
                     dateTime = it.dateTime
                 }
 
+                users?.let {
+                    for(user in users){
+                        if(user.userId == id){
+                            name = user.getShowName()
+                            avatar = user.avatar
+                            break
+                        }
+                    }
+                }
             }
 
             messageLists.add(messageList)
@@ -56,7 +68,10 @@ class HomeModel @Inject constructor(repository: IDataRepository?): MessageModel(
 
         for (recentGroupChat in recentGroupChats) {
             val groupMessageResp = groupMessageDao.getLastMessageByGroupId(userId, recentGroupChat.groupChatId)
+            val count = groupMessageDao.getUnreadNumByGroupId1(userId,recentGroupChat.groupChatId).size
+            totalCount += count
             val messageGroupList = Message()
+            messageGroupList.count = count
             with(messageGroupList){
                 id = recentGroupChat.groupChatId
                 name = recentGroupChat.showName
@@ -70,11 +85,13 @@ class HomeModel @Inject constructor(repository: IDataRepository?): MessageModel(
                     dateTime = it.dateTime
                 }
 
-//                for(group in groups){
-//                    if(group.groupId == groupId){
-//                        name = group.groupName
-//                    }
-//                }
+                for(group in groups){
+                    if(group.groupId == id){
+                        name = group.groupName
+                        avatar = group.avatar
+                        break
+                    }
+                }
 
             }
 

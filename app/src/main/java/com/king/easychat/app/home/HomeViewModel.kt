@@ -1,6 +1,7 @@
 package com.king.easychat.app.home
 
 import android.app.Application
+import android.os.SystemClock
 import androidx.lifecycle.MutableLiveData
 import com.king.easychat.App
 import com.king.easychat.api.ApiService
@@ -14,6 +15,7 @@ import com.king.frame.mvvmframe.http.callback.ApiCallback
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import retrofit2.Call
 import javax.inject.Inject
 
@@ -26,6 +28,8 @@ class HomeViewModel @Inject constructor(application: Application, model: HomeMod
 
     var userLiveData = MutableLiveData<User>()
 
+    var totalCountLiveData = MutableLiveData<Int>()
+
     override fun onCreate() {
         super.onCreate()
     }
@@ -33,21 +37,29 @@ class HomeViewModel @Inject constructor(application: Application, model: HomeMod
 
 
     fun retry(){
-        queryMessageList(getApp().getUserId(),1,Constants.PAGE_SIZE)
+        queryMessageList(getApp().getUserId(),1,Constants.PAGE_SIZE,0)
     }
 
 
+    fun delay(sleepTime: Int){
+        queryMessageList(getApp().getUserId(),1,Constants.PAGE_SIZE,sleepTime)
+    }
 
 
     /**
      * 查询最近聊天记录
      */
-    fun queryMessageList(userId : String, currentPage : Int, pageSize : Int){
-        GlobalScope.launch(Dispatchers.IO) {
-            var list = mModel.queryMessageList(userId,pageSize)
-            lastMessageLiveData.postValue(list)
+    fun queryMessageList(userId : String, currentPage : Int, pageSize : Int,sleepTime: Int){
+        GlobalScope.launch(Dispatchers.Main) {
+            SystemClock.sleep(sleepTime.toLong())
+            var list = withContext(Dispatchers.IO){
+                mModel.queryMessageList(userId,pageSize)
+
+            }
+            lastMessageLiveData.value = list
+            totalCountLiveData.value = mModel.totalCount
+            sendSingleLiveEvent(Constants.REFRESH_SUCCESS)
         }
-        sendSingleLiveEvent(Constants.REFRESH_SUCCESS)
     }
 
     /**

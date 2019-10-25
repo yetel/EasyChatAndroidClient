@@ -46,6 +46,7 @@ class SplashActivity : BaseActivity<SplashViewModel, SplashActivityBinding>(){
             })
             NettyClient.INSTANCE.connect()
         }else{
+            loginResp = getApp().loginResp
             isRequest = true
         }
 

@@ -2,11 +2,7 @@ package com.king.easychat.app.home
 
 import android.os.Bundle
 import android.view.View
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
-import androidx.lifecycle.Observer
-import com.king.app.dialog.AppDialog
-import com.king.app.dialog.AppDialogConfig
 import com.king.easychat.R
 import com.king.easychat.app.base.BaseActivity
 import com.king.easychat.app.friend.FriendFragment
@@ -15,20 +11,20 @@ import com.king.easychat.app.me.MeFragment
 import com.king.easychat.databinding.HomeActivityBinding
 import com.king.easychat.netty.packet.Packet
 import com.king.easychat.netty.packet.PacketType
-import com.king.easychat.netty.packet.resp.AddUserResp
-import com.king.easychat.netty.packet.resp.InviteGroupResp
-import com.king.easychat.util.Event
+import com.king.easychat.netty.packet.resp.GroupMessageResp
+import com.king.easychat.netty.packet.resp.MessageResp
+import com.king.easychat.view.DragBubbleView
 import com.king.frame.mvvmframe.base.livedata.StatusEvent
 import kotlinx.android.synthetic.main.home_activity.*
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import timber.log.Timber
-import java.security.acl.Group
 
 /**
  * @author <a href="mailto:jenly1314@gmail.com">Jenly</a>
  */
-class HomeActivity : BaseActivity<HomeViewModel, HomeActivityBinding>() {
+class HomeActivity : BaseActivity<HomeViewModel, HomeActivityBinding>() ,
+    HomeFragment.OnTotalCountCallback {
 
      var homeFragment : HomeFragment? = null
 
@@ -49,8 +45,30 @@ class HomeActivity : BaseActivity<HomeViewModel, HomeActivityBinding>() {
                 StatusEvent.Status.ERROR -> hideLoading()
             }
         }
+
+        dbvCount.setOnBubbleStateListener(object : DragBubbleView.OnBubbleStateListener{
+            override fun onDrag() {
+            }
+
+            override fun onMove() {
+            }
+
+            override fun onRestore() {
+            }
+
+            override fun onDismiss() {
+                mViewModel.updateAllMessageRead(getApp().getUserId())
+            }
+
+        })
+
         mViewModel.getUser()
 
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onMessageEvent(event: Int){
+        Timber.d("----------刷新$event")
     }
 
     override fun getLayoutId(): Int {
@@ -121,40 +139,30 @@ class HomeActivity : BaseActivity<HomeViewModel, HomeActivityBinding>() {
 
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onMessageEvent(event: Packet){
-        Timber.d("event:${event.packetType()}")
+    override fun onMessageEvent(event: Packet){
+        super.onMessageEvent(event)
         when(event.packetType()){
-            PacketType.ADD_FRIEND_RESP -> handlerAddFriend(event as AddUserResp)
-            PacketType.INVITE_GROUP_RESP -> handlerInviteGroup(event as InviteGroupResp)
+            PacketType.SEND_MESSAGE_RESP -> handleMessageResp(event as MessageResp)
+            PacketType.GROUP_MESSAGE_RESP -> handleGroupMessageResp(event as GroupMessageResp)
         }
     }
 
-    private fun handlerAddFriend(data: AddUserResp){
-        var config = AppDialogConfig()
-        with(config){
-            content = "id=${data.inviterId}向您发送了好友申请？"
-            ok = "同意"
-            onClickOk =  View.OnClickListener {
-                mViewModel.sendAcceptReq(data.inviterId,true)
-                AppDialog.INSTANCE.dismissDialog()
-            }
-
-        }
-        AppDialog.INSTANCE.showDialog(context,config)
+    /**
+     * 处理普通消息
+     */
+    private fun handleMessageResp(data: MessageResp){
+        val read = getApp().firends != null
+        mViewModel.saveMessage(getApp().getUserId(),data.sender!!,data.senderName,null,read,data)
     }
 
-    private fun handlerInviteGroup(data: InviteGroupResp){
-        var config = AppDialogConfig()
-        with(config){
-            content = "id=${data.inviteId}邀请您加入群[${data.groupName}]，是否同意？"
-            ok = "同意"
-            onClickOk =  View.OnClickListener {
-                mViewModel.sendAcceptGroupReq(data.groupId!!,data.inviteId!!,true)
-                AppDialog.INSTANCE.dismissDialog()
-            }
-        }
-        AppDialog.INSTANCE.showDialog(context,config)
+    /**
+     * 处理群消息
+     */
+    private fun handleGroupMessageResp(data: GroupMessageResp){
+        val read = getApp().groupId != null
+        mViewModel.saveGroupMessage(getApp().getUserId(),data.groupId,null,read,data)
     }
+
 
     override fun onClick(v: View){
         when(v.id){
@@ -163,6 +171,10 @@ class HomeActivity : BaseActivity<HomeViewModel, HomeActivityBinding>() {
             R.id.rb3 -> showGroupFragment()
             R.id.rb4 -> showMeFragment()
         }
+    }
+
+    override fun onTotalCountChanged(count: Int){
+        mBinding.data = count
     }
 
 }

@@ -1,5 +1,6 @@
 package com.king.easychat.app.home
 
+import android.content.Context
 import android.os.Bundle
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -7,18 +8,16 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.king.base.adapter.divider.DividerItemDecoration
 import com.king.easychat.R
 import com.king.easychat.app.Constants
-import com.king.easychat.app.adapter.BindingAdapter
+import com.king.easychat.app.adapter.MessageAdapter
 import com.king.easychat.app.base.BaseFragment
 import com.king.easychat.app.chat.ChatActivity
 import com.king.easychat.app.chat.GroupChatActivity
 import com.king.easychat.bean.Message
+import com.king.easychat.bean.Operator
 import com.king.easychat.databinding.HomeFragmentBinding
 import com.king.easychat.netty.packet.Packet
 import com.king.easychat.netty.packet.PacketType
-import kotlinx.android.synthetic.main.chat_activity.*
 import kotlinx.android.synthetic.main.group_fragment.*
-import kotlinx.android.synthetic.main.group_fragment.rv
-import kotlinx.android.synthetic.main.group_fragment.srl
 import kotlinx.android.synthetic.main.home_toolbar.*
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -28,12 +27,27 @@ import org.greenrobot.eventbus.ThreadMode
  */
 class HomeFragment : BaseFragment<HomeViewModel,HomeFragmentBinding>(){
 
-    val mAdapter by lazy { BindingAdapter<Message>(R.layout.rv_message_item) }
+    val mAdapter by lazy { MessageAdapter(getApp().getUserId(),mViewModel) }
 
+    var isRefresh = false
+
+    var onTotalCountCallback : OnTotalCountCallback? = null
+
+
+    interface OnTotalCountCallback{
+        fun onTotalCountChanged(count: Int)
+    }
 
     companion object{
         fun newInstance(): HomeFragment {
             return HomeFragment()
+        }
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if(context is OnTotalCountCallback){
+            onTotalCountCallback = context
         }
     }
 
@@ -53,7 +67,13 @@ class HomeFragment : BaseFragment<HomeViewModel,HomeFragmentBinding>(){
         mBinding.viewModel = mViewModel
 
         mViewModel.lastMessageLiveData.observe(this, Observer {
+            mAdapter.curTime = System.currentTimeMillis()
             mAdapter.replaceData(it)
+        })
+
+
+        mViewModel.totalCountLiveData.observe(this, Observer {
+            onTotalCountCallback?.onTotalCountChanged(it)
         })
 
         registerSingleLiveEvent {
@@ -61,12 +81,25 @@ class HomeFragment : BaseFragment<HomeViewModel,HomeFragmentBinding>(){
                 Constants.REFRESH_SUCCESS -> srl.isRefreshing = false
             }
         }
-
-        requestData()
     }
 
     fun requestData(){
-        mViewModel.retry()
+        if(isRefresh){
+            mViewModel.delay(200)
+        }
+
+    }
+
+    override fun onResume() {
+        isRefresh = true
+        super.onResume()
+        requestData()
+    }
+
+    override fun onHiddenChanged(hidden: Boolean) {
+        super.onHiddenChanged(hidden)
+        isRefresh = !hidden
+        requestData()
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -74,6 +107,13 @@ class HomeFragment : BaseFragment<HomeViewModel,HomeFragmentBinding>(){
         when(event.packetType()){
             PacketType.SEND_MESSAGE_RESP -> requestData()
             PacketType.GROUP_MESSAGE_RESP -> requestData()
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onMessageEvent(event: Operator){
+        when(event.event){
+            Constants.EVENT_REFRESH_MESSAGE_COUNT -> requestData()
         }
     }
 
@@ -97,6 +137,11 @@ class HomeFragment : BaseFragment<HomeViewModel,HomeFragmentBinding>(){
         intent.putExtra(Constants.KEY_ID,data.id)
         intent.putExtra(Constants.KEY_IMAGE_URL,data.avatar)
         startActivity(intent)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        isRefresh = false
     }
 
     override fun getLayoutId(): Int {

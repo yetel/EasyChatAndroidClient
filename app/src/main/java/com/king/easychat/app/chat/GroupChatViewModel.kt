@@ -26,30 +26,6 @@ class GroupChatViewModel @Inject constructor(application: Application, model: Gr
 
     var groupMessageLiveData = MutableLiveData<List<GroupMessageResp>>()
 
-    override fun onCreate() {
-        super.onCreate()
-    }
-
-    /**
-     *保存群聊消息
-     */
-    fun saveGroupMessage(userId: String,groupId: String,groupName: String?,data : GroupMessageResp){
-        GlobalScope.launch(Dispatchers.IO) {
-            mModel.saveGroupMessage(userId,data)
-            // 保存最近聊天群组
-            if(groupId == data.groupId){
-                val recentChat = RecentGroupChat(userId,groupId,groupName,null,data.dateTime)
-                mModel.saveRecentGroupChat(recentChat)
-            }else{
-                val recentChat = RecentGroupChat(userId,data.groupId,null,null,data.dateTime)
-                mModel.saveRecentGroupChat(recentChat)
-            }
-
-        }
-    }
-
-
-
     /**
      * 查询群组聊天记录
      */

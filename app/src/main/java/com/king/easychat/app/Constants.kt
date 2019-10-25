@@ -50,6 +50,8 @@ object Constants {
     const val EVENT_SUCCESS = 0x01
     const val REFRESH_SUCCESS = 0x02
 
+    const val EVENT_REFRESH_MESSAGE_COUNT = 0x03
+
     //---------------------------------------------
 
     const val PAGE_SIZE = 20

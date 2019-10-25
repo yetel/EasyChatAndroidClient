@@ -1,10 +1,15 @@
 package com.king.easychat.app.base
 
 import android.app.Application
+import android.os.Message
+import android.os.SystemClock
 import android.text.TextUtils
 import com.king.easychat.App
 import com.king.easychat.R
 import com.king.easychat.app.Constants
+import com.king.easychat.bean.Operator
+import com.king.easychat.bean.RecentChat
+import com.king.easychat.bean.RecentGroupChat
 import com.king.easychat.bean.Result
 import com.king.easychat.netty.NettyClient
 import com.king.easychat.netty.packet.MessageType
@@ -12,6 +17,9 @@ import com.king.easychat.netty.packet.req.AcceptGroupReq
 import com.king.easychat.netty.packet.req.AcceptReq
 import com.king.easychat.netty.packet.req.GroupMessageReq
 import com.king.easychat.netty.packet.req.MessageReq
+import com.king.easychat.netty.packet.resp.GroupMessageResp
+import com.king.easychat.netty.packet.resp.MessageResp
+import com.king.easychat.util.Event
 import com.king.easychat.util.FileUtil
 import com.king.frame.mvvmframe.base.BaseViewModel
 import com.king.frame.mvvmframe.http.callback.ApiCallback
@@ -78,61 +86,6 @@ open class MessageViewModel<M :MessageModel> @Inject constructor(application: Ap
             val imageBase64 = FileUtil.imageToBase64(filename)
             mModel.updateImage(token!!,imageBase64,suffix).await()
         }
-
-//        Luban.with(getApp())
-//            .load(file)
-//            .ignoreBy(80)
-//            .setTargetDir(getApp().getPath())
-//            .filter { path -> !(TextUtils.isEmpty(path) || path.toLowerCase().endsWith(".gif")) }
-//            .setCompressListener(object : OnCompressListener {
-//                override fun onStart() {
-//                    Timber.d("Start compressing...")
-//                }
-//
-//                override fun onSuccess(file: File) {
-//                    Timber.d("file:" + file.absolutePath)
-//                    GlobalScope.launch(Dispatchers.Main){
-//                        val imageBase64 = withContext(Dispatchers.IO){
-//                            FileUtil.imageToBase64(file)
-//                            mModel.updateImage(token!!,imageBase64,suffix).execute().body()
-//                        }
-//
-//                        mModel.updateImage(token!!,imageBase64,suffix).enqueue(object: ApiCallback<Result<String>>(){
-//
-//                            override fun onResponse(call: Call<Result<String>>?, result: Result<String>?) {
-//                                result?.let {
-//                                    if(it.isSuccess()){
-//
-//                                        try{
-//                                            if(isGroup){
-//                                                sendGroupMessage(receiver,it.data!!,MessageType.IMAGE)
-//                                            }else{
-//                                                sendGroupMessage(receiver,it.data!!,MessageType.IMAGE)
-//                                            }
-//                                        }catch (e: Exception){
-//                                            Timber.e(e)
-//                                        }
-//
-//                                    }else{
-//                                        sendMessage(it.desc)
-//                                    }
-//                                }
-//                            }
-//
-//                            override fun onError(call: Call<Result<String>>?, t: Throwable?) {
-//                                sendMessage(t?.message)
-//                            }
-//
-//                        })
-//                    }
-//
-//                }
-//
-//                override fun onError(e: Throwable) {
-//                    Timber.e(e)
-//                }
-//            }).launch()
-
     }
 
     private fun getUploadImageUrl(result: Result<String>?): String?{
@@ -207,12 +160,67 @@ open class MessageViewModel<M :MessageModel> @Inject constructor(application: Ap
 
     }
 
-    fun sendAcceptReq(receiver: String,accept: Boolean){
-        NettyClient.INSTANCE.sendMessage(AcceptReq(receiver,accept))
+    /**
+     * 保存消息记录
+     */
+    fun saveMessage(userId: String,friendId: String,showName: String?,avatar: String?,read: Boolean,data: MessageResp){
+        GlobalScope.launch {
+            val recentChat = withContext(Dispatchers.IO){
+                Timber.d("save:$data")
+                if(data.isSender || friendId == data.sender){
+                    mModel.saveMessage(userId,friendId,read,data)
+                    // 保存最近聊天好友
+                    RecentChat(userId,friendId,showName,avatar,data.dateTime)
+                }else{
+                    mModel.saveMessage(userId,data.sender,read,data)
+                    // 保存最近聊天好友
+                    RecentChat(userId,data.sender!!,data.senderName,null,data.dateTime)
+                }
+
+
+            }
+
+            mModel.saveRecentChat(recentChat)
+        }
     }
 
-    fun sendAcceptGroupReq(groupId: String,inviterId: String,accept: Boolean){
-        NettyClient.INSTANCE.sendMessage(AcceptGroupReq(groupId,inviterId,accept))
+
+    /**
+     *保存群聊消息
+     */
+    fun saveGroupMessage(userId: String,groupId: String,groupName: String?,read: Boolean,data : GroupMessageResp){
+        GlobalScope.launch(Dispatchers.IO) {
+            mModel.saveGroupMessage(userId,read,data)
+            // 保存最近聊天群组
+            if(groupId == data.groupId){
+                val recentChat = RecentGroupChat(userId,groupId,groupName,null,data.dateTime)
+                mModel.saveRecentGroupChat(recentChat)
+            }else{
+                val recentChat = RecentGroupChat(userId,data.groupId,null,null,data.dateTime)
+                mModel.saveRecentGroupChat(recentChat)
+            }
+
+        }
     }
 
+    fun updateMessageRead(userId: String,friendId: String){
+        GlobalScope.launch(Dispatchers.IO) {
+            mModel.updateMessageRead(userId, friendId)
+            Event.sendEvent(Operator(Constants.EVENT_REFRESH_MESSAGE_COUNT))
+        }
+    }
+
+    fun updateGroupMessageRead(userId: String,groupId: String){
+        GlobalScope.launch(Dispatchers.IO) {
+            mModel.updateGroupMessageRead(userId, groupId)
+            Event.sendEvent(Operator(Constants.EVENT_REFRESH_MESSAGE_COUNT))
+        }
+    }
+
+    fun updateAllMessageRead(userId: String){
+        GlobalScope.launch(Dispatchers.IO) {
+            mModel.updateAllMessageRead(userId)
+            Event.sendEvent(Operator(Constants.EVENT_REFRESH_MESSAGE_COUNT))
+        }
+    }
 }

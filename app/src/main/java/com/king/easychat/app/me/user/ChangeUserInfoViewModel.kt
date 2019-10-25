@@ -11,6 +11,7 @@ import com.king.easychat.bean.User
 import com.king.easychat.util.FileUtil
 import com.king.frame.mvvmframe.base.BaseModel
 import com.king.frame.mvvmframe.base.DataViewModel
+import com.king.frame.mvvmframe.base.livedata.StatusEvent
 import com.king.frame.mvvmframe.http.callback.ApiCallback
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -103,6 +104,40 @@ class ChangeUserInfoViewModel @Inject constructor(application: Application, mode
 
                 })
         }
+    }
+
+    /**
+     * 获取好友信息
+     */
+    fun updateFriendRemark(friendId: String,remark: String){
+        updateStatus(StatusEvent.Status.LOADING)
+        val token = getApplication<App>().getToken()
+        mModel.getRetrofitService(ApiService::class.java)
+            .updateFriendRemark(token,friendId,remark)
+            .enqueue(object : ApiCallback<Result<User>>(){
+                override fun onResponse(call: Call<Result<User>>?, result: Result<User>?) {
+                    result?.let {
+                        if(it.isSuccess()){
+                            updateStatus(StatusEvent.Status.SUCCESS)
+                            userLiveData.value = it.data
+                        }else{
+                            sendMessage(it.desc)
+                            updateStatus(StatusEvent.Status.FAILURE)
+                        }
+
+                    } ?: run{
+                        updateStatus(StatusEvent.Status.FAILURE)
+                        sendMessage(R.string.result_failure)
+                    }
+                }
+
+                override fun onError(call: Call<Result<User>>?, t: Throwable?) {
+                    updateStatus(StatusEvent.Status.ERROR)
+                    sendMessage(t?.message)
+                }
+
+            })
+
     }
 
 

@@ -34,6 +34,11 @@ class Message {
 
     var avatar: String? = null
 
+    /**
+     * 未读消息数
+     */
+    var count = 0
+
     fun getMsg() : String? {
         if(messageType ==1){
             return "[图片消息]"
@@ -49,7 +54,7 @@ class Message {
     }
 
     override fun toString(): String {
-        return "Message(id=$id, dateTime=$dateTime, messageMode=$messageMode, senderId=$senderId, message=$message, messageType=$messageType, name=$name, avatar=$avatar)"
+        return "Message(id=$id, dateTime=$dateTime, messageMode=$messageMode, senderId=$senderId, message=$message, messageType=$messageType, name=$name, avatar=$avatar, count=$count)"
     }
 
 

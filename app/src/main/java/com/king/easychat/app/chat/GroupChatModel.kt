@@ -15,21 +15,6 @@ import javax.inject.Inject
  */
 class GroupChatModel @Inject constructor(repository: IDataRepository?) : MessageModel(repository){
 
-
-    /**
-     *保存群聊消息
-     */
-    fun saveGroupMessage(userId: String,userName: String?, data: GroupMessageReq){
-        getGroupMessageDao().insert(data.toGroupMessageResp(userId,userName,true).toGroupMessageDbo(userId))
-    }
-
-    /**
-     *保存群聊消息
-     */
-    fun saveGroupMessage(userId : String, data: GroupMessageResp){
-        getGroupMessageDao().insert(data.toGroupMessageDbo(userId))
-    }
-
     /**
      * 根据群聊id获取聊天记录
      */
@@ -37,9 +22,7 @@ class GroupChatModel @Inject constructor(repository: IDataRepository?) : Message
         return getGroupMessageDao().getGroupMessageByGroupId(userId, groupId, (currentPage-1) * pageSize, pageSize).sortedBy { it.dateTime }
     }
 
-    fun saveRecentGroupChat(data: RecentGroupChat){
-        getRecentGroupChatDao().insert(data)
-    }
+
 
 
 }

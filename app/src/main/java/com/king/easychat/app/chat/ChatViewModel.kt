@@ -45,30 +45,6 @@ class ChatViewModel @Inject constructor(application: Application, model: ChatMod
 //
 //    }
 
-    /**
-     * 保存消息记录
-     */
-    fun saveMessage(userId: String,friendId: String,showName: String?,avatar: String?,data: MessageResp){
-        GlobalScope.launch {
-            val recentChat = withContext(Dispatchers.IO){
-                Timber.d("save:$data")
-                if(data.isSender || friendId == data.sender){
-                    mModel.saveMessage(userId,friendId,data)
-                    // 保存最近聊天好友
-                    RecentChat(userId,friendId,showName,avatar,data.dateTime)
-                }else{
-                    mModel.saveMessage(userId,data.sender,data)
-                    // 保存最近聊天好友
-                    RecentChat(userId,data.sender!!,data.senderName,null,data.dateTime)
-                }
-
-
-            }
-
-            mModel.saveRecentChat(recentChat)
-        }
-    }
-
 
     /**
      * 根据好友id获取聊天记录
