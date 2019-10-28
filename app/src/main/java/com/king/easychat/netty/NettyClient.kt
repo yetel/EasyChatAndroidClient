@@ -2,8 +2,11 @@ package com.king.easychat.netty
 
 import com.king.anetty.ANetty
 import com.king.anetty.Netty
+import com.king.easychat.app.Constants
+import com.king.easychat.bean.Operator
 import com.king.easychat.netty.packet.req.AcceptGroupReq
 import com.king.easychat.netty.packet.req.AcceptReq
+import com.king.easychat.util.Event
 import io.netty.channel.ChannelFuture
 import io.netty.util.concurrent.GenericFutureListener
 import timber.log.Timber
@@ -38,7 +41,12 @@ class NettyClient {
    */
   fun sendMessage(msg: Any){
     Timber.d(msg.toString())
-    netty.sendMessage(msg)
+    if(netty.isConnected){
+        netty.sendMessage(msg)
+    }else{
+        Event.sendEvent(Operator(Constants.EVENT_NETTY_DISCONNECT))
+    }
+
   }
 
   /**

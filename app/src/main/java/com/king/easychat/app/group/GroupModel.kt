@@ -67,8 +67,4 @@ class GroupModel @Inject constructor(repository: IDataRepository?): MessageModel
         }
 
     }
-
-    fun getGroups(): LiveData<List<Group>> {
-        return getGroupDao().getAllGroups()
-    }
 }

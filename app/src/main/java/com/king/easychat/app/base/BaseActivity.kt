@@ -23,7 +23,10 @@ import com.king.easychat.App
 import com.king.easychat.R
 import com.king.easychat.app.Constants
 import com.king.easychat.app.account.LoginActivity
+import com.king.easychat.app.code.ScanCodeActivity
 import com.king.easychat.app.home.HomeActivity
+import com.king.easychat.app.photo.PhotoViewActivity
+import com.king.easychat.bean.Operator
 import com.king.easychat.glide.GlideEngine
 import com.king.easychat.netty.NettyClient
 import com.king.easychat.netty.packet.Packet
@@ -51,6 +54,17 @@ abstract class BaseActivity<VM : BaseViewModel<out BaseModel>,VDB : ViewDataBind
     val rxPermission by lazy { RxPermissions(this@BaseActivity) }
 
     var isStop = true
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onMessageEvent(event: Operator){
+        Timber.d("event:${event.event}")
+        if(!isStop) {
+            when (event.event) {
+                Constants.EVENT_NETTY_DISCONNECT -> showToast(R.string.tips_netty_disconnect)
+                Constants.EVENT_NETTY_RECONNECT -> showToast(R.string.tips_netty_reconnect)
+            }
+        }
+    }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     open fun onMessageEvent(event: Packet){
@@ -315,6 +329,30 @@ abstract class BaseActivity<VM : BaseViewModel<out BaseModel>,VDB : ViewDataBind
         startActivity(intent, optionsCompat.toBundle())
     }
 
+    fun startPhotoViewActivity(imgUrl: String,v: View){
+        val intent = Intent(context, PhotoViewActivity::class.java)
+        var list = ArrayList<String>()
+        list.add(imgUrl)
+        intent.putStringArrayListExtra(Constants.KEY_LIST,list)
+        val optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(this,v,
+            PhotoViewActivity.IMAGE)
+        startActivity(intent, optionsCompat.toBundle())
+    }
+
+    fun startScanCodeActivity(){
+        val intent = Intent(context,ScanCodeActivity::class.java)
+        val optionsCompat = ActivityOptionsCompat.makeCustomAnimation(context, R.anim.anim_in, R.anim.anim_out)
+        startActivity(intent, optionsCompat.toBundle())
+    }
+
+    fun clickScan(){
+        rxPermission.request(Manifest.permission.CAMERA)
+            .subscribe{
+                if(it){
+                    startScanCodeActivity()
+                }
+            }
+    }
 
     open fun onClick(v: View){
         if(v.id == R.id.ivLeft) onBackPressed()

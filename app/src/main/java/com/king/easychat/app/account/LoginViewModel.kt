@@ -34,7 +34,6 @@ class LoginViewModel @Inject constructor(application: Application, model: BaseMo
         super.onCreate()
 
 
-
         NettyClient.INSTANCE.setOnConnectListener(object: Netty.OnConnectListener{
             override fun onSuccess() {
                 NettyClient.INSTANCE.addListener(genericFutureListener)

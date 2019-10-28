@@ -2,6 +2,7 @@ package com.king.easychat.app.home
 
 import android.content.Context
 import android.os.Bundle
+import android.view.View
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.chad.library.adapter.base.BaseQuickAdapter
@@ -12,6 +13,7 @@ import com.king.easychat.app.adapter.MessageAdapter
 import com.king.easychat.app.base.BaseFragment
 import com.king.easychat.app.chat.ChatActivity
 import com.king.easychat.app.chat.GroupChatActivity
+import com.king.easychat.app.search.SearchActivity
 import com.king.easychat.bean.Message
 import com.king.easychat.bean.Operator
 import com.king.easychat.databinding.HomeFragmentBinding
@@ -25,11 +27,11 @@ import org.greenrobot.eventbus.ThreadMode
 /**
  * @author <a href="mailto:jenly1314@gmail.com">Jenly</a>
  */
-class HomeFragment : BaseFragment<HomeViewModel,HomeFragmentBinding>(){
+class HomeFragment : BaseFragment<HomeViewModel,HomeFragmentBinding>(),View.OnClickListener{
 
     val mAdapter by lazy { MessageAdapter(getApp().getUserId(),mViewModel) }
 
-    var isRefresh = false
+    var isRefresh = true
 
     var onTotalCountCallback : OnTotalCountCallback? = null
 
@@ -54,6 +56,11 @@ class HomeFragment : BaseFragment<HomeViewModel,HomeFragmentBinding>(){
     override fun initData(savedInstanceState: Bundle?) {
         tvTitle.setText(R.string.menu_message)
         srl.setColorSchemeResources(R.color.colorAccent)
+        isRefresh = true
+        ivLeft.setImageResource(R.drawable.btn_scan_selector)
+        ivRight.setImageResource(R.drawable.btn_search_selector)
+        ivLeft.setOnClickListener(this)
+        ivRight.setOnClickListener(this)
 
         rv.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL,false)
         rv.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
@@ -63,6 +70,7 @@ class HomeFragment : BaseFragment<HomeViewModel,HomeFragmentBinding>(){
         mAdapter.onItemClickListener = BaseQuickAdapter.OnItemClickListener { adapter, view, position ->
             clickItem(mAdapter.getItem(position)!!)
         }
+        mAdapter.setEmptyView(R.layout.layout_empty,rv)
 
         mBinding.viewModel = mViewModel
 
@@ -85,7 +93,7 @@ class HomeFragment : BaseFragment<HomeViewModel,HomeFragmentBinding>(){
 
     fun requestData(){
         if(isRefresh){
-            mViewModel.delay(100)
+            mViewModel.delay(200)
         }
 
     }
@@ -98,8 +106,9 @@ class HomeFragment : BaseFragment<HomeViewModel,HomeFragmentBinding>(){
 
     override fun onHiddenChanged(hidden: Boolean) {
         super.onHiddenChanged(hidden)
-        isRefresh = !hidden
-        requestData()
+        if(!hidden){
+            requestData()
+        }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -141,11 +150,27 @@ class HomeFragment : BaseFragment<HomeViewModel,HomeFragmentBinding>(){
 
     override fun onPause() {
         super.onPause()
+
+    }
+
+    override fun onDestroy() {
         isRefresh = false
+        super.onDestroy()
     }
 
     override fun getLayoutId(): Int {
         return R.layout.home_fragment
+    }
+
+    private fun clickSearch(){
+        startActivityForResult(SearchActivity::class.java,Constants.REQ_SEARCH)
+    }
+
+    override fun onClick(v: View) {
+        when(v.id){
+            R.id.ivLeft -> clickScan()
+            R.id.ivRight -> clickSearch()
+        }
     }
 
 }

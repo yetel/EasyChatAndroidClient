@@ -29,6 +29,10 @@
         <item name="colorPrimaryDark">@color/white_50</item>
     </style>
 
+    <style name="BlackAppTheme" parent="AppTheme">
+        <item name="colorPrimaryDark">@color/black</item>
+    </style>
+
     <style name="ToolbarTheme" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
         <item name="actionOverflowMenuStyle">@style/OverflowMenuStyle</item>
     </style>

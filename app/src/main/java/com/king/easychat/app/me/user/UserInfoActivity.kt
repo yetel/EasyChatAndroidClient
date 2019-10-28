@@ -12,6 +12,7 @@ import com.king.app.dialog.AppDialogConfig
 import com.king.easychat.R
 import com.king.easychat.app.Constants
 import com.king.easychat.app.base.BaseActivity
+import com.king.easychat.app.code.CodeActivity
 import com.king.easychat.databinding.UserInfoActivityBinding
 import com.yalantis.ucrop.UCrop
 import com.zhihu.matisse.Matisse
@@ -42,6 +43,7 @@ class UserInfoActivity : BaseActivity<UserInfoViewModel, UserInfoActivityBinding
                 ok = getString(R.string.confirm)
                 onClickOk = View.OnClickListener {
                     AppDialog.INSTANCE.dismissDialog()
+                    mViewModel.deleteUserAndGroups()
                     getApp().logout(context)
                     startLoginActivity()
                     finish()
@@ -138,12 +140,22 @@ class UserInfoActivity : BaseActivity<UserInfoViewModel, UserInfoActivityBinding
         startActivityForResult(intent,Constants.REQ_CHANGE_USER_INFO)
     }
 
+    private fun clickQRCode(){
+        var intent = newIntent(CodeActivity::class.java)
+        intent.putExtra(Constants.KEY_ID,getApp().getUserId())
+        intent.putExtra(Constants.KEY_TYPE,Constants.USER_TYPE)
+        intent.putExtra(Constants.KEY_IMAGE_URL,getApp().getAvatar())
+        startActivity(intent)
+
+    }
+
     override fun onClick(v: View) {
         super.onClick(v)
         when(v.id){
             R.id.tvLabelAvatar -> clickAvatar()
             R.id.tvLabelNickname -> clickNickname()
             R.id.tvLabelSignature -> clickSignature()
+            R.id.tvLabelQRCode -> clickQRCode()
         }
     }
 }

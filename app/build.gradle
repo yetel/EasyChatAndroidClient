@@ -18,14 +18,14 @@ kotlin{
 }
 
 android {
-    compileSdkVersion 29
-    buildToolsVersion "29.0.2"
+    compileSdkVersion build_versions.compileSdk
+    buildToolsVersion build_versions.buildTools
     defaultConfig {
         applicationId "com.king.easychat"
-        minSdkVersion 16
-        targetSdkVersion 29
-        versionCode 1
-        versionName "1.0"
+        minSdkVersion build_versions.minSdk
+        targetSdkVersion build_versions.targetSdk
+        versionCode app_version.versionCode
+        versionName app_version.versionName
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
 
@@ -113,65 +113,79 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'androidx.appcompat:appcompat:1.0.2'
-    implementation 'androidx.core:core-ktx:1.0.2'
-    implementation 'com.google.android.material:material:1.0.0'
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test:runner:1.1.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
+    implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$versions.kotlin"
+    implementation "androidx.appcompat:appcompat:$versions.appcompat"
+    implementation "androidx.core:core-ktx:$versions.coreKtx"
+    implementation "com.google.android.material:material:$versions.material"
+    implementation "androidx.constraintlayout:constraintlayout:$versions.constraintlayout"
+    testImplementation "junit:junit:$versions.junit"
+    androidTestImplementation "androidx.test:runner:$versions.runner"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$versions.espressoCore"
 
-    implementation 'androidx.viewpager2:viewpager2:1.0.0-beta05'
+    implementation "androidx.recyclerview:recyclerview:$versions.recyclerview"
+    implementation "androidx.viewpager2:viewpager2:$versions.viewpager2"
 
-    debugImplementation 'com.amitshekhar.android:debug-db:1.0.6'
+    debugImplementation "com.amitshekhar.android:debug-db:$versions.debugDb"
 
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.2'
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.2'
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$versions.kotlinxCoroutines"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$versions.kotlinxCoroutines"
 
-    kapt 'androidx.room:room-compiler:2.2.0-alpha01'
-    implementation 'androidx.room:room-rxjava2:2.2.0-alpha01'
+    kapt "androidx.room:room-compiler:$versions.room"
+    implementation "androidx.room:room-rxjava2:$versions.room"
 
 
-    kapt 'com.google.dagger:dagger-android-processor:2.23.2'
-    kapt 'com.google.dagger:dagger-compiler:2.23.2'
+    kapt "com.google.dagger:dagger-android-processor:$versions.dagger"
+    kapt "com.google.dagger:dagger-compiler:$versions.dagger"
 
-    implementation 'com.king.frame:mvvmframe:1.1.0'
+    implementation "com.king.frame:mvvmframe:$versions.mvvmframe"
 
-    implementation 'com.king.base:adapter:3.2.1-androidx'
-    implementation 'com.king.base:util:3.2.1-androidx'
-    implementation 'com.king.anetty:anetty:1.0.1'
+    implementation "com.king.thread:nevercrash:$versions.nevercrash"
+    implementation "com.king.base:adapter:$versions.base"
+    implementation "com.king.base:util:$versions.base"
+    implementation "com.king.anetty:anetty:$versions.anetty"
     //app-updater
-    implementation 'com.king.app:app-updater:1.0.5-androidx'
+    implementation "com.king.app:app-updater:$versions.appUpdater"
     //app-dialog
-    implementation 'com.king.app:app-dialog:1.0.5-androidx'
+    implementation "com.king.app:app-dialog:$versions.appUpdater"
 
-    implementation 'com.king.view:flutteringlayout:1.1.1'
+    implementation "com.king.view:flutteringlayout:$versions.flutteringlayout"
 
-    implementation 'com.orhanobut:logger:2.2.0'
-    implementation 'androidx.recyclerview:recyclerview:1.0.0+'
+    implementation "com.king.zxing:zxing-lite:$versions.zxingLite"
 
-    implementation 'org.greenrobot:eventbus:3.1.1'
+    implementation "com.orhanobut:logger:$versions.logger"
 
-    implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.49-androidx'
 
-    implementation 'de.hdodenhof:circleimageview:3.0.1'
+    implementation "org.greenrobot:eventbus:$versions.eventbus"
 
-    implementation 'com.github.bumptech.glide:glide:4.10.0'
-    kapt 'com.github.bumptech.glide:compiler:4.10.0'
+    implementation "com.github.CymChad:BaseRecyclerViewAdapterHelper:$versions.brvah"
 
-    implementation 'com.zhihu.android:matisse:0.5.3-beta2'
+    implementation "de.hdodenhof:circleimageview:$versions.circleimageview"
 
-    implementation 'top.zibin:Luban:1.1.8'
+    implementation "com.github.bumptech.glide:glide:$versions.glide"
+    kapt "com.github.bumptech.glide:compiler:$versions.glide"
 
-    implementation 'com.github.yalantis:ucrop:2.2.4'
+    implementation "com.zhihu.android:matisse:$versions.matisse"
 
-    implementation 'com.github.chrisbanes:PhotoView:2.0.0'
+    implementation "top.zibin:Luban:$versions.Luban"
 
-    implementation 'com.github.tbruyelle:rxpermissions:0.10.2'
+    implementation "com.github.yalantis:ucrop:$versions.ucrop"
 
-    implementation 'com.github.lzyzsd:jsbridge:1.0.4'
+    implementation "com.github.chrisbanes:PhotoView:$versions.PhotoView"
 
-    implementation 'com.tencent:mmkv:1.0.23'
+    implementation "com.github.tbruyelle:rxpermissions:$versions.rxpermissions"
 
+    implementation "com.github.lzyzsd:jsbridge:$versions.jsbridge"
+
+    implementation "com.tencent:mmkv:$versions.mmkv"
+
+    // 远程依赖集成方式（推荐）
+    implementation "com.tencent.bugly:crashreport_upgrade:$versions.bugly"
+    // 指定tinker依赖版本（注：应用升级1.3.5版本起，不再内置tinker）
+    implementation "com.tencent.tinker:tinker-android-lib:$versions.tinker"
+
+}
+
+
+if(rootProject.ext.tinkerEnabled){
+    apply from: 'tinker-support.gradle'
 }

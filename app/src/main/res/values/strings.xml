@@ -106,9 +106,19 @@
     <string name="accept">接受</string>
     <string name="ignore">忽略</string>
 
+
+    <string name="scan_code_title">扫码</string>
+    <string name="tips_user_qrcode">扫一扫上面的二维码，添加我为好友</string>
+    <string name="tips_group_qrcode">扫一扫上面的二维码，申请加群</string>
+
+    <string name="tips_scan_code">将二维码/条形码放入框内，即可自动扫描</string>
+
     <!-- Search -->
     <string name="hint_search">搜索用户或群</string>
     <string name="tips_search_key_is_empty">请输入搜索内容</string>
+
+    <string name="tips_default_new_version">发现新版本，是否更新？</string>
+    <string name="update_now">更新</string>
 
     <!-- About -->
     <string name="menu_github">GitHub</string>
@@ -118,6 +128,9 @@
     <string name="menu_qq_group">加入QQ群</string>
 
     <string name="tips_join_qq_group_exception">未安装手Q或安装的版本不支持</string>
+
+    <string name="tips_netty_disconnect">Netty断开链接</string>
+    <string name="tips_netty_reconnect">Netty自动重连</string>
 
     <string name="about_desc">
         1.只有飞速的旋转，才可以止住我的泪水，忘记你的模样。 -----不祥之刃\n

@@ -3,6 +3,7 @@ package com.king.easychat.app.home
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.FragmentTransaction
+import androidx.lifecycle.Observer
 import com.king.easychat.R
 import com.king.easychat.app.base.BaseActivity
 import com.king.easychat.app.friend.FriendFragment
@@ -62,6 +63,23 @@ class HomeActivity : BaseActivity<HomeViewModel, HomeActivityBinding>() ,
         })
 
         mViewModel.getUser()
+        mViewModel.friendsLiveData.observe(this, Observer {
+            if(getApp().friends == null){
+                getApp().friends = it
+            }
+        })
+
+        mViewModel.groupsLiveData.observe(this, Observer {
+            if(getApp().groups == null){
+                getApp().groups = it
+            }
+        })
+        if(getApp().friends == null){
+            mViewModel.getCacheFriends()
+        }
+        if(getApp().groups == null){
+            mViewModel.getCacheGroups()
+        }
 
         mViewModel.syncMessageReq()
     }
@@ -146,7 +164,7 @@ class HomeActivity : BaseActivity<HomeViewModel, HomeActivityBinding>() ,
      * 处理普通消息
      */
     private fun handleMessageResp(data: MessageResp){
-        val read = getApp().firends != null
+        val read = getApp().friends != null
         mViewModel.saveMessage(getApp().getUserId(),data.sender!!,data.senderName,null,read,data)
     }
 

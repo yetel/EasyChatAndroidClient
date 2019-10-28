@@ -1,6 +1,7 @@
 package com.king.easychat
 
 import android.content.Context
+import androidx.multidex.MultiDex
 import com.king.easychat.app.Constants
 import com.king.easychat.app.service.HeartBeatService
 import com.king.easychat.bean.Group
@@ -10,9 +11,13 @@ import com.king.easychat.netty.NettyClient
 import com.king.easychat.netty.packet.resp.LoginResp
 import com.king.easychat.util.Cache
 import com.king.frame.mvvmframe.base.BaseApplication
+import com.king.thread.nevercrash.NeverCrash
 import com.orhanobut.logger.AndroidLogAdapter
 import com.orhanobut.logger.Logger
 import com.orhanobut.logger.PrettyFormatStrategy
+import com.tencent.bugly.Bugly
+import com.tencent.bugly.beta.Beta
+import com.tencent.bugly.crashreport.CrashReport
 import com.tencent.mmkv.MMKV
 import timber.log.Timber
 import java.io.File
@@ -26,7 +31,7 @@ class App : BaseApplication() {
 
     var user: User? = null
 
-    var firends: List<User>? = null
+    var friends: List<User>? = null
     var groups: List<Group>? = null
 
     var friendId: String? = null
@@ -51,10 +56,17 @@ class App : BaseApplication() {
 
         super.attachBaseContext(base)
 
+        MultiDex.install(base)
+        Beta.installTinker()
+
     }
 
     override fun onCreate() {
         super.onCreate()
+        Bugly.init(this, Constants.BUGLY_APP_ID, BuildConfig.DEBUG)
+        NeverCrash.init { t, e ->
+            CrashReport.postCatchedException(e)
+        }
         DaggerApplicationComponent.builder()
             .appComponent(appComponent)
             .build()
@@ -113,7 +125,7 @@ class App : BaseApplication() {
     private fun clear(){
         loginResp = null
         user = null
-        firends = null
+        friends = null
         groups = null
     }
 

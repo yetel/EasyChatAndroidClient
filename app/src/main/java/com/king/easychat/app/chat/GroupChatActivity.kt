@@ -18,6 +18,7 @@ import com.king.easychat.app.Constants
 import com.king.easychat.app.adapter.GroupChatAdapter
 import com.king.easychat.app.base.BaseActivity
 import com.king.easychat.app.friend.UserProfileActivity
+import com.king.easychat.app.group.GroupProfileActivity
 import com.king.easychat.app.me.user.UserInfoActivity
 import com.king.easychat.app.photo.PhotoViewActivity
 import com.king.easychat.databinding.GroupChatActivityBinding
@@ -49,6 +50,8 @@ class GroupChatActivity : BaseActivity<GroupChatViewModel, GroupChatActivityBind
     override fun initData(savedInstanceState: Bundle?) {
 
         tvSend.visibility = View.GONE
+        ivRight.setImageResource(R.drawable.btn_detail_selector)
+
         srl.setColorSchemeResources(R.color.colorAccent)
         srl.setOnRefreshListener {
             isAutoScroll = false
@@ -151,16 +154,6 @@ class GroupChatActivity : BaseActivity<GroupChatViewModel, GroupChatActivityBind
         }
     }
 
-
-    private fun startPhotoViewActivity(imgUrl: String, v: View){
-        val intent = Intent(context, PhotoViewActivity::class.java)
-        val list = ArrayList<String>()
-        list.add(imgUrl)
-        intent.putStringArrayListExtra(Constants.KEY_LIST,list)
-        val optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(this,v,PhotoViewActivity.IMAGE)
-        startActivity(intent, optionsCompat.toBundle())
-    }
-
     private fun updateBtnStatus(isEmpty: Boolean){
         if(isEmpty){
             if(tvSend.visibility == View.VISIBLE){
@@ -216,6 +209,12 @@ class GroupChatActivity : BaseActivity<GroupChatViewModel, GroupChatActivityBind
         mViewModel.sendGroupMessage(groupId,result[0],MessageType.IMAGE)
     }
 
+    private fun clickRight(){
+        val intent = newIntent(GroupProfileActivity::class.java)
+        intent.putExtra(Constants.KEY_ID,groupId)
+        intent.putExtra(Constants.KEY_TITLE,showName)
+        startActivity(intent)
+    }
 
     private fun clickAdd(){
         selectPhoto()
@@ -239,6 +238,7 @@ class GroupChatActivity : BaseActivity<GroupChatViewModel, GroupChatActivityBind
     override fun onClick(v: View){
         super.onClick(v)
         when(v.id){
+            R.id.ivRight -> clickRight()
             R.id.ivAdd -> clickAdd()
             R.id.tvSend -> clickSend()
         }

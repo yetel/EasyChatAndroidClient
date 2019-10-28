@@ -64,8 +64,4 @@ class FriendModel @Inject constructor(repository: IDataRepository?) : MessageMod
 
     }
 
-    fun getUsers(): LiveData<List<User>>{
-        return getUserDao().getAllUsers()
-    }
-
 }

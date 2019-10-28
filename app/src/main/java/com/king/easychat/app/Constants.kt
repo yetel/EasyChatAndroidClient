@@ -36,6 +36,14 @@ object Constants {
 
     const val KEY_CONTENT = "key_content"
 
+    //---------------------------------------------
+
+    const val BUGLY_APP_ID = "96ccc1a8f6"
+
+    //---------------------------------------------
+
+    const val USER_CODE_PREFIX = "EasyChat://user/"
+    const val GROUP_CODE_PREFIX = "EasyChat://group/"
 
     //---------------------------------------------
 
@@ -45,12 +53,22 @@ object Constants {
 
     const val REQ_CHANGE_USER_INFO = 0x03
 
+    const val REQ_SEARCH = 0x05
+
     //---------------------------------------------
 
     const val EVENT_SUCCESS = 0x01
     const val REFRESH_SUCCESS = 0x02
 
     const val EVENT_REFRESH_MESSAGE_COUNT = 0x03
+
+    const val EVENT_NETTY_DISCONNECT = 0x04
+    const val EVENT_NETTY_RECONNECT = 0x05
+
+    //---------------------------------------------
+
+    const val USER_TYPE = 0
+    const val GROUP_TYPE =1
 
     //---------------------------------------------
 

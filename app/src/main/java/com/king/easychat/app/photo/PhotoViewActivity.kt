@@ -11,6 +11,7 @@ import com.king.easychat.app.adapter.BindingAdapter
 import com.king.easychat.app.base.BaseActivity
 import com.king.easychat.databinding.PhotoViewActivityBinding
 import com.king.easychat.temp.TempViewModel
+import com.king.easychat.util.SystemBarHelper
 import com.king.frame.mvvmframe.base.DataViewModel
 import kotlinx.android.synthetic.main.photo_view_activity.*
 

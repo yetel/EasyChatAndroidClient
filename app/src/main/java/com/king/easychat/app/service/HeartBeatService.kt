@@ -7,10 +7,18 @@ import android.content.Intent
 import android.content.ServiceConnection
 import android.os.Binder
 import android.os.IBinder
+import com.king.anetty.Netty
+import com.king.easychat.app.Constants
+import com.king.easychat.bean.Operator
 import com.king.easychat.netty.NettyClient
 import com.king.easychat.netty.packet.req.HeartBeatReq
+import com.king.easychat.util.Cache
+import com.king.easychat.util.Event
 import io.reactivex.Observable
 import io.reactivex.disposables.Disposable
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 
@@ -25,6 +33,23 @@ class HeartBeatService : Service(){
 
     var disposable : Disposable? = null
 
+    val connectListener = object: Netty.OnConnectListener{
+        override fun onSuccess() {
+            Cache.getLoginReq()?.let {
+                NettyClient.INSTANCE.sendMessage(it)
+            }
+
+        }
+
+        override fun onFailed() {
+            Timber.d("Netty connect failed.")
+        }
+
+        override fun onError(e: Exception?) {
+            Timber.w(e)
+        }
+
+    }
 
 
     companion object{
@@ -76,6 +101,8 @@ class HeartBeatService : Service(){
             if(NettyClient.INSTANCE.isConnected()){
                 NettyClient.INSTANCE.sendMessage(HeartBeatReq())
             }else{
+                Event.sendEvent(Operator(Constants.EVENT_NETTY_RECONNECT))
+                NettyClient.INSTANCE.setOnConnectListener(connectListener)
                 NettyClient.INSTANCE.connect()
             }
         }

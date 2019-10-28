@@ -112,7 +112,7 @@ class SplashActivity : BaseActivity<SplashViewModel, SplashActivityBinding>(){
     fun startActivity(){
         if(isAnimEnd && isRequest){
 
-            if(loginResp != null){
+            if(getApp().isLogin()){
                 getApp().loginResp = loginResp
                 HeartBeatService.startHeartBeatService(context)
                 startHomeActivity()

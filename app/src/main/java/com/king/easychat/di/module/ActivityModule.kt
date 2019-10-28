@@ -5,6 +5,8 @@ import com.king.easychat.app.account.RegisterActivity
 import com.king.easychat.app.account.UpdatePwdActivity
 import com.king.easychat.app.chat.ChatActivity
 import com.king.easychat.app.chat.GroupChatActivity
+import com.king.easychat.app.code.CodeActivity
+import com.king.easychat.app.code.ScanCodeActivity
 import com.king.easychat.app.friend.UserProfileActivity
 import com.king.easychat.app.group.GroupProfileActivity
 import com.king.easychat.app.home.HomeActivity
@@ -69,5 +71,11 @@ abstract class ActivityModule {
 
     @ContributesAndroidInjector
     abstract fun contributeGroupProfileActivity(): GroupProfileActivity
+
+    @ContributesAndroidInjector
+    abstract fun contributeCodeActivity(): CodeActivity
+
+    @ContributesAndroidInjector
+    abstract fun contributeScanCodeActivity(): ScanCodeActivity
 
 }

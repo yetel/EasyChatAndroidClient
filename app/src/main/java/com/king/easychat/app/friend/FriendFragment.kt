@@ -1,5 +1,7 @@
 package com.king.easychat.app.friend
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.Observer
@@ -32,9 +34,11 @@ class FriendFragment : BaseFragment<FriendViewModel,FriendFragmentBinding>(), Vi
 
     override fun initData(savedInstanceState: Bundle?) {
         tvTitle.setText(R.string.menu_friend)
+        ivLeft.setImageResource(R.drawable.btn_scan_selector)
         ivRight.setImageResource(R.drawable.btn_search_selector)
+        ivLeft.setOnClickListener(this)
         ivRight.setOnClickListener(this)
-        View.VISIBLE
+
         srl.setColorSchemeResources(R.color.colorAccent)
 
         rv.layoutManager = LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false)
@@ -45,13 +49,14 @@ class FriendFragment : BaseFragment<FriendViewModel,FriendFragmentBinding>(), Vi
         mAdapter.onItemClickListener = BaseQuickAdapter.OnItemClickListener { adapter, view, position ->
             clickItem(mAdapter.getItem(position)!!)
         }
+        mAdapter.setEmptyView(R.layout.layout_empty,rv)
 
         mBinding.viewModel = mViewModel
 
         mViewModel.friendsLiveData.observe(this, Observer<List<User>>{
             it?.let {
                 mAdapter.replaceData(it)
-                getApp().firends = it
+                getApp().friends = it
             }
             srl.isRefreshing = false
         })
@@ -69,10 +74,23 @@ class FriendFragment : BaseFragment<FriendViewModel,FriendFragmentBinding>(), Vi
         return R.layout.friend_fragment
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(resultCode == Activity.RESULT_OK){
+            when(requestCode){
+                Constants.REQ_SEARCH -> mViewModel.retry()
+            }
+        }
+    }
+
+    private fun clickSearch(){
+        startActivityForResult(SearchActivity::class.java,Constants.REQ_SEARCH)
+    }
 
     override fun onClick(v: View) {
         when(v.id){
-            R.id.ivRight -> { startActivity(SearchActivity::class.java)}
+            R.id.ivLeft -> clickScan()
+            R.id.ivRight -> clickSearch()
         }
     }
 

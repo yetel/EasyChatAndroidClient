@@ -1,18 +1,24 @@
 package com.king.easychat.app.friend
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.core.app.ActivityOptionsCompat
 import androidx.lifecycle.Observer
+import com.king.base.util.StringUtils
 import com.king.easychat.R
 import com.king.easychat.app.Constants
 import com.king.easychat.app.base.BaseActivity
 import com.king.easychat.app.me.user.ChangeUserInfoActivity
+import com.king.easychat.app.photo.PhotoViewActivity
 import com.king.easychat.bean.User
 import com.king.easychat.databinding.UserProfileActivityBinding
 import com.king.easychat.netty.NettyClient
+import kotlinx.android.synthetic.main.me_fragment.*
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.user_profile_activity.*
+import kotlinx.android.synthetic.main.user_profile_activity.ivAvatar
 
 /**
  * @author <a href="mailto:jenly1314@gmail.com">Jenly</a>
@@ -20,21 +26,30 @@ import kotlinx.android.synthetic.main.user_profile_activity.*
 class UserProfileActivity : BaseActivity<UserProfileViewModel,UserProfileActivityBinding>(),View.OnClickListener{
 
     private lateinit var userId : String
+    private var title: String? = null
 
     private var user: User? = null
 
     override fun initData(savedInstanceState: Bundle?) {
 
-        tvTitle.text = intent.getStringExtra(Constants.KEY_TITLE)
+        title = intent.getStringExtra(Constants.KEY_TITLE)
+        title?.let {
+            tvTitle.text = it
+        }
+
         userId = intent.getStringExtra(Constants.KEY_ID)
 
+        ivAvatar.setOnClickListener(this)
         btnAdd.setOnClickListener(this)
 
         mViewModel.userLiveData.observe(this, Observer {
             it?.let {
                 mBinding.data = it
                 user = it
-                getApp().firends?.run {
+                if(StringUtils.isBlank(title)){
+                    tvTitle.text = it.getShowName()
+                }
+                getApp().friends?.run {
                     if(contains(it)){
                         btnAdd.visibility = View.GONE
                         tvLabelRemark.visibility = View.VISIBLE
@@ -76,6 +91,7 @@ class UserProfileActivity : BaseActivity<UserProfileViewModel,UserProfileActivit
         if(NettyClient.INSTANCE.isConnected()){
             mViewModel.addFriend(userId)
             showToast(R.string.success_operator)
+            setResult(Activity.RESULT_OK)
             finish()
         }else{
             showToast(R.string.operator_failed)
@@ -83,7 +99,11 @@ class UserProfileActivity : BaseActivity<UserProfileViewModel,UserProfileActivit
 
     }
 
-
+    private fun clickAvatar(){
+        user?.avatar?.let {
+            startPhotoViewActivity(it,ivAvatar)
+        }
+    }
 
     private fun clickRemark(){
         val intent = newIntent(getString(R.string.change_remark), ChangeUserInfoActivity::class.java)
@@ -98,6 +118,7 @@ class UserProfileActivity : BaseActivity<UserProfileViewModel,UserProfileActivit
     override fun onClick(v: View) {
         super.onClick(v)
         when(v.id){
+            R.id.ivAvatar -> clickAvatar()
             R.id.btnAdd -> clickAddFriend()
             R.id.tvLabelRemark -> clickRemark()
         }

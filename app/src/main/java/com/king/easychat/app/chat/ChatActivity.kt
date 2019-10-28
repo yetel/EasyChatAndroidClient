@@ -48,13 +48,15 @@ class ChatActivity : BaseActivity<ChatViewModel, ChatActivityBinding>(){
     var isAutoScroll = true
 
     override fun initData(savedInstanceState: Bundle?) {
+
         tvSend.visibility = View.GONE
+        ivRight.setImageResource(R.drawable.btn_detail_selector)
+
         srl.setColorSchemeResources(R.color.colorAccent)
         srl.setOnRefreshListener {
             isAutoScroll = false
             mViewModel.queryMessageByFriendId(getApp().getUserId(),friendId,curPage,Constants.PAGE_SIZE)
         }
-
 
         etContent.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
@@ -147,20 +149,8 @@ class ChatActivity : BaseActivity<ChatViewModel, ChatActivityBinding>(){
         if(data.sender == getApp().getUserId()){
             startActivity(UserInfoActivity::class.java)
         }else{
-            val intent = newIntent(UserProfileActivity::class.java)
-            intent.putExtra(Constants.KEY_ID,data.sender)
-            intent.putExtra(Constants.KEY_TITLE,data.senderName)
-            startActivity(intent)
+            clickRight()
         }
-    }
-
-    private fun startPhotoViewActivity(imgUrl: String,v: View){
-        val intent = Intent(context,PhotoViewActivity::class.java)
-        var list = ArrayList<String>()
-        list.add(imgUrl)
-        intent.putStringArrayListExtra(Constants.KEY_LIST,list)
-        val optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(this,v,PhotoViewActivity.IMAGE)
-        startActivity(intent, optionsCompat.toBundle())
     }
 
     private fun updateBtnStatus(isEmpty: Boolean){
@@ -227,6 +217,13 @@ class ChatActivity : BaseActivity<ChatViewModel, ChatActivityBinding>(){
         mViewModel.sendMessage(friendId,result[0],MessageType.IMAGE)
     }
 
+    private fun clickRight(){
+        val intent = newIntent(UserProfileActivity::class.java)
+        intent.putExtra(Constants.KEY_ID,friendId)
+        intent.putExtra(Constants.KEY_TITLE,showName)
+        startActivity(intent)
+    }
+
 
     private fun clickSmile(){
         fl.addHeart()
@@ -255,6 +252,7 @@ class ChatActivity : BaseActivity<ChatViewModel, ChatActivityBinding>(){
     override fun onClick(v: View){
         super.onClick(v)
         when(v.id){
+            R.id.ivRight -> clickRight()
             R.id.ivSmile -> clickSmile()
             R.id.ivAdd -> clickAdd()
             R.id.tvSend -> clickSend()

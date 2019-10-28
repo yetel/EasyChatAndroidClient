@@ -139,6 +139,7 @@ public class DragBubbleView extends View {
         mTextPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mTextPaint.setColor(mTextColor);
         mTextPaint.setTextSize(mTextSize);
+        mTextPaint.setTextAlign(Paint.Align.CENTER);
         mTextRect = new Rect();
 
         mExplosionPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -224,7 +225,8 @@ public class DragBubbleView extends View {
         //画消息个数的文本
         if (mState != STATE_DISMISS && !TextUtils.isEmpty(mText)) {
             mTextPaint.getTextBounds(mText, 0, mText.length(), mTextRect);
-            canvas.drawText(mText, mBubbleCenterX - mTextRect.width() / 2, mBubbleCenterY + mTextRect.height() / 2, mTextPaint);
+//            canvas.drawText(mText, mBubbleCenterX - mTextRect.width() / 2, mBubbleCenterY + mTextRect.height() / 2, mTextPaint);
+            canvas.drawText(mText, mBubbleCenterX, mBubbleCenterY + mTextRect.height() / 2, mTextPaint);
         }
 
         if (mIsExplosionAnimStart && mCurExplosionIndex < mExplosionDrawables.length) {

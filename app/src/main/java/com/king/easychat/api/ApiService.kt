@@ -1,9 +1,6 @@
 package com.king.easychat.api
 
-import com.king.easychat.bean.Group
-import com.king.easychat.bean.User
-import com.king.easychat.bean.Result
-import com.king.easychat.bean.Search
+import com.king.easychat.bean.*
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -69,5 +66,11 @@ interface ApiService {
     @PUT("update/friend/remark")
     fun updateFriendRemark(@Header("token")token : String,@Field("friendId")friendId : String,@Field("remark")remark : String): Call<Result<User>>
 
+
+    /**
+     * 版本检测
+     */
+    @GET("system/checkVersion")
+    fun checkVersion(@Query("versionCode")versionCode : String): Call<Result<AppVersion>>
 
 }

@@ -21,6 +21,9 @@
 
     <uses-permission android:name="android.permission.CAMERA"/>
 
+    <uses-permission android:name="android.permission.READ_LOGS" />
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+
     <application
         android:name=".App"
         android:allowBackup="true"
@@ -66,7 +69,8 @@
             android:screenOrientation="portrait" />
 
         <activity android:name=".app.photo.PhotoViewActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/BlackAppTheme"/>
 
         <activity android:name=".app.me.user.UserInfoActivity"
             android:screenOrientation="portrait" />
@@ -82,6 +86,12 @@
             android:screenOrientation="portrait" />
 
         <activity android:name=".app.group.GroupProfileActivity"
+            android:screenOrientation="portrait" />
+
+        <activity android:name=".app.code.CodeActivity"
+            android:screenOrientation="portrait" />
+
+        <activity android:name=".app.code.ScanCodeActivity"
             android:screenOrientation="portrait" />
 
         <activity android:name=".app.search.SearchActivity"

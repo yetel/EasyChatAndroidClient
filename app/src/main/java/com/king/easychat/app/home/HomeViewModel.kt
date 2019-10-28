@@ -2,11 +2,13 @@ package com.king.easychat.app.home
 
 import android.app.Application
 import android.os.SystemClock
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import com.king.easychat.App
 import com.king.easychat.api.ApiService
 import com.king.easychat.app.Constants
 import com.king.easychat.app.base.MessageViewModel
+import com.king.easychat.bean.Group
 import com.king.easychat.bean.Message
 import com.king.easychat.bean.Result
 import com.king.easychat.bean.User
@@ -31,6 +33,10 @@ class HomeViewModel @Inject constructor(application: Application, model: HomeMod
     var userLiveData = MutableLiveData<User>()
 
     var totalCountLiveData = MutableLiveData<Int>()
+
+    var friendsLiveData = MediatorLiveData<List<User>>()
+
+    var groupsLiveData = MediatorLiveData<List<Group>>()
 
     override fun onCreate() {
         super.onCreate()
@@ -96,5 +102,20 @@ class HomeViewModel @Inject constructor(application: Application, model: HomeMod
 
             })
 
+    }
+
+
+    /**
+     * 获取好友列表
+     */
+    fun getCacheFriends(){
+        friendsLiveData.addSource(mModel.getUsers(), friendsLiveData::postValue)
+    }
+
+    /**
+     * 获取群组列表
+     */
+    fun getCacheGroups(){
+        groupsLiveData.addSource(mModel.getGroups(), groupsLiveData::postValue)
     }
 }

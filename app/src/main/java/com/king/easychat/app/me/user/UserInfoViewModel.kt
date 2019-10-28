@@ -6,6 +6,8 @@ import androidx.lifecycle.MutableLiveData
 import com.king.easychat.App
 import com.king.easychat.R
 import com.king.easychat.api.ApiService
+import com.king.easychat.app.base.MessageModel
+import com.king.easychat.app.base.MessageViewModel
 import com.king.easychat.bean.Result
 import com.king.easychat.bean.User
 import com.king.easychat.util.FileUtil
@@ -13,6 +15,7 @@ import com.king.frame.mvvmframe.base.BaseModel
 import com.king.frame.mvvmframe.base.DataViewModel
 import com.king.frame.mvvmframe.base.livedata.StatusEvent
 import com.king.frame.mvvmframe.http.callback.ApiCallback
+import com.tencent.bugly.beta.tinker.TinkerManager.getApplication
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -26,7 +29,7 @@ import javax.inject.Inject
 /**
  * @author <a href="mailto:jenly1314@gmail.com">Jenly</a>
  */
-open class UserInfoViewModel @Inject constructor(application: Application, model: BaseModel?) : DataViewModel(application, model){
+open class UserInfoViewModel @Inject constructor(application: Application, model: MessageModel?) : MessageViewModel<MessageModel>(application, model){
 
     var userLiveData = MutableLiveData<User>()
 
@@ -120,7 +123,7 @@ open class UserInfoViewModel @Inject constructor(application: Application, model
             signature?.let {
                 params.put("signature",it)
             }
-            getRetrofitService(ApiService::class.java)
+            mModel.getRetrofitService(ApiService::class.java)
                 .updateUserInfo(token,params)
                 .enqueue(object: ApiCallback<Result<User>>(){
                     override fun onResponse(call: Call<Result<User>>?, result: Result<User>?) {
@@ -147,6 +150,13 @@ open class UserInfoViewModel @Inject constructor(application: Application, model
                 })
         }
 
-
     }
+
+    fun deleteUserAndGroups(){
+        GlobalScope.launch(Dispatchers.IO) {
+            mModel.deleteUsers()
+            mModel.deleteGroups()
+        }
+    }
+
 }

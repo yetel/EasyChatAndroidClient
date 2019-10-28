@@ -1,5 +1,6 @@
 package com.king.easychat.app.base
 
+import android.Manifest
 import android.content.Intent
 import android.os.Bundle
 import android.text.InputType
@@ -23,12 +24,15 @@ import com.king.easychat.App
 import com.king.easychat.R
 import com.king.easychat.app.Constants
 import com.king.easychat.app.account.LoginActivity
+import com.king.easychat.app.code.ScanCodeActivity
 import com.king.easychat.app.home.HomeActivity
+import com.king.easychat.app.photo.PhotoViewActivity
 import com.king.easychat.util.Cache
 import com.king.easychat.util.Event
 import com.king.frame.mvvmframe.base.BaseFragment
 import com.king.frame.mvvmframe.base.BaseModel
 import com.king.frame.mvvmframe.base.BaseViewModel
+import com.tbruyelle.rxpermissions2.RxPermissions
 import kotlinx.android.synthetic.main.toolbar.*
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -39,6 +43,7 @@ import timber.log.Timber
  */
 abstract class BaseFragment<VM : BaseViewModel<out BaseModel>,VDB : ViewDataBinding> : BaseFragment<VM,VDB>(){
 
+    val rxPermission by lazy { RxPermissions(this@BaseFragment) }
 
     open fun useEvent(): Boolean {
         return true
@@ -234,5 +239,31 @@ abstract class BaseFragment<VM : BaseViewModel<out BaseModel>,VDB : ViewDataBind
         val optionsCompat = ActivityOptionsCompat.makeCustomAnimation(context!!, R.anim.anim_in, R.anim.anim_out)
         startActivity(intent, optionsCompat.toBundle())
     }
-    
+
+    fun startPhotoViewActivity(imgUrl: String,v: View){
+        val intent = Intent(context, PhotoViewActivity::class.java)
+        var list = ArrayList<String>()
+        list.add(imgUrl)
+        intent.putStringArrayListExtra(Constants.KEY_LIST,list)
+        val optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity()!!,v,
+            PhotoViewActivity.IMAGE)
+        startActivity(intent, optionsCompat.toBundle())
+    }
+
+    fun startScanCodeActivity(){
+        val intent = Intent(context, ScanCodeActivity::class.java)
+        val optionsCompat = ActivityOptionsCompat.makeCustomAnimation(context!!, R.anim.anim_in, R.anim.anim_out)
+        startActivity(intent, optionsCompat.toBundle())
+    }
+
+    fun clickScan(){
+        rxPermission.request(Manifest.permission.CAMERA)
+            .subscribe{
+                if(it){
+                    startScanCodeActivity()
+                }
+            }
+    }
+
+
 }
