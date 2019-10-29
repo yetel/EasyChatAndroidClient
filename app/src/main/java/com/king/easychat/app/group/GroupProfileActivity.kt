@@ -12,8 +12,8 @@ import com.king.easychat.app.code.CodeActivity
 import com.king.easychat.bean.Group
 import com.king.easychat.databinding.GroupProfileActivityBinding
 import com.king.easychat.netty.NettyClient
+import kotlinx.android.synthetic.main.group_profile_activity.*
 import kotlinx.android.synthetic.main.toolbar.*
-import kotlinx.android.synthetic.main.user_profile_activity.*
 
 /**
  * @author <a href="mailto:jenly1314@gmail.com">Jenly</a>
@@ -40,7 +40,8 @@ class GroupProfileActivity : BaseActivity<GroupProfileViewModel,GroupProfileActi
                 mBinding.data = it
                 group = it
                 if(StringUtils.isBlank(title)){
-                    tvTitle.text = it.groupName
+                    title = it.groupName
+                    tvTitle.text = title
                 }
                 getApp().groups?.run {
                     if(contains(it)){
@@ -63,7 +64,7 @@ class GroupProfileActivity : BaseActivity<GroupProfileViewModel,GroupProfileActi
         }
     }
 
-    private fun clickAddFriend(){
+    private fun clickjoinGroup(){
         if(NettyClient.INSTANCE.isConnected()){
             mViewModel.inviteGroup(groupId,getApp().getUserId())
             showToast(R.string.success_operator)
@@ -87,12 +88,19 @@ class GroupProfileActivity : BaseActivity<GroupProfileViewModel,GroupProfileActi
 
     }
 
+    private fun clickGroupMember(){
+        var intent = newIntent(title ?: getString(R.string.group_member),GroupMemberActivity::class.java)
+        intent.putExtra(Constants.KEY_ID,groupId)
+        startActivity(intent)
+    }
+
     override fun onClick(v: View) {
         super.onClick(v)
         when(v.id){
             R.id.ivAvatar -> clickAvatar()
-            R.id.btnAdd -> clickAddFriend()
+            R.id.btnAdd -> clickjoinGroup()
             R.id.tvLabelQRCode -> clickQRCode()
+            R.id.tvLabelMember -> clickGroupMember()
         }
     }
 }

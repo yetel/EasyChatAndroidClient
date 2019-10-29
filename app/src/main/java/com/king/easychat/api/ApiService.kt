@@ -35,6 +35,12 @@ interface ApiService {
     fun getGroups(@Header("token")token : String): Call<Result<List<Group>>>
 
     /**
+     * 获取群用户列表
+     */
+    @GET("query/member/{groupId}")
+    fun getGroupMembers(@Header("token")token : String,@Path("groupId")groupId : String): Call<Result<List<User>>>
+
+    /**
      * 上传图片
      */
     @POST("image/upload")

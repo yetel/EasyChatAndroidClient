@@ -21,9 +21,11 @@ import com.king.easychat.app.friend.UserProfileActivity
 import com.king.easychat.app.group.GroupProfileActivity
 import com.king.easychat.app.me.user.UserInfoActivity
 import com.king.easychat.app.photo.PhotoViewActivity
+import com.king.easychat.bean.Operator
 import com.king.easychat.databinding.GroupChatActivityBinding
 import com.king.easychat.netty.packet.MessageType
 import com.king.easychat.netty.packet.resp.GroupMessageResp
+import com.king.easychat.util.Event
 import com.zhihu.matisse.Matisse
 import kotlinx.android.synthetic.main.chat_activity.*
 import kotlinx.android.synthetic.main.toolbar.*
@@ -230,9 +232,8 @@ class GroupChatActivity : BaseActivity<GroupChatViewModel, GroupChatActivityBind
     }
 
     override fun onBackPressed() {
-        mViewModel.updateGroupMessageRead(getApp().getUserId(),groupId)
-        getApp().groupId = null
         super.onBackPressed()
+        Event.sendEvent(Operator(Constants.EVENT_UPDATE_GROUP_MESSAGE_READ))
     }
 
     override fun onClick(v: View){

@@ -128,6 +128,24 @@
                 app:layout_constraintTop_toBottomOf="@+id/tvLabelGroupId"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintBottom_toBottomOf="@+id/tvLabelQRCode"/>
+
+            <TextView
+                android:id="@+id/tvLabelMember"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/group_member"
+                android:textColor="@color/text_6"
+                android:gravity="center_vertical"
+                android:layout_marginTop="@dimen/size_line"
+                android:paddingTop="@dimen/size_12dp"
+                android:paddingBottom="@dimen/size_12dp"
+                android:paddingLeft="@dimen/size_16dp"
+                android:paddingRight="@dimen/size_16dp"
+                android:drawablePadding="@dimen/size_4dp"
+                android:drawableRight="@drawable/ec_next"
+                android:background="@drawable/white_selector"
+                app:layout_constraintTop_toBottomOf="@+id/tvLabelQRCode"
+                style="@style/OnClick"/>
             <Button
                 android:id="@+id/btnAdd"
                 android:layout_width="match_parent"
@@ -139,7 +157,7 @@
                 android:text="@string/invite_group"
                 android:textSize="@dimen/size_16sp"
                 android:background="@drawable/btn_bg_selector"
-                app:layout_constraintTop_toBottomOf="@+id/tvLabelQRCode"
+                app:layout_constraintTop_toBottomOf="@+id/tvLabelMember"
                 style="?android:attr/borderlessButtonStyle"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>

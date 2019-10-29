@@ -63,11 +63,12 @@ class LoginActivity : BaseActivity<LoginViewModel, LoginActivityBinding>(), View
         handleLoginResp(event)
     }
 
-    fun handleLoginResp(resp : LoginResp){
+    override fun handleLoginResp(resp : LoginResp){
         hideLoading()
         if(resp.success){
             getApp().login(resp)
-            Cache.put(mViewModel.loginReq)
+            mViewModel.loginReq?.token = resp.token
+            Cache.put(mViewModel.loginReq,resp.token)
             HeartBeatService.startHeartBeatService(context)
             startHomeActivity()
             finish()

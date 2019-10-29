@@ -16,6 +16,7 @@ import com.king.easychat.app.chat.ChatActivity
 import com.king.easychat.app.search.SearchActivity
 import com.king.easychat.bean.User
 import com.king.easychat.databinding.FriendFragmentBinding
+import com.king.frame.mvvmframe.base.livedata.StatusEvent
 import kotlinx.android.synthetic.main.group_fragment.*
 import kotlinx.android.synthetic.main.home_toolbar.*
 
@@ -49,18 +50,29 @@ class FriendFragment : BaseFragment<FriendViewModel,FriendFragmentBinding>(), Vi
         mAdapter.onItemClickListener = BaseQuickAdapter.OnItemClickListener { adapter, view, position ->
             clickItem(mAdapter.getItem(position)!!)
         }
-        mAdapter.setEmptyView(R.layout.layout_empty,rv)
 
         mBinding.viewModel = mViewModel
+
+        registerStatusEvent {
+            if(it!=StatusEvent.Status.LOADING){
+                srl.isRefreshing = false
+                setEmpty()
+            }
+        }
 
         mViewModel.friendsLiveData.observe(this, Observer<List<User>>{
             it?.let {
                 mAdapter.replaceData(it)
                 getApp().friends = it
             }
-            srl.isRefreshing = false
         })
 
+    }
+
+    private fun setEmpty(){
+        if(mAdapter.emptyView == null){
+            mAdapter.setEmptyView(R.layout.layout_empty,rv)
+        }
     }
 
     fun clickItem(data: User){

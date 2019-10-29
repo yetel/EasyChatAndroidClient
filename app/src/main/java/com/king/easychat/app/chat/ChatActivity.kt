@@ -20,9 +20,11 @@ import com.king.easychat.app.base.BaseActivity
 import com.king.easychat.app.friend.UserProfileActivity
 import com.king.easychat.app.me.user.UserInfoActivity
 import com.king.easychat.app.photo.PhotoViewActivity
+import com.king.easychat.bean.Operator
 import com.king.easychat.databinding.ChatActivityBinding
 import com.king.easychat.netty.packet.MessageType
 import com.king.easychat.netty.packet.resp.MessageResp
+import com.king.easychat.util.Event
 import com.zhihu.matisse.Matisse
 import kotlinx.android.synthetic.main.chat_activity.*
 import kotlinx.android.synthetic.main.toolbar.*
@@ -244,9 +246,8 @@ class ChatActivity : BaseActivity<ChatViewModel, ChatActivityBinding>(){
     }
 
     override fun onBackPressed() {
-        mViewModel.updateMessageRead(getApp().getUserId(),friendId)
-        getApp().friendId = null
         super.onBackPressed()
+        Event.sendEvent(Operator(Constants.EVENT_UPDATE_MESSAGE_READ))
     }
 
     override fun onClick(v: View){

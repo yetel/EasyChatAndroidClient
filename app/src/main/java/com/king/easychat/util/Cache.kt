@@ -11,19 +11,21 @@ import com.tencent.mmkv.MMKV
  */
 object Cache {
 
-    fun put(data: RegisterReq?){
+    fun put(data: RegisterReq?,token: String){
         data?.let {
             MMKV.defaultMMKV().encode(Constants.KEY_USERNAME,it.userName)
-            MMKV.defaultMMKV().encode(Constants.KEY_PASSWORD,it.password)
+//            MMKV.defaultMMKV().encode(Constants.KEY_PASSWORD,it.password)
         }
+        putToken(token)
 
     }
 
-    fun put(data: LoginReq?){
+    fun put(data: LoginReq?,token: String){
         data?.let {
             MMKV.defaultMMKV().encode(Constants.KEY_USERNAME,it.userName)
-            MMKV.defaultMMKV().encode(Constants.KEY_PASSWORD,it.password)
+//            MMKV.defaultMMKV().encode(Constants.KEY_PASSWORD,it.password)
         }
+        putToken(token)
 
     }
 
@@ -32,7 +34,7 @@ object Cache {
 
     }
 
-    fun putToken(token : String){
+    fun putToken(token : String?){
         token?.let {
             put(Constants.KEY_TOKEN,it)
         }
@@ -55,10 +57,10 @@ object Cache {
         var loginReq : LoginReq? = null
         MMKV.defaultMMKV().run {
             var username: String? = decodeString(Constants.KEY_USERNAME)
-            var password: String? = decodeString(Constants.KEY_PASSWORD)
+            var token: String? = decodeString(Constants.KEY_TOKEN)
 
-            if(StringUtils.isNotBlank(username) && StringUtils.isNotBlank(password)){
-                loginReq = LoginReq(username!!,password!!)
+            if(StringUtils.isNotBlank(token)){
+                loginReq = LoginReq(token,username,null)
             }
         }
 

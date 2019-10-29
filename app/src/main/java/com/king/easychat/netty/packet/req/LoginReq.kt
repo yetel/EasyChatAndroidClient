@@ -9,7 +9,7 @@ import kotlinx.android.parcel.Parcelize
  * @author <a href="mailto:jenly1314@gmail.com">Jenly</a>
  */
 @Parcelize
-data class LoginReq(val userName: String,val password: String, val sendCacheMessage: Boolean = false) : Packet(), Parcelable {
+data class LoginReq(var token: String?,val userName: String?,val password: String?, val sendCacheMessage: Boolean = false) : Packet(), Parcelable {
 
 
     override fun packetType(): Int {
@@ -17,7 +17,7 @@ data class LoginReq(val userName: String,val password: String, val sendCacheMess
     }
 
     override fun toString(): String {
-        return "LoginReq(userName='$userName', password='$password', sendCacheMessage=$sendCacheMessage)"
+        return "LoginReq(token='$token', userName='$userName', password='$password', sendCacheMessage=$sendCacheMessage)"
     }
 
 

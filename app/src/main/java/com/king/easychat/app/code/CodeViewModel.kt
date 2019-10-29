@@ -37,12 +37,15 @@ class CodeViewModel @Inject constructor(application: Application, model: BaseMod
             val code = withContext(Dispatchers.IO){
                 var logo : Bitmap? = null
                 if(avatar != null){
+                    var bmp: Bitmap? = null
                     var file = GlideApp.with(context).load(avatar).downloadOnly(100,100).get()
                     if(file != null){
-                        logo = BitmapFactory.decodeFile(file.absolutePath)
+                        bmp = BitmapFactory.decodeFile(file.absolutePath)
                     }else{
-                        logo = BitmapFactory.decodeResource(context.resources, R.drawable.logo)
+                        bmp = BitmapFactory.decodeResource(context.resources, R.drawable.logo)
                     }
+
+                    logo = BitmapUtil.getOvalBitmap(bmp)
                 }
 
                 CodeUtils.createQRCode(codeContent,400,logo)

@@ -10,6 +10,7 @@ import com.king.easychat.app.code.CodeViewModel
 import com.king.easychat.app.friend.FriendViewModel
 import com.king.easychat.app.search.SearchViewModel
 import com.king.easychat.app.friend.UserProfileViewModel
+import com.king.easychat.app.group.GroupMemberViewModel
 import com.king.easychat.app.group.GroupProfileViewModel
 import com.king.easychat.app.group.GroupViewModel
 import com.king.easychat.app.home.HomeViewModel
@@ -114,5 +115,10 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(CodeViewModel::class)
     abstract fun bindCodeViewModel(viewModel: CodeViewModel) : ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(GroupMemberViewModel::class)
+    abstract fun bindGroupMemberViewModel(viewModel: GroupMemberViewModel) : ViewModel
 
 }

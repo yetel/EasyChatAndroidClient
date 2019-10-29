@@ -49,7 +49,7 @@
                 android:id="@+id/tvLabelRemark"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/nickname"
+                android:text="@string/remark_name"
                 android:textColor="@color/text_6"
                 android:gravity="center_vertical"
                 android:layout_marginTop="@dimen/size_line"

@@ -99,6 +99,12 @@
             android:windowSoftInputMode="stateVisible|adjustPan"
             android:theme="@style/WhiteAppTheme"/>
 
+        <activity android:name=".app.group.GroupMemberActivity"
+            android:screenOrientation="portrait" />
+
+        <activity android:name=".app.web.WebActivity"
+            android:screenOrientation="portrait" />
+
         <service android:name=".app.service.HeartBeatService"/>
 
         <activity android:name="com.zhihu.matisse.ui.MatisseActivity"

@@ -51,7 +51,7 @@ interface GroupMessageDao {
      * 查询未读消息记录数
      */
     @Query("SELECT id FROM GroupMessageDbo WHERE  userId = :userId AND groupId = :groupId AND read = '0'")
-    fun getUnreadNumByGroupId1(userId : String, groupId : String) : List<Long>
+    fun getUnreadList(userId : String, groupId : String) : List<Long>
 
     /**
      * 更新为已读消息

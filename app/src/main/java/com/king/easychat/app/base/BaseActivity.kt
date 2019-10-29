@@ -33,6 +33,7 @@ import com.king.easychat.netty.packet.Packet
 import com.king.easychat.netty.packet.PacketType
 import com.king.easychat.netty.packet.resp.AddUserResp
 import com.king.easychat.netty.packet.resp.InviteGroupResp
+import com.king.easychat.netty.packet.resp.LoginResp
 import com.king.easychat.util.Cache
 import com.king.easychat.util.Event
 import com.king.frame.mvvmframe.base.BaseActivity
@@ -56,7 +57,7 @@ abstract class BaseActivity<VM : BaseViewModel<out BaseModel>,VDB : ViewDataBind
     var isStop = true
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onMessageEvent(event: Operator){
+    open fun onMessageEvent(event: Operator){
         Timber.d("event:${event.event}")
         if(!isStop) {
             when (event.event) {
@@ -73,7 +74,15 @@ abstract class BaseActivity<VM : BaseViewModel<out BaseModel>,VDB : ViewDataBind
             when(event.packetType()){
                 PacketType.ADD_FRIEND_RESP -> handlerAddUserResp(event as AddUserResp)
                 PacketType.INVITE_GROUP_RESP -> handlerInviteGroupResp(event as InviteGroupResp)
+                PacketType.LOGIN_RESP -> handleLoginResp(event as LoginResp)
             }
+        }
+    }
+
+    open fun handleLoginResp(resp : LoginResp){
+        if(resp.success){
+            showToast(R.string.tips_netty_connected)
+            getApp().login(resp)
         }
     }
 

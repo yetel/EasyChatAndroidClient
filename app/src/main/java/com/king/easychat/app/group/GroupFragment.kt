@@ -3,7 +3,11 @@ package com.king.easychat.app.group
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.WindowManager
+import android.widget.Button
+import android.widget.EditText
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.chad.library.adapter.base.BaseQuickAdapter
@@ -16,8 +20,14 @@ import com.king.easychat.app.chat.GroupChatActivity
 import com.king.easychat.app.search.SearchActivity
 import com.king.easychat.bean.Group
 import com.king.easychat.databinding.GroupFragmentBinding
+import com.king.easychat.netty.packet.Packet
+import com.king.easychat.netty.packet.PacketType
+import com.king.easychat.netty.packet.resp.CreateGroupResp
+import com.king.frame.mvvmframe.base.livedata.StatusEvent
 import kotlinx.android.synthetic.main.group_fragment.*
 import kotlinx.android.synthetic.main.home_toolbar.*
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 /**
  * @author <a href="mailto:jenly1314@gmail.com">Jenly</a>
@@ -36,7 +46,7 @@ class GroupFragment : BaseFragment<GroupViewModel,GroupFragmentBinding>(),View.O
 
     override fun initData(savedInstanceState: Bundle?) {
         tvTitle.setText(R.string.menu_group)
-        ivLeft.setImageResource(R.drawable.btn_scan_selector)
+        ivLeft.setImageResource(R.drawable.btn_create_group_selector)
         ivRight.setImageResource(R.drawable.btn_search_selector)
         ivLeft.setOnClickListener(this)
         ivRight.setOnClickListener(this)
@@ -51,9 +61,15 @@ class GroupFragment : BaseFragment<GroupViewModel,GroupFragmentBinding>(),View.O
         mAdapter.onItemClickListener = BaseQuickAdapter.OnItemClickListener { adapter, view, position ->
             clickItem(mAdapter.getItem(position)!!)
         }
-        mAdapter.setEmptyView(R.layout.layout_empty,rv)
 
         mBinding.viewModel = mViewModel
+
+        registerStatusEvent {
+            if(it!= StatusEvent.Status.LOADING){
+                srl.isRefreshing = false
+                setEmpty()
+            }
+        }
 
         mViewModel.groupsLiveData.observe(this, Observer<List<Group>>{
             it?.let {
@@ -63,6 +79,12 @@ class GroupFragment : BaseFragment<GroupViewModel,GroupFragmentBinding>(),View.O
             srl.isRefreshing = false
         })
 
+    }
+
+    private fun setEmpty(){
+        if(mAdapter.emptyView == null){
+            mAdapter.setEmptyView(R.layout.layout_empty,rv)
+        }
     }
 
     fun clickItem(data: Group){
@@ -75,6 +97,12 @@ class GroupFragment : BaseFragment<GroupViewModel,GroupFragmentBinding>(),View.O
         return R.layout.group_fragment
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onMessageEvent(event: CreateGroupResp){
+        showToast(R.string.success_create)
+        mViewModel.retry()
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if(resultCode == Activity.RESULT_OK){
@@ -84,13 +112,34 @@ class GroupFragment : BaseFragment<GroupViewModel,GroupFragmentBinding>(),View.O
         }
     }
 
+
+
+    private fun clickCreateGroup(){
+        var view = LayoutInflater.from(context).inflate(R.layout.create_group_dialog,null)
+        var etContent = view.findViewById<EditText>(R.id.etDialogContent)
+        var btnOk = view.findViewById<Button>(R.id.btnDialogOK)
+        var btnCancel = view.findViewById<Button>(R.id.btnDialogCancel)
+        btnOk.setOnClickListener{
+            if(checkInput(etContent,R.string.tips_group_name)){
+                dismissDialog()
+                mViewModel.createGroup(etContent.text.toString().trim())
+            }
+        }
+        btnCancel.setOnClickListener{
+            dismissDialog()
+        }
+
+        showDialog(view)
+        dialog.setOnKeyListener(null)
+    }
+
     private fun clickSearch(){
         startActivityForResult(SearchActivity::class.java,Constants.REQ_SEARCH)
     }
 
     override fun onClick(v: View) {
         when(v.id){
-            R.id.ivLeft -> clickScan()
+            R.id.ivLeft -> clickCreateGroup()
             R.id.ivRight -> clickSearch()
         }
     }

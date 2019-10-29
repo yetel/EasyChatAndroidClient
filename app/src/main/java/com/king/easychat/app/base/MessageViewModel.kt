@@ -211,6 +211,7 @@ open class MessageViewModel<M :MessageModel> @Inject constructor(application: Ap
 
     fun updateMessageRead(userId: String,friendId: String){
         GlobalScope.launch(Dispatchers.IO) {
+            Timber.d("updateMessageRead")
             mModel.updateMessageRead(userId, friendId)
             Event.sendEvent(Operator(Constants.EVENT_REFRESH_MESSAGE_COUNT))
         }
@@ -218,6 +219,7 @@ open class MessageViewModel<M :MessageModel> @Inject constructor(application: Ap
 
     fun updateGroupMessageRead(userId: String,groupId: String){
         GlobalScope.launch(Dispatchers.IO) {
+            Timber.d("updateGroupMessageRead")
             mModel.updateGroupMessageRead(userId, groupId)
             Event.sendEvent(Operator(Constants.EVENT_REFRESH_MESSAGE_COUNT))
         }

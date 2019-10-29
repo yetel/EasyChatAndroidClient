@@ -34,7 +34,7 @@ class HomeModel @Inject constructor(repository: IDataRepository?): MessageModel(
         for (recentChat in recentChats) {
 
             val messageResp = messageDao.getLastMessageBySenderId(userId, recentChat.chatId,recentChat.chatId)
-            val count = messageDao.getUnreadNumBySenderId1(userId,recentChat.chatId).size
+            val count = messageDao.getUnreadList(userId,recentChat.chatId).size
             totalCount += count
             val messageList = Message()
             messageList.count = count
@@ -68,7 +68,7 @@ class HomeModel @Inject constructor(repository: IDataRepository?): MessageModel(
 
         for (recentGroupChat in recentGroupChats) {
             val groupMessageResp = groupMessageDao.getLastMessageByGroupId(userId, recentGroupChat.groupChatId)
-            val count = groupMessageDao.getUnreadNumByGroupId1(userId,recentGroupChat.groupChatId).size
+            val count = groupMessageDao.getUnreadList(userId,recentGroupChat.groupChatId).size
             totalCount += count
             val messageGroupList = Message()
             messageGroupList.count = count

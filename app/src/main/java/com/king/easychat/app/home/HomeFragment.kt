@@ -70,7 +70,6 @@ class HomeFragment : BaseFragment<HomeViewModel,HomeFragmentBinding>(),View.OnCl
         mAdapter.onItemClickListener = BaseQuickAdapter.OnItemClickListener { adapter, view, position ->
             clickItem(mAdapter.getItem(position)!!)
         }
-        mAdapter.setEmptyView(R.layout.layout_empty,rv)
 
         mBinding.viewModel = mViewModel
 
@@ -86,8 +85,17 @@ class HomeFragment : BaseFragment<HomeViewModel,HomeFragmentBinding>(),View.OnCl
 
         registerSingleLiveEvent {
             when(it.what){
-                Constants.REFRESH_SUCCESS -> srl.isRefreshing = false
+                Constants.REFRESH_SUCCESS -> {
+                    srl.isRefreshing = false
+                    setEmpty()
+                }
             }
+        }
+    }
+
+    private fun setEmpty(){
+        if(mAdapter.emptyView == null){
+            mAdapter.setEmptyView(R.layout.layout_empty,rv)
         }
     }
 

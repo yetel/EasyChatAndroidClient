@@ -51,7 +51,7 @@ interface MessageDao {
      * 查询未读消息记录数
      */
     @Query("SELECT id FROM MessageDbo WHERE  userId = :userId AND sender = :senderId AND read = '0' GROUP BY id")
-    fun getUnreadNumBySenderId1(userId : String, senderId : String) : List<Long>
+    fun getUnreadList(userId : String, senderId : String) : List<Long>
 
     /**
      * 更新为已读消息

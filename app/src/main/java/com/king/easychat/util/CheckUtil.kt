@@ -15,9 +15,18 @@ object CheckUtil {
      * @return
      */
     fun isPassword(password: String): Boolean {
+        val regex = "^(?![0-9]+\$)(?![a-zA-Z]+\$)[0-9A-Za-z]{6,20}\$"
+        return matcher(password,regex)
+    }
 
-        val p = Pattern.compile("^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,20}$")
-        val m = p.matcher(password)
+    fun isUrl(url: String): Boolean{
+        val regex = "[hH][tT]{2}[pP]://|[hH][tT]{2}[pP][sS]://"
+        return matcher(url,regex)
+    }
+
+    fun matcher(content: String,regex: String): Boolean{
+        val p = Pattern.compile(regex)
+        val  m = p.matcher(content)
         return m.matches()
     }
 }

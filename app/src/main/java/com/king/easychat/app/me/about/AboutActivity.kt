@@ -11,6 +11,7 @@ import androidx.core.content.ContextCompat
 import com.king.easychat.R
 import com.king.easychat.app.Constants
 import com.king.easychat.app.base.BaseActivity
+import com.king.easychat.app.web.WebActivity
 import com.king.easychat.databinding.AboutActivityBinding
 import com.king.easychat.util.SystemBarHelper
 import com.king.frame.mvvmframe.base.DataViewModel
@@ -82,13 +83,15 @@ class AboutActivity : BaseActivity<DataViewModel,AboutActivityBinding>(){
 
 
     private fun startWeb(title: String,url: String){
-
+        val intent = newIntent(title,WebActivity::class.java)
+        intent.putExtra(Constants.KEY_URL,url)
+        startActivity(intent)
     }
 
     override fun onClick(v: View) {
         super.onClick(v)
         when(v.id){
-            R.id.fab -> startWeb(Constants.AUTHOR,"")
+            R.id.fab -> startWeb(Constants.AUTHOR,"https://github.com/jenly1314")
         }
     }
 

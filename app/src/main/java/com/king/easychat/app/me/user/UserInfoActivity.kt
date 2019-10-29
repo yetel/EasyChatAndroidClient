@@ -32,6 +32,8 @@ class UserInfoActivity : BaseActivity<UserInfoViewModel, UserInfoActivityBinding
         mViewModel.userLiveData.observe(this, Observer {
             it?.let {
                 mBinding.data = it
+                getApp().user = it
+                setResult(RESULT_OK)
             }
         })
 

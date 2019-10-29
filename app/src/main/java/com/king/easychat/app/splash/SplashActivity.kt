@@ -80,10 +80,11 @@ class SplashActivity : BaseActivity<SplashViewModel, SplashActivityBinding>(){
         handleLoginResp(event)
     }
 
-    fun handleLoginResp(resp : LoginResp){
+    override fun handleLoginResp(resp : LoginResp){
         isRequest = true
         if(resp.success){
             loginResp = resp
+            getApp().login(resp)
         }
 
         startActivity()
@@ -113,7 +114,6 @@ class SplashActivity : BaseActivity<SplashViewModel, SplashActivityBinding>(){
         if(isAnimEnd && isRequest){
 
             if(getApp().isLogin()){
-                getApp().loginResp = loginResp
                 HeartBeatService.startHeartBeatService(context)
                 startHomeActivity()
             }else{

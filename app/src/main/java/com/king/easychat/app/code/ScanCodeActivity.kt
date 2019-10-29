@@ -1,6 +1,5 @@
 package com.king.easychat.app.code
 
-import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.MotionEvent
@@ -12,6 +11,8 @@ import com.king.easychat.app.base.BaseActivity
 import com.king.easychat.app.friend.UserProfileActivity
 import com.king.easychat.app.group.GroupProfileActivity
 import com.king.easychat.app.me.user.UserInfoActivity
+import com.king.easychat.app.web.WebActivity
+import com.king.easychat.util.CheckUtil
 import com.king.easychat.util.SystemBarHelper
 import com.king.frame.mvvmframe.base.DataViewModel
 import com.king.zxing.CaptureHelper
@@ -114,7 +115,7 @@ class ScanCodeActivity : BaseActivity<DataViewModel,ViewDataBinding>(), OnCaptur
                 }
 
             }else if(result.startsWith(Constants.GROUP_CODE_PREFIX,true)){//群组二维码
-                var groupId = result.substring(Constants.USER_CODE_PREFIX.length)
+                var groupId = result.substring(Constants.GROUP_CODE_PREFIX.length)
                 if(StringUtils.isNotBlank(groupId)){
                     val intent = newIntent(GroupProfileActivity::class.java)
                     intent.putExtra(Constants.KEY_ID,groupId)
@@ -122,6 +123,12 @@ class ScanCodeActivity : BaseActivity<DataViewModel,ViewDataBinding>(), OnCaptur
                     finish()
                     return true
                 }
+            }else if(CheckUtil.isUrl(it)){//url
+                val intent = newIntent(WebActivity::class.java)
+                intent.putExtra(Constants.KEY_URL,it)
+                startActivity(intent)
+                finish()
+                return true
             }
             //扫的其它信息，直接提示
             showToast(it)

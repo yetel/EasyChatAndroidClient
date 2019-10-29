@@ -38,6 +38,7 @@ class FriendViewModel @Inject constructor(application: Application, model: Frien
         }
         source = mModel.friendResource
         friendsLiveData.addSource(source!!) {
+            updateStatus(it.status)
             if(it.isSuccess){
                 friendsLiveData.postValue(it.data)
             }else {

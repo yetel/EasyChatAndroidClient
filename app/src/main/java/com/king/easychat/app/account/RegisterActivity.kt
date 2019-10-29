@@ -39,7 +39,7 @@ class RegisterActivity : BaseActivity<RegisterViewModel, RegisterActivityBinding
         hideLoading()
         if(resp.success){
             getApp().login(resp)
-            Cache.put(mViewModel.registerReq)
+            Cache.put(mViewModel.registerReq,resp.token)
             HeartBeatService.startHeartBeatService(context)
             startHomeActivity()
             finish()

@@ -65,6 +65,5 @@ class GroupModel @Inject constructor(repository: IDataRepository?): MessageModel
                 }
             }
         }
-
     }
 }

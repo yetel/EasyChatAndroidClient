@@ -65,6 +65,9 @@ object Constants {
     const val EVENT_NETTY_DISCONNECT = 0x04
     const val EVENT_NETTY_RECONNECT = 0x05
 
+    const val EVENT_UPDATE_MESSAGE_READ = 0x06
+    const val EVENT_UPDATE_GROUP_MESSAGE_READ = 0x07
+
     //---------------------------------------------
 
     const val USER_TYPE = 0

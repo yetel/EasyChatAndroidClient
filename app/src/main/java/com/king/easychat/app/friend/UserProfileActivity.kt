@@ -47,7 +47,8 @@ class UserProfileActivity : BaseActivity<UserProfileViewModel,UserProfileActivit
                 mBinding.data = it
                 user = it
                 if(StringUtils.isBlank(title)){
-                    tvTitle.text = it.getShowName()
+                    title = it.getShowName()
+                    tvTitle.text = title
                 }
                 getApp().friends?.run {
                     if(contains(it)){
@@ -106,7 +107,7 @@ class UserProfileActivity : BaseActivity<UserProfileViewModel,UserProfileActivit
     }
 
     private fun clickRemark(){
-        val intent = newIntent(getString(R.string.change_remark), ChangeUserInfoActivity::class.java)
+        val intent = newIntent(getString(R.string.remark_name), ChangeUserInfoActivity::class.java)
         intent.putExtra(Constants.KEY_ID,userId)
         intent.putExtra(Constants.KEY_TYPE, ChangeUserInfoActivity.CHANGE_REMARK)
         intent.putExtra(Constants.KEY_TIPS,getString(R.string.tips_change_remark))
