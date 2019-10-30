@@ -117,7 +117,7 @@ class SplashActivity : BaseActivity<SplashViewModel, SplashActivityBinding>(){
                 HeartBeatService.startHeartBeatService(context)
                 startHomeActivity()
             }else{
-                startLoginActivity()
+                startLoginActivity(Cache.getUsername())
             }
 
             finish()

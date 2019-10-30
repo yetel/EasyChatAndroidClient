@@ -4,7 +4,6 @@ import android.app.Application
 import com.king.anetty.Netty
 import com.king.easychat.app.Constants
 import com.king.easychat.netty.NettyClient
-import com.king.easychat.netty.packet.req.LoginReq
 import com.king.easychat.netty.packet.req.RegisterReq
 import com.king.frame.mvvmframe.base.BaseModel
 import com.king.frame.mvvmframe.base.DataViewModel
@@ -63,12 +62,31 @@ class RegisterViewModel @Inject constructor(application: Application, model: Bas
      */
     fun register(username: String,password: String){
         showLoading()
-        if(!NettyClient.INSTANCE.isConnected()){
-            NettyClient.INSTANCE.connect()
-            hideLoading()
-        }
         registerReq = RegisterReq(username,password)
-        NettyClient.INSTANCE.sendMessage(registerReq!!)
+        if(!NettyClient.INSTANCE.isConnected()){
+
+            NettyClient.INSTANCE.setOnConnectListener(object: Netty.OnConnectListener{
+                override fun onSuccess() {
+                    NettyClient.INSTANCE.sendMessage(registerReq!!)
+                    hideLoading()
+                }
+
+                override fun onFailed() {
+                    hideLoading()
+                }
+
+                override fun onError(e: Exception?) {
+                    hideLoading()
+                }
+
+            })
+
+            NettyClient.INSTANCE.connect()
+        }else{
+            NettyClient.INSTANCE.sendMessage(registerReq!!)
+        }
+
+
     }
 
 }
