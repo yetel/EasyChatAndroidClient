@@ -2,7 +2,9 @@ package com.king.easychat.app.account
 
 import android.os.Bundle
 import android.view.View
+import com.king.base.util.StringUtils
 import com.king.easychat.R
+import com.king.easychat.app.Constants
 import com.king.easychat.app.base.BaseActivity
 import com.king.easychat.app.service.HeartBeatService
 import com.king.easychat.databinding.RegisterActivityBinding
@@ -23,6 +25,16 @@ class RegisterActivity : BaseActivity<RegisterViewModel, RegisterActivityBinding
     var username : String? = null
 
     override fun initData(savedInstanceState: Bundle?) {
+
+        username = intent.getStringExtra(Constants.KEY_USERNAME)
+
+        etUsername.setText(username)
+
+        if(StringUtils.isNotBlank(username)){
+            etPassword.requestFocus()
+        }
+
+
         btnRegister.setOnClickListener(this)
     }
 

@@ -227,7 +227,7 @@ class ChatActivity : BaseActivity<ChatViewModel, ChatActivityBinding>(){
     }
 
 
-    private fun clickSmile(){
+    private fun clickHeart(){
         fl.addHeart()
         mViewModel.sendHeart(friendId)
     }
@@ -254,7 +254,7 @@ class ChatActivity : BaseActivity<ChatViewModel, ChatActivityBinding>(){
         super.onClick(v)
         when(v.id){
             R.id.ivRight -> clickRight()
-            R.id.ivSmile -> clickSmile()
+            R.id.ivHeart -> clickHeart()
             R.id.ivAdd -> clickAdd()
             R.id.tvSend -> clickSend()
         }

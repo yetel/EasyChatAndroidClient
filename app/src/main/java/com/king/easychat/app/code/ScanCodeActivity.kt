@@ -123,12 +123,6 @@ class ScanCodeActivity : BaseActivity<DataViewModel,ViewDataBinding>(), OnCaptur
                     finish()
                     return true
                 }
-            }else if(CheckUtil.isUrl(it)){//url
-                val intent = newIntent(WebActivity::class.java)
-                intent.putExtra(Constants.KEY_URL,it)
-                startActivity(intent)
-                finish()
-                return true
             }
             //扫的其它信息，直接提示
             showToast(it)

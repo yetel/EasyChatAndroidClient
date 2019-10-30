@@ -32,6 +32,7 @@ import com.king.easychat.netty.NettyClient
 import com.king.easychat.netty.packet.Packet
 import com.king.easychat.netty.packet.PacketType
 import com.king.easychat.netty.packet.resp.AddUserResp
+import com.king.easychat.netty.packet.resp.ApplyGroupResp
 import com.king.easychat.netty.packet.resp.InviteGroupResp
 import com.king.easychat.netty.packet.resp.LoginResp
 import com.king.easychat.util.Cache
@@ -72,9 +73,10 @@ abstract class BaseActivity<VM : BaseViewModel<out BaseModel>,VDB : ViewDataBind
         Timber.d("event:${event.packetType()}")
         if(!isStop){
             when(event.packetType()){
+                PacketType.LOGIN_RESP -> handleLoginResp(event as LoginResp)
                 PacketType.ADD_FRIEND_RESP -> handlerAddUserResp(event as AddUserResp)
                 PacketType.INVITE_GROUP_RESP -> handlerInviteGroupResp(event as InviteGroupResp)
-                PacketType.LOGIN_RESP -> handleLoginResp(event as LoginResp)
+                PacketType.APPLY_GROUP_RESP -> handleApplyGroupResp(event as ApplyGroupResp)
             }
         }
     }
@@ -93,7 +95,7 @@ abstract class BaseActivity<VM : BaseViewModel<out BaseModel>,VDB : ViewDataBind
         var config = AppDialogConfig()
         with(config){
             isHideTitle = true
-            content = String.format(getString(R.string.tips_accept_friend_),data.inviterId)
+            content = String.format(getString(R.string.tips_add_friend_),data.inviterName)
             ok = getString(R.string.accept)
             cancel = getString(R.string.ignore)
             onClickOk =  View.OnClickListener {
@@ -105,15 +107,36 @@ abstract class BaseActivity<VM : BaseViewModel<out BaseModel>,VDB : ViewDataBind
         AppDialog.INSTANCE.showDialog(context,config)
     }
 
+    /**
+     * 处理邀请加群
+     */
     private fun handlerInviteGroupResp(data: InviteGroupResp){
         var config = AppDialogConfig()
         with(config){
             isHideTitle = true
-            content = String.format(getString(R.string.tips_accept_group_),data.inviteId,data.groupName)
+            content = String.format(getString(R.string.tips_invite_group_),data.inviteId,data.groupName)
             ok = getString(R.string.accept)
             cancel = getString(R.string.ignore)
             onClickOk =  View.OnClickListener {
                 NettyClient.INSTANCE.sendAcceptGroupReq(data.groupId!!,data.inviteId!!,true)
+                AppDialog.INSTANCE.dismissDialog()
+            }
+        }
+        AppDialog.INSTANCE.showDialog(context,config)
+    }
+
+    /**
+     * 处理申请加群
+     */
+    private fun handleApplyGroupResp(data: ApplyGroupResp){
+        var config = AppDialogConfig()
+        with(config){
+            isHideTitle = true
+            content = String.format(getString(R.string.tips_apply_group_),data.applyUserName,data.groupName)
+            ok = getString(R.string.accept)
+            cancel = getString(R.string.ignore)
+            onClickOk =  View.OnClickListener {
+                NettyClient.INSTANCE.sendAllowGroupReq(data,true)
                 AppDialog.INSTANCE.dismissDialog()
             }
         }
@@ -171,12 +194,6 @@ abstract class BaseActivity<VM : BaseViewModel<out BaseModel>,VDB : ViewDataBind
         isStop = true
         super.onStop()
     }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onAllEvent(event: Any){
-
-    }
-
 
     fun clickRightClear(tv: TextView) {
         tv.setOnTouchListener { v, event ->

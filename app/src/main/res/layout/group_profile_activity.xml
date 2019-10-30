@@ -146,6 +146,18 @@
                 android:background="@drawable/white_selector"
                 app:layout_constraintTop_toBottomOf="@+id/tvLabelQRCode"
                 style="@style/OnClick"/>
+            <TextView
+                android:id="@+id/tvMemberNum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/size_40dp"
+                android:textColor="@color/text_80"
+                android:gravity="center_vertical"
+                android:text="@{data.memberNumber}"
+                tools:text="66"
+                app:layout_constraintTop_toBottomOf="@+id/tvLabelQRCode"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintBottom_toBottomOf="@+id/tvLabelMember"/>
             <Button
                 android:id="@+id/btnAdd"
                 android:layout_width="match_parent"

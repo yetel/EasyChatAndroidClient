@@ -25,6 +25,7 @@ import com.king.easychat.bean.Operator
 import com.king.easychat.databinding.GroupChatActivityBinding
 import com.king.easychat.netty.packet.MessageType
 import com.king.easychat.netty.packet.resp.GroupMessageResp
+import com.king.easychat.netty.packet.resp.MessageResp
 import com.king.easychat.util.Event
 import com.zhihu.matisse.Matisse
 import kotlinx.android.synthetic.main.chat_activity.*
@@ -182,17 +183,27 @@ class GroupChatActivity : BaseActivity<GroupChatViewModel, GroupChatActivityBind
         handleMessageResp(event)
     }
 
+
     fun handleMessageResp(resp: GroupMessageResp?){
         resp?.let {
             if(groupId == it.groupId){
-                mAdapter.addData(it)
-                if(isAutoScroll){
-                    rv.scrollToPosition(mAdapter.itemCount - 1)
+
+                if(it.messageType >= MessageType.NORMAL){
+                    when(it.messageType){
+                        MessageType.HEART -> fl.addHeart()
+                    }
+                }else{
+                    mAdapter.addData(it)
+                    if(isAutoScroll){
+                        rv.scrollToPosition(mAdapter.itemCount - 1)
+                    }
+                    if(it.isSender){
+                        mViewModel.saveGroupMessage(getApp().getUserId(),groupId,showName,true,it)
+                    }
                 }
+
             }
-            if(it.isSender){
-                mViewModel.saveGroupMessage(getApp().getUserId(),groupId,showName,true,it)
-            }
+
         }
 
     }
@@ -218,6 +229,11 @@ class GroupChatActivity : BaseActivity<GroupChatViewModel, GroupChatActivityBind
         startActivity(intent)
     }
 
+    private fun clickHeart(){
+        fl.addHeart()
+        mViewModel.sendHeart(groupId)
+    }
+
     private fun clickAdd(){
         selectPhoto()
     }
@@ -240,6 +256,7 @@ class GroupChatActivity : BaseActivity<GroupChatViewModel, GroupChatActivityBind
         super.onClick(v)
         when(v.id){
             R.id.ivRight -> clickRight()
+            R.id.ivHeart -> clickHeart()
             R.id.ivAdd -> clickAdd()
             R.id.tvSend -> clickSend()
         }

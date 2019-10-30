@@ -64,9 +64,9 @@ class GroupProfileActivity : BaseActivity<GroupProfileViewModel,GroupProfileActi
         }
     }
 
-    private fun clickjoinGroup(){
+    private fun clickJoinGroup(){
         if(NettyClient.INSTANCE.isConnected()){
-            mViewModel.inviteGroup(groupId,getApp().getUserId())
+            mViewModel.applyGroupReq(groupId)
             showToast(R.string.success_operator)
             setResult(Activity.RESULT_OK)
             finish()
@@ -98,7 +98,7 @@ class GroupProfileActivity : BaseActivity<GroupProfileViewModel,GroupProfileActi
         super.onClick(v)
         when(v.id){
             R.id.ivAvatar -> clickAvatar()
-            R.id.btnAdd -> clickjoinGroup()
+            R.id.btnAdd -> clickJoinGroup()
             R.id.tvLabelQRCode -> clickQRCode()
             R.id.tvLabelMember -> clickGroupMember()
         }

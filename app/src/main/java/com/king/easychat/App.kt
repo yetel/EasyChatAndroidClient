@@ -2,6 +2,8 @@ package com.king.easychat
 
 import android.content.Context
 import androidx.multidex.MultiDex
+import com.king.base.baseurlmanager.BaseUrlManager
+import com.king.base.baseurlmanager.bean.UrlInfo
 import com.king.easychat.app.Constants
 import com.king.easychat.app.service.HeartBeatService
 import com.king.easychat.bean.Group
@@ -37,6 +39,8 @@ class App : BaseApplication() {
     var friendId: String? = null
     var groupId: String? = null
 
+    val manager  by lazy { BaseUrlManager(this) }
+
     override fun attachBaseContext(base: Context?) {
         //初始化打印日志
         var formatStrategy = PrettyFormatStrategy.newBuilder()
@@ -62,11 +66,21 @@ class App : BaseApplication() {
     }
 
     override fun onCreate() {
+        if(Constants.isDomain){//提供动态切换环境
+            if(manager.count==0){
+                manager.urlInfo = UrlInfo(BuildConfig.API_HOST)
+            }
+
+            NettyClient.INSTANCE.init(manager.baseUrl)
+        }
         super.onCreate()
         Bugly.init(this, Constants.BUGLY_APP_ID, BuildConfig.DEBUG)
         NeverCrash.init { t, e ->
             CrashReport.postCatchedException(e)
         }
+
+
+
         DaggerApplicationComponent.builder()
             .appComponent(appComponent)
             .build()

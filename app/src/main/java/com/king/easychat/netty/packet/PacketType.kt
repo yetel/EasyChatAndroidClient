@@ -36,6 +36,11 @@ object PacketType {
     const val HEART_BEAT_REQ = 26
     const val HEART_BEAT_RESP = 27
     const val SYNC_MESSAGE_REQ = 28
+    const val APPLY_GROUP_REQ = 29
+    const val APPLY_GROUP_RESP = 30
+    const val APPLY_GROUP_SELF_RESP = 31
+    const val ALLOW_GROUP_REQ = 32
+    const val ALLOW_GROUP_RESP = 33
 
 
 }

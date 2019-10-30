@@ -101,15 +101,17 @@
     <string name="qrcode">二维码</string>
 
     <string name="group_name">群名称</string>
-    <string name="group_id">群名ID</string>
+    <string name="group_id">群ID</string>
     <string name="group_member">群成员</string>
 
     <string name="add_friend">添加好友</string>
     <string name="invite_group">申请加群</string>
 
-    <string name="tips_accept_friend_">"ID为[%1$s]的用户向您发送了好友申请？"</string>
-    <string name="tips_accept_group_">"ID为[%1$s]的用户邀请您加入群[%2$s]？"</string>
+    <string name="tips_add_friend_">"用户[%1$s]向您发送了好友申请？"</string>
+    <string name="tips_invite_group_">"ID为[%1$s]的用户邀请您加入群[%2$s]？"</string>
+    <string name="tips_apply_group_">"用户[%1$s]申请加入群[%2$s]？"</string>
     <string name="accept">接受</string>
+    <string name="agree">同意</string>
     <string name="ignore">忽略</string>
 
 
@@ -139,7 +141,6 @@
     <string name="tips_netty_reconnect">Netty自动重连</string>
     <string name="tips_netty_connected">Netty连接成功</string>
 
-    <string name="about_desc">
-    </string>
+    <string name="about_desc">本App纯属个人作品，完全开源。如果您在使用的过程中遇到问题或有好的建议需要反馈，请点击右上角菜单选项联系作者，谢谢合作。</string>
 
 </resources>

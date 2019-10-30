@@ -30,6 +30,9 @@ class ChannelInitial : ChannelInitializer<SocketChannel>(){
                 .addLast(InviteGroupRespHandler())
                 .addLast(InviteGroupSelfRespHandler())
                 .addLast(AcceptGroupRespHandler())
+                .addLast(ApplyGroupRespHandler())
+                .addLast(ApplyGroupSelfRespHandler())
+                .addLast(AllowGroupRespHandler())
         }
     }
 

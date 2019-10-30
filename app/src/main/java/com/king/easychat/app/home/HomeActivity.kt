@@ -199,7 +199,7 @@ class HomeActivity : BaseActivity<HomeViewModel, HomeActivityBinding>() ,
      * 处理群消息
      */
     private fun handleGroupMessageResp(data: GroupMessageResp){
-        val read = (data.groupId == getApp().groupId != null)
+        val read = (data.groupId == getApp().groupId)
         Timber.d("read=$read")
         mViewModel.saveGroupMessage(getApp().getUserId(),data.groupId,null,read,data)
     }

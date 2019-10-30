@@ -1,10 +1,16 @@
 package com.king.easychat.app.account
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
 import android.view.View
+import androidx.core.app.ActivityOptionsCompat
+import androidx.core.content.ContextCompat.startActivity
+import com.king.base.baseurlmanager.BaseUrlManagerActivity
+import com.king.base.util.StringUtils
+import com.king.base.util.ToastUtils.showToast
 import com.king.easychat.R
 import com.king.easychat.app.Constants
 import com.king.easychat.app.base.BaseActivity
@@ -12,10 +18,10 @@ import com.king.easychat.app.service.HeartBeatService
 import com.king.easychat.databinding.LoginActivityBinding
 import com.king.easychat.netty.packet.resp.LoginResp
 import com.king.easychat.util.Cache
-import com.king.easychat.util.SystemBarHelper
 import kotlinx.android.synthetic.main.login_activity.*
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+
 
 /**
  * @author <a href="mailto:jenly1314@gmail.com">Jenly</a>
@@ -43,6 +49,10 @@ class LoginActivity : BaseActivity<LoginViewModel, LoginActivityBinding>(), View
         username = intent.getStringExtra(Constants.KEY_USERNAME)
 
         etUsername.setText(username)
+
+        if(StringUtils.isNotBlank(username)){
+            etPassword.requestFocus()
+        }
 
         clickRightClear(etUsername)
         clickRightEye(etPassword)
@@ -84,13 +94,13 @@ class LoginActivity : BaseActivity<LoginViewModel, LoginActivityBinding>(), View
 
     fun clickLogin(){
 
-        if (!checkInput(etUsername, R.string.tips_username_is_empty)) {
+        if (!checkInput(etUsername, com.king.easychat.R.string.tips_username_is_empty)) {
             return
         }
 
         username = etUsername.text.toString()
 
-        if (!checkInput(etPassword, R.string.tips_password_is_empty)) {
+        if (!checkInput(etPassword, com.king.easychat.R.string.tips_password_is_empty)) {
             return
         }
 
@@ -99,13 +109,25 @@ class LoginActivity : BaseActivity<LoginViewModel, LoginActivityBinding>(), View
         mViewModel.login(username!!,password)
     }
 
-    fun clickRegister(){
-        startActivity(RegisterActivity::class.java)
+    private fun clickLogo(){
+        if(Constants.isDomain){
+            val intent = Intent(this, BaseUrlManagerActivity::class.java)
+            startActivity(intent)
+        }
+    }
+
+    private fun clickRegister(){
+        username = etUsername.text.toString().trim()
+        val intent = Intent(context,RegisterActivity::class.java)
+        intent.putExtra(Constants.KEY_USERNAME,username)
+        val optionsCompat = ActivityOptionsCompat.makeCustomAnimation(context, R.anim.anim_in, R.anim.anim_out)
+        startActivity(intent, optionsCompat.toBundle())
     }
 
     override fun onClick(v: View){
         when(v.id){
             R.id.ivLeft -> onBackPressed()
+            R.id.ivLogo -> clickLogo()
             R.id.btnLogin -> clickLogin()
             R.id.tvForgotPwd -> clickForgotPwd()
             R.id.tvRegister -> clickRegister()

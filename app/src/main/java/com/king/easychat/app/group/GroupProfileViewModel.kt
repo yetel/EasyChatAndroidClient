@@ -8,6 +8,7 @@ import com.king.easychat.api.ApiService
 import com.king.easychat.bean.Group
 import com.king.easychat.bean.Result
 import com.king.easychat.netty.NettyClient
+import com.king.easychat.netty.packet.req.ApplyGroupReq
 import com.king.easychat.netty.packet.req.InviteGroupReq
 import com.king.frame.mvvmframe.base.BaseModel
 import com.king.frame.mvvmframe.base.DataViewModel
@@ -57,9 +58,19 @@ class GroupProfileViewModel @Inject constructor(application: Application, model:
 
     }
 
-    fun inviteGroup(groupId: String,userId: String){
+    /**
+     * 邀请进群
+     */
+    fun inviteGroupReq(groupId: String,userId: String){
         val users = ArrayList<String>()
         users.add(userId)
         NettyClient.INSTANCE.sendMessage(InviteGroupReq(groupId,users))
+    }
+
+    /**
+     * 申请加群
+     */
+    fun applyGroupReq(groupId: String){
+        NettyClient.INSTANCE.sendMessage(ApplyGroupReq(groupId))
     }
 }

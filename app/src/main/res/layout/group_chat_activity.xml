@@ -11,18 +11,29 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <include layout="@layout/toolbar"/>
-        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-            android:id="@+id/srl"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1">
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv"
+            <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+                android:id="@+id/srl"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:background="@color/space_bg"/>
-        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+                android:layout_height="match_parent">
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:background="@color/space_bg"/>
+            </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+            <com.king.view.flutteringlayout.FlutteringLayout
+                android:id="@+id/fl"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/size_20dp"
+                android:layout_marginRight="@dimen/size_20dp"
+                android:layout_centerHorizontal="true"/>
+        </RelativeLayout>
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -42,12 +53,12 @@
                 app:layout_constraintHorizontal_weight="1"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintRight_toLeftOf="@+id/ivSmile"/>
+                app:layout_constraintRight_toLeftOf="@+id/ivHeart"/>
             <ImageView
-                android:id="@+id/ivSmile"
+                android:id="@+id/ivHeart"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ec_smile"
+                android:src="@drawable/ec_heart"
                 android:layout_marginLeft="@dimen/size_6dp"
                 app:layout_constraintLeft_toRightOf="@+id/etContent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -60,7 +71,7 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/ec_add"
                 android:layout_marginLeft="@dimen/size_6dp"
-                app:layout_constraintLeft_toRightOf="@+id/ivSmile"
+                app:layout_constraintLeft_toRightOf="@+id/ivHeart"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintRight_toLeftOf="@+id/tvSend"

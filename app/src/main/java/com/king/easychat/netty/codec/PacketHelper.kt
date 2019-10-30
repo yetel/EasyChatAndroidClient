@@ -98,7 +98,14 @@ object PacketHelper {
             PacketType.MESSAGE_SELF_RESP -> return MessageSelfResp::class.java
             PacketType.HEART_BEAT_REQ -> return HeartBeatReq::class.java
             PacketType.HEART_BEAT_RESP -> return HeartBeatResp::class.java
+            PacketType.SYNC_MESSAGE_REQ -> return SyncMessageReq::class.java
+            PacketType.APPLY_GROUP_REQ -> return ApplyGroupReq::class.java
+            PacketType.APPLY_GROUP_RESP -> return ApplyGroupResp::class.java
+            PacketType.APPLY_GROUP_SELF_RESP -> return ApplyGroupSelfResp::class.java
+            PacketType.ALLOW_GROUP_REQ -> return AllowGroupReq::class.java
+            PacketType.ALLOW_GROUP_RESP -> return AllowGroupResp::class.java
         }
         return Packet::class.java
     }
+
 }

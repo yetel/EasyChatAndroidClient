@@ -82,8 +82,8 @@ android {
         }
     }
 
-    def API_RELEASE_HOST = "\"http://xx.xx.xx:9000/\""
-    def API_DEV_HOST = "\"http://xx.xx.xx:9000/\""
+    def API_RELEASE_HOST = "\"120.79.175.213\""
+    def API_DEV_HOST = "\"192.168.100.54\""
 
     flavorDimensions "flavor"
     productFlavors {
@@ -151,6 +151,9 @@ dependencies {
     implementation "com.king.view:flutteringlayout:$versions.flutteringlayout"
 
     implementation "com.king.zxing:zxing-lite:$versions.zxingLite"
+
+    implementation "com.king.base:base-url-manager:$versions.baseUrlManager"
+
 
     implementation "com.orhanobut:logger:$versions.logger"
 

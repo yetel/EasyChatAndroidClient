@@ -8,6 +8,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import androidx.core.content.ContextCompat
+import com.king.easychat.BuildConfig
 import com.king.easychat.R
 import com.king.easychat.app.Constants
 import com.king.easychat.app.base.BaseActivity
@@ -32,6 +33,8 @@ class AboutActivity : BaseActivity<DataViewModel,AboutActivityBinding>(){
         collapsingToolbar.setExpandedTitleColor(ContextCompat.getColor(context, R.color.white))
         collapsingToolbar.setCollapsedTitleTextColor(ContextCompat.getColor(context, R.color.white))
         collapsingToolbar.collapsedTitleGravity = Gravity.CENTER
+
+        tvVersion.text = "${getString(R.string.app_name)} v${BuildConfig.VERSION_NAME}"
     }
 
     override fun getLayoutId(): Int {

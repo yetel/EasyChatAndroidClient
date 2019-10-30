@@ -16,9 +16,12 @@ import com.king.easychat.app.chat.ChatActivity
 import com.king.easychat.app.search.SearchActivity
 import com.king.easychat.bean.User
 import com.king.easychat.databinding.FriendFragmentBinding
+import com.king.easychat.netty.packet.resp.AcceptResp
 import com.king.frame.mvvmframe.base.livedata.StatusEvent
 import kotlinx.android.synthetic.main.group_fragment.*
 import kotlinx.android.synthetic.main.home_toolbar.*
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 /**
  * @author <a href="mailto:jenly1314@gmail.com">Jenly</a>
@@ -66,6 +69,14 @@ class FriendFragment : BaseFragment<FriendViewModel,FriendFragmentBinding>(), Vi
                 getApp().friends = it
             }
         })
+
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onMessageEvent(event: AcceptResp){
+        if(event.success){//同意添加好友-刷新数据
+            mViewModel.retry()
+        }
 
     }
 

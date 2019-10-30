@@ -2,6 +2,7 @@ package com.king.easychat.bean
 
 import android.os.Parcelable
 import androidx.room.Entity
+import androidx.room.Ignore
 import androidx.room.Index
 import androidx.room.PrimaryKey
 import kotlinx.android.parcel.Parcelize
@@ -19,8 +20,10 @@ class Group(val groupId: String,var groupName: String,var avatar: String?,var ma
     @PrimaryKey(autoGenerate = true)
     var id: Int = 0
 
-    override fun toString(): String {
-        return "Group(groupId=$groupId, groupName=$groupName, mainUserId=$mainUserId)"
+    @Ignore var memberNum: Int = 0
+
+    fun getMemberNumber(): String{
+        return memberNum.toString()
     }
 
     override fun equals(other: Any?): Boolean {
@@ -36,6 +39,10 @@ class Group(val groupId: String,var groupName: String,var avatar: String?,var ma
 
     override fun hashCode(): Int {
         return groupId.hashCode()
+    }
+
+    override fun toString(): String {
+        return "Group(groupId='$groupId', groupName='$groupName', avatar=$avatar, mainUserId=$mainUserId, memberNum=$memberNum, id=$id)"
     }
 
 

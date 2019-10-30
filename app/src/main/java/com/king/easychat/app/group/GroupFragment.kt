@@ -5,7 +5,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
-import android.view.WindowManager
 import android.widget.Button
 import android.widget.EditText
 import androidx.lifecycle.Observer
@@ -20,8 +19,7 @@ import com.king.easychat.app.chat.GroupChatActivity
 import com.king.easychat.app.search.SearchActivity
 import com.king.easychat.bean.Group
 import com.king.easychat.databinding.GroupFragmentBinding
-import com.king.easychat.netty.packet.Packet
-import com.king.easychat.netty.packet.PacketType
+import com.king.easychat.netty.packet.resp.AllowGroupResp
 import com.king.easychat.netty.packet.resp.CreateGroupResp
 import com.king.frame.mvvmframe.base.livedata.StatusEvent
 import kotlinx.android.synthetic.main.group_fragment.*
@@ -99,8 +97,21 @@ class GroupFragment : BaseFragment<GroupViewModel,GroupFragmentBinding>(),View.O
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onMessageEvent(event: CreateGroupResp){
-        showToast(R.string.success_create)
-        mViewModel.retry()
+        if(event.success){
+            showToast(R.string.success_create)
+            mViewModel.retry()
+        }else{
+            showToast(event.reason)
+        }
+
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onMessageEvent(event: AllowGroupResp){
+        if(event.allow){//同意加入群-刷新数据
+            mViewModel.retry()
+        }
+
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

@@ -107,6 +107,10 @@
 
         <service android:name=".app.service.HeartBeatService"/>
 
+        <activity android:name="com.king.base.baseurlmanager.BaseUrlManagerActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseUrlManagerTheme"/>
+
         <activity android:name="com.zhihu.matisse.ui.MatisseActivity"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait"

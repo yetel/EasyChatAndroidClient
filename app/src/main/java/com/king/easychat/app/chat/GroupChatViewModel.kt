@@ -38,4 +38,8 @@ class GroupChatViewModel @Inject constructor(application: Application, model: Gr
     }
 
 
+    fun sendHeart(receiver: String){
+        NettyClient.INSTANCE.sendMessage(GroupMessageReq(receiver,MessageType.HEART.toString(),MessageType.HEART))
+    }
+
 }
