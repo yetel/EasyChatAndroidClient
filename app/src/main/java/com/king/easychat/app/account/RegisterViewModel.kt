@@ -65,6 +65,7 @@ class RegisterViewModel @Inject constructor(application: Application, model: Bas
         showLoading()
         if(!NettyClient.INSTANCE.isConnected()){
             NettyClient.INSTANCE.connect()
+            hideLoading()
         }
         registerReq = RegisterReq(username,password)
         NettyClient.INSTANCE.sendMessage(registerReq!!)

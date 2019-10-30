@@ -62,6 +62,7 @@ class LoginViewModel @Inject constructor(application: Application, model: BaseMo
         showLoading()
         if(!NettyClient.INSTANCE.isConnected()){
             NettyClient.INSTANCE.connect()
+            hideLoading()
         }
         loginReq = LoginReq(null,username,password)
         NettyClient.INSTANCE.sendMessage(loginReq!!)
