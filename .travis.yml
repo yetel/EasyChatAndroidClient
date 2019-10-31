@@ -25,6 +25,7 @@ android:
     # The SDK version used to compile your project
     - android-$ANDROID_API_LEVEL
     - extra-android-m2repository
+    - extra-google-android-support
 
 script:
     - ./gradlew clean
