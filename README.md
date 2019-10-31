@@ -10,7 +10,8 @@
 [![Blog](https://img.shields.io/badge/blog-Jenly-9933CC.svg)](https://jenly1314.github.io/)
 [![QQGroup](https://img.shields.io/badge/QQGroup-20867961-blue.svg)](http://shang.qq.com/wpa/qunwpa?idkey=8fcc6a2f88552ea44b1411582c94fd124f7bb3ec227e2a400dbbfaad3dc2f5ad)
 
-EasyChat for Android 是一个开源的社交类的App。主要包含消息、好友、群组等相关的社交核心功能。部分界面参照了QQ、微信等相关社交APP。更多精彩详情，请[下载App](https://raw.githubusercontent.com/yetel/EasyChatAndroidClient/master/app/release/app-release.apk)体验吧。
+
+#### EasyChat for Android 是一个开源的社交类的App。主要包含消息、好友、群组等相关的社交核心功能。部分界面参照了QQ、微信等相关社交APP。更多精彩详情，请[下载App](https://raw.githubusercontent.com/yetel/EasyChatAndroidClient/master/app/release/app-release.apk)体验吧。
 
 #####   App主要采用MVVM基于 [MVVMFrame](https://github.com/jenly1314/MVVMFrame) 框架搭建。
 
@@ -48,3 +49,6 @@ EasyChat for Android 是一个开源的社交类的App。主要包含消息、�
 ## 鸣谢
 
 感谢所有开源库的开发者和开源精神。
+
+
+
