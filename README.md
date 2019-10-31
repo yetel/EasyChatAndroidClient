@@ -3,8 +3,7 @@
 ![Image](app/src/main/ic_launcher-web.png)
 
 [![Download](https://img.shields.io/badge/download-App-blue.svg)](https://raw.githubusercontent.com/yetel/EasyChatAndroidClient/master/app/release/app-release.apk)
-[![CI](https://travis-ci.org/yetel/EasyChatAndroidClientAndroidClient.svg?branch=master)](https://travis-ci.org/yetel/EasyChatAndroidClient)
-[![CircleCI](https://circleci.com/gh/yetel/EasyChatAndroidClient.svg?style=svg)](https://circleci.com/gh/yetel/EasyChatAndroidClient)
+[![CI](https://travis-ci.org/yetel/EasyChatAndroidClient.svg?branch=master)](https://travis-ci.org/yetel/EasyChatAndroidClient)
 [![API](https://img.shields.io/badge/API-16%2B-blue.svg?style=flat)](https://android-arsenal.com/api?level=16)
 [![License](https://img.shields.io/badge/license-Apche%202.0-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0)
 [![Blog](https://img.shields.io/badge/blog-Jenly-9933CC.svg)](https://jenly1314.github.io/)
