@@ -27,7 +27,7 @@
 ### EasyChat相关开源项目
 
 ##### 服务端：[EasyChatServer](https://github.com/yetel/EasyChatServer)
-##### Java客户端：[EasyChatJavaClient](https://github.com/yetel/EasyChatJavaClient)
+##### JavaFX客户端：[EasyChatJavaFXClient](https://github.com/yetel/EasyChatJavaFXClient)
 
 ## Gif 展示
 ![Image](art/GIF.gif)

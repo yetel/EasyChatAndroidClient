@@ -48,7 +48,7 @@ class AboutActivity : BaseActivity<DataViewModel,AboutActivityBinding>(){
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.menuGithub -> startWeb(getString(R.string.app_name), "https://github.com/yetel")
+            R.id.menuGithub -> startWeb(Constants.AUTHOR, "https://github.com/jenly1314")
             R.id.menuSource -> startWeb(
                 getString(R.string.menu_source),
                 "https://github.com/yetel/EasyChatAndroidClient"
@@ -94,7 +94,7 @@ class AboutActivity : BaseActivity<DataViewModel,AboutActivityBinding>(){
     override fun onClick(v: View) {
         super.onClick(v)
         when(v.id){
-            R.id.fab -> startWeb(Constants.AUTHOR,"https://github.com/jenly1314")
+            R.id.fab -> startWeb(getString(R.string.app_name), "https://github.com/yetel/EasyChatAndroidClient")
         }
     }
 
