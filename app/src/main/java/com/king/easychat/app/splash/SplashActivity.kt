@@ -14,10 +14,10 @@ import com.king.easychat.netty.NettyClient
 import com.king.easychat.netty.packet.req.LoginReq
 import com.king.easychat.netty.packet.resp.LoginResp
 import com.king.easychat.util.Cache
-import com.king.easychat.util.SystemBarHelper
 import kotlinx.android.synthetic.main.splash_activity.*
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+import timber.log.Timber
 
 /**
  * @author <a href="mailto:jenly1314@gmail.com">Jenly</a>
@@ -58,6 +58,7 @@ class SplashActivity : BaseActivity<SplashViewModel, SplashActivityBinding>(){
 
     fun autoLogin(){
         var cacheToken = Cache.getToken()
+        Timber.d("cacheToken=$cacheToken")
         if(StringUtils.isNotBlank(cacheToken)){
             var loginReq: LoginReq?  = Cache.getLoginReq()
             if(loginReq != null){
@@ -91,7 +92,7 @@ class SplashActivity : BaseActivity<SplashViewModel, SplashActivityBinding>(){
     }
 
 
-    fun startAnimation(view: View) {
+    private fun startAnimation(view: View) {
         val anim = AnimationUtils.loadAnimation(context, R.anim.splash_in)
         anim.setAnimationListener(object : Animation.AnimationListener {
             override fun onAnimationStart(animation: Animation) {
@@ -110,7 +111,7 @@ class SplashActivity : BaseActivity<SplashViewModel, SplashActivityBinding>(){
         view.startAnimation(anim)
     }
 
-    fun startActivity(){
+    private fun startActivity(){
         if(isAnimEnd && isRequest){
 
             if(getApp().isLogin()){

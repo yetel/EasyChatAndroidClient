@@ -7,6 +7,7 @@ import com.king.easychat.app.home.HomeViewModel
 import com.king.easychat.bean.Message
 import com.king.easychat.util.Event
 import com.king.easychat.view.DragBubbleView
+import com.king.easychat.view.EasySwipeMenuLayout
 
 /**
  * @author <a href="mailto:jenly1314@gmail.com">Jenly</a>
@@ -34,6 +35,11 @@ class MessageAdapter(val userId: String,val viewModel: HomeViewModel) : BindingA
             }
 
         })
+
+        helper.addOnClickListener(R.id.clContent)
+        helper.addOnClickListener(R.id.llDelete)
+
+
         helper.mBinding?.let {
             it.setVariable(BR.curTime,curTime)
             it.setVariable(BR.data,item)

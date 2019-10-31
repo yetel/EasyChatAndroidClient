@@ -48,14 +48,14 @@ class AboutActivity : BaseActivity<DataViewModel,AboutActivityBinding>(){
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.menuGithub -> startWeb(Constants.AUTHOR, "https://github.com/jenly1314")
+            R.id.menuGithub -> startWeb(getString(R.string.app_name), "https://github.com/yetel")
             R.id.menuSource -> startWeb(
                 getString(R.string.menu_source),
-                "https://github.com/jenly1314/EasyChat"
+                "https://github.com/yetel/EasyChatAndroidClient"
             )
             R.id.menuIssue -> startWeb(
                 getString(R.string.menu_issue),
-                "https://github.com/jenly1314/EasyChat/issues"
+                "https://github.com/yetel/EasyChatAndroidClient/issues"
             )
             R.id.menuEmail -> clickEmail(Constants.GMAIL)
             R.id.menuQQGroup -> joinQQGroup(Constants.QQ_GROUP_KEY)

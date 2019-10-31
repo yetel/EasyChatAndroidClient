@@ -7,7 +7,7 @@ import com.king.easychat.BuildConfig
  */
 object Constants {
 
-    const val isDomain = true
+    const val isDomain = false
 
     const val HOST = BuildConfig.API_HOST
 
@@ -73,6 +73,8 @@ object Constants {
 
     const val EVENT_UPDATE_MESSAGE_READ = 0x06
     const val EVENT_UPDATE_GROUP_MESSAGE_READ = 0x07
+
+    const val EVENT_DELETE_REFRESH_MESSAGE = 0x08
 
     //---------------------------------------------
 

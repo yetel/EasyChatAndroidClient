@@ -102,6 +102,14 @@ open class MessageModel @Inject constructor(repository: IDataRepository?) : Base
         getRecentGroupChatDao().insert(data)
     }
 
+    fun deleteRecentChat(userId: String,chatId: String){
+        getRecentChatDao().delete(userId,chatId)
+    }
+
+    fun deleteGroupRecentChat(userId: String,chatId: String){
+        getRecentGroupChatDao().delete(userId,chatId)
+    }
+
     fun updateMessageRead(userId: String,friendId: String){
         getMessageDao().updateRead(userId,friendId,friendId)
     }

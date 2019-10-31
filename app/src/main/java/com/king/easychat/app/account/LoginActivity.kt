@@ -48,6 +48,10 @@ class LoginActivity : BaseActivity<LoginViewModel, LoginActivityBinding>(), View
 
         username = intent.getStringExtra(Constants.KEY_USERNAME)
 
+        if(StringUtils.isBlank(username)){
+            username = Cache.getUsername()
+        }
+
         etUsername.setText(username)
 
         if(StringUtils.isNotBlank(username)){

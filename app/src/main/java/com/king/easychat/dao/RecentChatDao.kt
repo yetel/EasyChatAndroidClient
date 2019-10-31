@@ -18,6 +18,7 @@ interface RecentChatDao {
     @Query("DELETE FROM RecentChat WHERE userId = :userId")
     fun delete(userId: String)
 
+
     @Query("SELECT * FROM RecentChat WHERE userId = :userId")
     fun getRecentChats(userId: String): List<RecentChat>
 

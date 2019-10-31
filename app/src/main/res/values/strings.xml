@@ -114,6 +114,8 @@
     <string name="agree">同意</string>
     <string name="ignore">忽略</string>
 
+    <string name="delete">删除</string>
+
 
     <string name="scan_code_title">扫码</string>
     <string name="tips_user_qrcode">扫一扫上面的二维码，添加我为好友</string>

@@ -67,8 +67,11 @@ class HomeFragment : BaseFragment<HomeViewModel,HomeFragmentBinding>(),View.OnCl
 
         rv.adapter = mAdapter
 
-        mAdapter.onItemClickListener = BaseQuickAdapter.OnItemClickListener { adapter, view, position ->
-            clickItem(mAdapter.getItem(position)!!)
+        mAdapter.onItemChildClickListener = BaseQuickAdapter.OnItemChildClickListener{ adapter, view, position ->
+            when(view.id){
+                R.id.clContent -> clickItem(mAdapter.getItem(position)!!)
+                R.id.llDelete -> clickDeleteItem(mAdapter.getItem(position)!!)
+            }
         }
 
         mBinding.viewModel = mViewModel
@@ -89,6 +92,7 @@ class HomeFragment : BaseFragment<HomeViewModel,HomeFragmentBinding>(),View.OnCl
                     srl.isRefreshing = false
                     setEmpty()
                 }
+                Constants.EVENT_DELETE_REFRESH_MESSAGE -> requestData()
             }
         }
     }
@@ -132,6 +136,10 @@ class HomeFragment : BaseFragment<HomeViewModel,HomeFragmentBinding>(),View.OnCl
         when(event.event){
             Constants.EVENT_REFRESH_MESSAGE_COUNT -> requestData()
         }
+    }
+
+    fun clickDeleteItem(data: Message){
+        mViewModel.deleteLatestChat(getApp().getUserId(),data)
     }
 
     fun clickItem(data: Message){

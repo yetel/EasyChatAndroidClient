@@ -118,4 +118,26 @@ class HomeViewModel @Inject constructor(application: Application, model: HomeMod
     fun getCacheGroups(){
         groupsLiveData.addSource(mModel.getGroups(), groupsLiveData::postValue)
     }
+
+    fun deleteLatestChat(userId: String,data: Message){
+        GlobalScope.launch(Dispatchers.Main) {
+            withContext(Dispatchers.IO){
+                when(data.messageMode){
+                    Message.userMode -> deleteLatestChatAndRead(userId,data.id!!)
+                    Message.groupMode -> deleteLatestGroupChatAndRead(userId,data.id!!)
+                }
+            }
+            sendSingleLiveEvent(Constants.EVENT_DELETE_REFRESH_MESSAGE)
+        }
+    }
+
+    private fun deleteLatestChatAndRead(userId: String,friendId: String){
+        mModel.deleteRecentChat(userId,friendId)
+        mModel.updateMessageRead(userId,friendId)
+    }
+
+    private fun deleteLatestGroupChatAndRead(userId: String,groupId: String){
+        mModel.deleteGroupRecentChat(userId,groupId)
+        mModel.deleteGroupRecentChat(userId,groupId)
+    }
 }

@@ -65,6 +65,10 @@ class HomeActivity : BaseActivity<HomeViewModel, HomeActivityBinding>() ,
 
         })
 
+        mViewModel.userLiveData.observe(this, Observer {
+            getApp().user = it
+        })
+
         mViewModel.getUser()
         mViewModel.friendsLiveData.observe(this, Observer {
             if(getApp().friends == null){
@@ -91,7 +95,7 @@ class HomeActivity : BaseActivity<HomeViewModel, HomeActivityBinding>() ,
         return R.layout.home_activity
     }
 
-    fun showHomeFragment(){
+    private fun showHomeFragment(){
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         if(homeFragment == null){
             homeFragment = HomeFragment.newInstance()
@@ -103,7 +107,7 @@ class HomeActivity : BaseActivity<HomeViewModel, HomeActivityBinding>() ,
         fragmentTransaction.commit()
     }
 
-    fun showFriendFragment(){
+    private fun showFriendFragment(){
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         if(friendFragment == null){
             friendFragment = FriendFragment.newInstance()
@@ -114,7 +118,7 @@ class HomeActivity : BaseActivity<HomeViewModel, HomeActivityBinding>() ,
         fragmentTransaction.commit()
     }
 
-    fun showGroupFragment(){
+    private fun showGroupFragment(){
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         if(groupFragment == null){
             groupFragment = GroupFragment.newInstance()
@@ -125,7 +129,7 @@ class HomeActivity : BaseActivity<HomeViewModel, HomeActivityBinding>() ,
         fragmentTransaction.commit()
     }
 
-    fun showMeFragment(){
+    private fun showMeFragment(){
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         if(meFragment == null){
             meFragment = MeFragment.newInstance()
@@ -136,7 +140,7 @@ class HomeActivity : BaseActivity<HomeViewModel, HomeActivityBinding>() ,
         fragmentTransaction.commit()
     }
 
-    fun hideAllFragment(fragmentTransaction: FragmentTransaction){
+    private fun hideAllFragment(fragmentTransaction: FragmentTransaction){
         homeFragment?.let {
             fragmentTransaction.hide(it)
         }
