@@ -3,8 +3,6 @@ package com.king.easychat.dao
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import com.king.easychat.bean.*
-import com.king.easychat.netty.packet.resp.GroupMessageResp
-import com.king.easychat.netty.packet.resp.MessageResp
 
 /**
  * @author <a href="mailto:jenly1314@gmail.com">Jenly</a>

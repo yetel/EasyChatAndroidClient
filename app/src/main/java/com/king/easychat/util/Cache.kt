@@ -14,7 +14,6 @@ object Cache {
     fun put(data: RegisterReq?,token: String){
         data?.let {
             MMKV.defaultMMKV().encode(Constants.KEY_USERNAME,it.userName)
-//            MMKV.defaultMMKV().encode(Constants.KEY_PASSWORD,it.password)
         }
         putToken(token)
 
@@ -23,7 +22,6 @@ object Cache {
     fun put(data: LoginReq?,token: String){
         data?.let {
             MMKV.defaultMMKV().encode(Constants.KEY_USERNAME,it.userName)
-//            MMKV.defaultMMKV().encode(Constants.KEY_PASSWORD,it.password)
         }
         putToken(token)
 

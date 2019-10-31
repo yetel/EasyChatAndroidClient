@@ -11,11 +11,8 @@ import com.king.easychat.app.base.MessageViewModel
 import com.king.easychat.bean.Result
 import com.king.easychat.bean.User
 import com.king.easychat.util.FileUtil
-import com.king.frame.mvvmframe.base.BaseModel
-import com.king.frame.mvvmframe.base.DataViewModel
 import com.king.frame.mvvmframe.base.livedata.StatusEvent
 import com.king.frame.mvvmframe.http.callback.ApiCallback
-import com.tencent.bugly.beta.tinker.TinkerManager.getApplication
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch

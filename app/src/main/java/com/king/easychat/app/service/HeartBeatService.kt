@@ -16,9 +16,6 @@ import com.king.easychat.util.Cache
 import com.king.easychat.util.Event
 import io.reactivex.Observable
 import io.reactivex.disposables.Disposable
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 
@@ -33,7 +30,7 @@ class HeartBeatService : Service(){
 
     var disposable : Disposable? = null
 
-    val connectListener = object: Netty.OnConnectListener{
+    private val connectListener = object: Netty.OnConnectListener{
         override fun onSuccess() {
             Cache.getLoginReq()?.let {
                 NettyClient.INSTANCE.sendMessage(it)

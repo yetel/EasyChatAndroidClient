@@ -1,8 +1,6 @@
 package com.king.easychat.app.me
 
 import android.app.Application
-import android.content.ComponentName
-import android.os.IBinder
 import androidx.lifecycle.MutableLiveData
 import com.king.easychat.App
 import com.king.easychat.BuildConfig

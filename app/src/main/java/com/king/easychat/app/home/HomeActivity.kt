@@ -1,5 +1,6 @@
 package com.king.easychat.app.home
 
+import android.Manifest
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.FragmentTransaction
@@ -36,6 +37,8 @@ class HomeActivity : BaseActivity<HomeViewModel, HomeActivityBinding>() ,
      var groupFragment : GroupFragment? = null
 
      var meFragment : MeFragment? = null
+
+     var isStorage = false
 
     override fun initData(savedInstanceState: Bundle?) {
         mBinding.viewModel = mViewModel
@@ -89,6 +92,11 @@ class HomeActivity : BaseActivity<HomeViewModel, HomeActivityBinding>() ,
         }
 
         mViewModel.syncMessageReq()
+
+        rxPermission.request(Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.READ_EXTERNAL_STORAGE)
+            .subscribe{
+                isStorage = true
+            }
     }
 
     override fun getLayoutId(): Int {

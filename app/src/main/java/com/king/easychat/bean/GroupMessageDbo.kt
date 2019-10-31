@@ -5,7 +5,6 @@ import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
 import com.king.easychat.netty.packet.resp.GroupMessageResp
-import com.king.easychat.netty.packet.resp.MessageResp
 import kotlinx.android.parcel.Parcelize
 
 /**

@@ -2,12 +2,9 @@ package com.king.easychat.app.adapter
 
 import com.king.easychat.BR
 import com.king.easychat.R
-import com.king.easychat.app.Constants
 import com.king.easychat.app.home.HomeViewModel
 import com.king.easychat.bean.Message
-import com.king.easychat.util.Event
 import com.king.easychat.view.DragBubbleView
-import com.king.easychat.view.EasySwipeMenuLayout
 
 /**
  * @author <a href="mailto:jenly1314@gmail.com">Jenly</a>

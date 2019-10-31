@@ -63,10 +63,12 @@
             android:windowSoftInputMode="stateVisible|adjustPan"/>
 
         <activity android:name=".app.chat.ChatActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize"/>
 
         <activity android:name=".app.chat.GroupChatActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize"/>
 
         <activity android:name=".app.photo.PhotoViewActivity"
             android:screenOrientation="portrait"

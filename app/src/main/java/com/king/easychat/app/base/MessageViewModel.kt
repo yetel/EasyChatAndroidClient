@@ -52,6 +52,9 @@ open class MessageViewModel<M :MessageModel> @Inject constructor(application: Ap
         return getApplication()
     }
 
+    /**
+     * 协程-挂起
+     */
     suspend fun <T> Call<T>.await(): T {
         return suspendCoroutine { continuation ->
             enqueue(object : ApiCallback<T>() {
@@ -88,6 +91,9 @@ open class MessageViewModel<M :MessageModel> @Inject constructor(application: Ap
         }
     }
 
+    /**
+     * 获取上传图片url
+     */
     private fun getUploadImageUrl(result: Result<String>?): String?{
         var url : String? = null
         result?.let { it ->
@@ -209,22 +215,30 @@ open class MessageViewModel<M :MessageModel> @Inject constructor(application: Ap
         }
     }
 
+    /**
+     * 根据好友ID更新消息为已读
+     */
     fun updateMessageRead(userId: String,friendId: String){
-        GlobalScope.launch {
+        GlobalScope.launch(Dispatchers.IO)  {
             Timber.d("updateMessageRead")
             mModel.updateMessageRead(userId, friendId)
             Event.sendEvent(Operator(Constants.EVENT_REFRESH_MESSAGE_COUNT))
         }
     }
 
+    /**
+     * 根据群ID更新群消息为已读
+     */
     fun updateGroupMessageRead(userId: String,groupId: String){
-        GlobalScope.launch {
-            Timber.d("updateGroupMessageRead")
+        GlobalScope.launch(Dispatchers.IO)  {
             mModel.updateGroupMessageRead(userId, groupId)
             Event.sendEvent(Operator(Constants.EVENT_REFRESH_MESSAGE_COUNT))
         }
     }
 
+    /**
+     * 更新所有消息为已读
+     */
     fun updateAllMessageRead(userId: String){
         GlobalScope.launch(Dispatchers.IO) {
             mModel.updateAllMessageRead(userId)

@@ -75,17 +75,16 @@ class App : BaseApplication() {
         }
         super.onCreate()
         Bugly.init(this, Constants.BUGLY_APP_ID, BuildConfig.DEBUG)
+
         NeverCrash.init { t, e ->
             CrashReport.postCatchedException(e)
         }
-
-
 
         DaggerApplicationComponent.builder()
             .appComponent(appComponent)
             .build()
             .inject(this)
-        MMKV.initialize(getPath())
+        MMKV.initialize(this)
     }
 
     fun isLogin(): Boolean{
@@ -136,6 +135,9 @@ class App : BaseApplication() {
 
     }
 
+    /**
+     * 清除数据
+     */
     private fun clear(){
         loginResp = null
         user = null

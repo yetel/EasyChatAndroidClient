@@ -5,7 +5,6 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import androidx.core.app.ActivityOptionsCompat
 import androidx.lifecycle.Observer
 import com.king.app.dialog.AppDialog
 import com.king.app.dialog.AppDialogConfig
@@ -17,7 +16,6 @@ import com.king.easychat.app.account.UpdatePwdActivity
 import com.king.easychat.app.base.BaseFragment
 import com.king.easychat.app.me.about.AboutActivity
 import com.king.easychat.app.me.user.UserInfoActivity
-import com.king.easychat.app.photo.PhotoViewActivity
 import com.king.easychat.databinding.MeFragmentBinding
 import com.king.frame.mvvmframe.base.livedata.StatusEvent
 import kotlinx.android.synthetic.main.home_toolbar.*

@@ -1,10 +1,7 @@
 package com.king.easychat.app.home
 
 import com.king.easychat.app.base.MessageModel
-import com.king.easychat.bean.GroupMessageDbo
 import com.king.easychat.bean.Message
-import com.king.easychat.bean.MessageDbo
-import com.king.frame.mvvmframe.base.BaseModel
 import com.king.frame.mvvmframe.data.IDataRepository
 import timber.log.Timber
 import javax.inject.Inject
@@ -31,6 +28,7 @@ class HomeModel @Inject constructor(repository: IDataRepository?): MessageModel(
 
         val messageLists = ArrayList<Message>()
         totalCount = 0
+        //遍历获取最近的聊天消息记录
         for (recentChat in recentChats) {
 
             val messageResp = messageDao.getLastMessageBySenderId(userId, recentChat.chatId,recentChat.chatId)
@@ -65,7 +63,7 @@ class HomeModel @Inject constructor(repository: IDataRepository?): MessageModel(
             messageLists.add(messageList)
         }
 
-
+        //遍历获取最近的群消息记录
         for (recentGroupChat in recentGroupChats) {
             val groupMessageResp = groupMessageDao.getLastMessageByGroupId(userId, recentGroupChat.groupChatId)
             val count = groupMessageDao.getUnreadList(userId,recentGroupChat.groupChatId).size

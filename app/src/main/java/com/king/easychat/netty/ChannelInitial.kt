@@ -4,7 +4,6 @@ import com.king.easychat.netty.codec.PacketDecoder
 import com.king.easychat.netty.codec.PacketEncoder
 import com.king.easychat.netty.codec.Spliter
 import com.king.easychat.netty.handle.*
-import com.king.easychat.netty.packet.Packet
 import io.netty.channel.ChannelInitializer
 import io.netty.channel.socket.SocketChannel
 

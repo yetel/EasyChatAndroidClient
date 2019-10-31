@@ -42,6 +42,9 @@ class HomeViewModel @Inject constructor(application: Application, model: HomeMod
         super.onCreate()
     }
 
+    /**
+     * 同步消息请求
+     */
     fun syncMessageReq(){
         NettyClient.INSTANCE.sendMessage(SyncMessageReq())
     }
@@ -59,7 +62,7 @@ class HomeViewModel @Inject constructor(application: Application, model: HomeMod
     /**
      * 查询最近聊天记录
      */
-    fun queryMessageList(userId : String, currentPage : Int, pageSize : Int,sleepTime: Int){
+    private fun queryMessageList(userId : String, currentPage : Int, pageSize : Int,sleepTime: Int){
         GlobalScope.launch(Dispatchers.Main) {
             SystemClock.sleep(sleepTime.toLong())
             var list = withContext(Dispatchers.IO){

@@ -2,11 +2,6 @@ package com.king.easychat.app.chat
 
 import com.king.easychat.app.base.MessageModel
 import com.king.easychat.bean.GroupMessageDbo
-import com.king.easychat.bean.RecentChat
-import com.king.easychat.bean.RecentGroupChat
-import com.king.easychat.dao.GroupMessageDao
-import com.king.easychat.netty.packet.req.GroupMessageReq
-import com.king.easychat.netty.packet.resp.GroupMessageResp
 import com.king.frame.mvvmframe.data.IDataRepository
 import javax.inject.Inject
 

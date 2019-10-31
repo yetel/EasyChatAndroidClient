@@ -7,10 +7,8 @@ import android.text.TextUtils
 import android.text.TextWatcher
 import android.view.View
 import androidx.core.app.ActivityOptionsCompat
-import androidx.core.content.ContextCompat.startActivity
 import com.king.base.baseurlmanager.BaseUrlManagerActivity
 import com.king.base.util.StringUtils
-import com.king.base.util.ToastUtils.showToast
 import com.king.easychat.R
 import com.king.easychat.app.Constants
 import com.king.easychat.app.base.BaseActivity

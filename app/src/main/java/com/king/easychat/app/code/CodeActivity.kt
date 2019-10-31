@@ -1,7 +1,6 @@
 package com.king.easychat.app.code
 
 import android.os.Bundle
-import androidx.databinding.ViewDataBinding
 import com.king.easychat.R
 import com.king.easychat.app.Constants
 import com.king.easychat.app.base.BaseActivity

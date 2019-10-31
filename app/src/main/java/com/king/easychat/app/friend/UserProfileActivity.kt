@@ -4,21 +4,17 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import androidx.core.app.ActivityOptionsCompat
 import androidx.lifecycle.Observer
 import com.king.base.util.StringUtils
 import com.king.easychat.R
 import com.king.easychat.app.Constants
 import com.king.easychat.app.base.BaseActivity
 import com.king.easychat.app.me.user.ChangeUserInfoActivity
-import com.king.easychat.app.photo.PhotoViewActivity
 import com.king.easychat.bean.User
 import com.king.easychat.databinding.UserProfileActivityBinding
 import com.king.easychat.netty.NettyClient
-import kotlinx.android.synthetic.main.me_fragment.*
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.user_profile_activity.*
-import kotlinx.android.synthetic.main.user_profile_activity.ivAvatar
 
 /**
  * @author <a href="mailto:jenly1314@gmail.com">Jenly</a>

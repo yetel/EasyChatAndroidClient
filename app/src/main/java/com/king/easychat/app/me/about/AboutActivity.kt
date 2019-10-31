@@ -95,6 +95,9 @@ class AboutActivity : BaseActivity<DataViewModel,AboutActivityBinding>(){
         super.onClick(v)
         when(v.id){
             R.id.fab -> startWeb(getString(R.string.app_name), "https://github.com/yetel/EasyChatAndroidClient")
+            R.id.tvServer -> startWeb(tvServer.text.toString(),"https://github.com/yetel/EasyChatServer")
+            R.id.tvJavaFX -> startWeb(tvJavaFX.text.toString(),"https://github.com/yetel/EasyChatJavaFXClient")
+            R.id.tvAndroid -> startWeb(tvAndroid.text.toString(),"https://github.com/yetel/EasyChatAndroidClient")
         }
     }
 

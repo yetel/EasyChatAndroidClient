@@ -17,11 +17,11 @@
 
 ### 核心技术点
 
-* JectPack(Lifecycle，LiveData，ViewModel，Room)
+* JetPack(Lifecycle，LiveData，ViewModel，Room)
 * Dagger
 * DataBinding
 * Netty
-* Kotlin Coroutines
+* Kotlin coroutine
 
 
 ### EasyChat相关开源项目

@@ -2,10 +2,6 @@ package com.king.easychat.app.chat
 
 import com.king.easychat.app.base.MessageModel
 import com.king.easychat.bean.MessageDbo
-import com.king.easychat.bean.RecentChat
-import com.king.easychat.dao.MessageDao
-import com.king.easychat.netty.packet.req.MessageReq
-import com.king.easychat.netty.packet.resp.MessageResp
 import com.king.frame.mvvmframe.data.IDataRepository
 import javax.inject.Inject
 

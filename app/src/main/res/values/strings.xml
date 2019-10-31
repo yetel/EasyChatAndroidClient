@@ -20,9 +20,7 @@
     <string name="modify">修改</string>
     <string name="submit">提交</string>
 
-
     <string name="forgot_password">忘记密码</string>
-
 
     <string name="tips_username_is_empty">请输入用户名</string>
     <string name="tips_password_is_empty">请输入密码</string>
@@ -31,7 +29,6 @@
     <string name="tips_new_password_is_empty">请输入新密码</string>
     <string name="tips_confirm_new_password_is_empty">请再次输入新密码</string>
     <string name="tips_password_is_different">两次密码不一致</string>
-
 
     <string name="tips_password_matcher">密码至少包括6个字符，必须由字母、数字组成。</string>
 
@@ -43,7 +40,6 @@
     <string name="tips_change_nickname">好的昵称能让你朋友更容易记住你</string>
     <string name="tips_change_signature">有签名才个性</string>
     <string name="tips_change_remark">修改好友备注名称</string>
-
 
     <string name="label_exist_account">已有账户，</string>
     <string name="login_now">立即登录</string>
@@ -74,7 +70,6 @@
 
     <string name="success_operator">操作成功</string>
     <string name="operator_failed">操作失败，请稍后再试</string>
-
 
     <!-- Home -->
     <string name="menu_message">消息</string>
@@ -116,7 +111,6 @@
 
     <string name="delete">删除</string>
 
-
     <string name="scan_code_title">扫码</string>
     <string name="tips_user_qrcode">扫一扫上面的二维码，添加我为好友</string>
     <string name="tips_group_qrcode">扫一扫上面的二维码，申请加群</string>
@@ -144,5 +138,10 @@
     <string name="tips_netty_connected">Netty连接成功</string>
 
     <string name="about_desc">本App纯属个人作品，完全开源。如果您在使用的过程中遇到问题或有好的建议需要反馈，请点击右上角菜单选项联系作者，谢谢合作。</string>
+
+    <string name="open_source_project">相关开源项目</string>
+    <string name="about_server"><u>EasyChatServer</u></string>
+    <string name="about_java_fx"><u>EasyChatJavaFXClient</u></string>
+    <string name="about_android"><u>EasyChatAndroidClient</u></string>
 
 </resources>

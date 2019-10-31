@@ -1,6 +1,5 @@
 package com.king.easychat.app.search
 
-import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextUtils
@@ -19,15 +18,9 @@ import com.king.easychat.app.friend.UserProfileActivity
 import com.king.easychat.app.group.GroupProfileActivity
 import com.king.easychat.app.me.user.UserInfoActivity
 import com.king.easychat.bean.Search
-import com.king.easychat.bean.User
 import com.king.easychat.databinding.SearchUserActivityBinding
-import com.king.easychat.netty.packet.resp.MessageResp
-import com.king.easychat.util.SystemBarHelper
 import com.king.frame.mvvmframe.base.livedata.StatusEvent
-import kotlinx.android.synthetic.main.about_activity.*
 import kotlinx.android.synthetic.main.search_user_activity.*
-import kotlinx.android.synthetic.main.search_user_activity.toolbar
-import timber.log.Timber
 
 /**
  * @author <a href="mailto:jenly1314@gmail.com">Jenly</a>

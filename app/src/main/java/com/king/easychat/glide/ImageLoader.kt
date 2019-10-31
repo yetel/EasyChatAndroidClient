@@ -3,7 +3,6 @@ package com.king.easychat.glide
 import android.app.Activity
 import android.content.Context
 import android.widget.ImageView
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 
 /**

@@ -1,16 +1,16 @@
 package com.king.easychat.app.friend
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.king.easychat.api.ApiService
 import com.king.easychat.app.base.MessageModel
 import com.king.easychat.bean.Result
 import com.king.easychat.bean.User
-import com.king.easychat.dao.UserDao
 import com.king.frame.mvvmframe.bean.Resource
 import com.king.frame.mvvmframe.data.IDataRepository
 import com.king.frame.mvvmframe.http.callback.ApiCallback
-import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import javax.inject.Inject
 

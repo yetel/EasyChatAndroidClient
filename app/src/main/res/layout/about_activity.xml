@@ -58,9 +58,10 @@
                     android:id="@+id/tvVersion"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/size_6dp"
+                    android:layout_marginTop="@dimen/size_10dp"
                     android:layout_marginBottom="@dimen/size_60dp"
-                    android:textColor="@color/text_3"
+                    android:textColor="@color/text_6"
+                    android:textSize="@dimen/size_18sp"
                     android:layout_gravity="center_horizontal"
                     android:gravity="center_horizontal"
                     tools:text="@string/app_name"/>
@@ -68,13 +69,55 @@
                     android:id="@+id/tvDesc"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/size_50dp"
+                    android:layout_marginTop="@dimen/size_40dp"
                     android:autoLink="web"
                     android:textSize="@dimen/size_16sp"
                     android:lineSpacingExtra="1dp"
                     android:lineSpacingMultiplier="1.2"
                     android:text="@string/about_desc"/>
-
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/size_30dp"
+                    android:layout_marginBottom="@dimen/size_10dp"
+                    android:drawablePadding="@dimen/size_8dp"
+                    android:drawableLeft="@drawable/ec_about_line"
+                    android:drawableRight="@drawable/ec_about_line"
+                    android:text="@string/open_source_project"
+                    android:textSize="@dimen/size_16sp"
+                    android:textColor="@color/text_80"
+                    android:gravity="center"/>
+                <TextView
+                    android:id="@+id/tvServer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/size_6dp"
+                    android:paddingBottom="@dimen/size_6dp"
+                    android:text="@string/about_server"
+                    android:textSize="@dimen/size_16sp"
+                    android:textColor="@color/text_theme"
+                    style="@style/OnClick"/>
+                <TextView
+                    android:id="@+id/tvJavaFX"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/size_6dp"
+                    android:paddingBottom="@dimen/size_6dp"
+                    android:text="@string/about_java_fx"
+                    android:textSize="@dimen/size_16sp"
+                    android:textColor="@color/text_theme"
+                    style="@style/OnClick"/>
+                <TextView
+                    android:id="@+id/tvAndroid"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/size_6dp"
+                    android:paddingBottom="@dimen/size_6dp"
+                    android:text="@string/about_android"
+                    android:textSize="@dimen/size_16sp"
+                    android:textColor="@color/text_theme"
+                    style="@style/OnClick"/>
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
         <com.google.android.material.floatingactionbutton.FloatingActionButton

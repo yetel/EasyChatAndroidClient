@@ -1,13 +1,10 @@
 package com.king.easychat.app.group
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.king.easychat.api.ApiService
 import com.king.easychat.app.base.MessageModel
-import com.king.easychat.bean.Result
 import com.king.easychat.bean.Group
-import com.king.easychat.dao.GroupDao
-import com.king.frame.mvvmframe.base.BaseModel
+import com.king.easychat.bean.Result
 import com.king.frame.mvvmframe.bean.Resource
 import com.king.frame.mvvmframe.data.IDataRepository
 import com.king.frame.mvvmframe.http.callback.ApiCallback
@@ -25,7 +22,9 @@ class GroupModel @Inject constructor(repository: IDataRepository?): MessageModel
 
     val groupResource = MutableLiveData<Resource<List<Group>>>()
 
-
+    /**
+     * 获取群组列表
+     */
     fun getGroups(token: String){
         groupResource.value = Resource.loading()
         getRetrofitService(ApiService::class.java)

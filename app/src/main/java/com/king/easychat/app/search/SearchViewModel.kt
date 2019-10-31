@@ -22,6 +22,9 @@ class SearchViewModel @Inject constructor(application: Application, model: BaseM
 
     val searchsLiveData = MutableLiveData<List<Search>>()
 
+    /**
+     * 搜索
+     */
     fun search(keyword: String,curPage: Int,pageSize: Int){
         val token = getApplication<App>().getToken()
         updateStatus(StatusEvent.Status.LOADING)

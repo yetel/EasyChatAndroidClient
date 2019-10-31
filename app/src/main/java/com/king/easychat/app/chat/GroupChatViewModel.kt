@@ -4,16 +4,10 @@ import android.app.Application
 import androidx.lifecycle.MutableLiveData
 import com.king.easychat.app.Constants
 import com.king.easychat.app.base.MessageViewModel
-import com.king.easychat.bean.RecentChat
-import com.king.easychat.bean.RecentGroupChat
 import com.king.easychat.netty.NettyClient
 import com.king.easychat.netty.packet.MessageType
 import com.king.easychat.netty.packet.req.GroupMessageReq
-import com.king.easychat.netty.packet.req.MessageReq
 import com.king.easychat.netty.packet.resp.GroupMessageResp
-import com.king.frame.mvvmframe.base.BaseModel
-import com.king.frame.mvvmframe.base.BaseViewModel
-import com.king.frame.mvvmframe.base.DataViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -37,7 +31,9 @@ class GroupChatViewModel @Inject constructor(application: Application, model: Gr
         sendSingleLiveEvent(Constants.REFRESH_SUCCESS)
     }
 
-
+    /**
+     * 发送桃心
+     */
     fun sendHeart(receiver: String){
         NettyClient.INSTANCE.sendMessage(GroupMessageReq(receiver,MessageType.HEART.toString(),MessageType.HEART))
     }

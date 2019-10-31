@@ -7,7 +7,6 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import android.view.animation.AnimationUtils
-import androidx.core.app.ActivityOptionsCompat
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -20,13 +19,12 @@ import com.king.easychat.app.base.BaseActivity
 import com.king.easychat.app.friend.UserProfileActivity
 import com.king.easychat.app.group.GroupProfileActivity
 import com.king.easychat.app.me.user.UserInfoActivity
-import com.king.easychat.app.photo.PhotoViewActivity
 import com.king.easychat.bean.Operator
 import com.king.easychat.databinding.GroupChatActivityBinding
 import com.king.easychat.netty.packet.MessageType
 import com.king.easychat.netty.packet.resp.GroupMessageResp
-import com.king.easychat.netty.packet.resp.MessageResp
 import com.king.easychat.util.Event
+import com.king.easychat.util.KeyboardUtils
 import com.zhihu.matisse.Matisse
 import kotlinx.android.synthetic.main.chat_activity.*
 import kotlinx.android.synthetic.main.toolbar.*
@@ -61,6 +59,11 @@ class GroupChatActivity : BaseActivity<GroupChatViewModel, GroupChatActivityBind
             mViewModel.queryMessageByGroupId(getApp().getUserId(),groupId,curPage,Constants.PAGE_SIZE)
         }
 
+        KeyboardUtils.registerSoftInputChangedListener(this) {
+            if(it>0){
+                rv.scrollToPosition(mAdapter.itemCount - 1)
+            }
+        }
 
         etContent.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
@@ -171,6 +174,11 @@ class GroupChatActivity : BaseActivity<GroupChatViewModel, GroupChatActivityBind
             ivAdd.startAnimation(AnimationUtils.loadAnimation(context,R.anim.anim_out))
             tvSend.startAnimation(AnimationUtils.loadAnimation(context,R.anim.anim_in))
         }
+    }
+
+    override fun onDestroy() {
+        KeyboardUtils.unregisterSoftInputChangedListener(this)
+        super.onDestroy()
     }
 
     override fun getLayoutId(): Int {

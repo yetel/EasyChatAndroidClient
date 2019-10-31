@@ -12,8 +12,6 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.PopupWindow
 import android.widget.TextView
-import androidx.annotation.DrawableRes
-import androidx.annotation.IdRes
 import androidx.annotation.StringRes
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.content.ContextCompat
@@ -33,7 +31,6 @@ import com.king.frame.mvvmframe.base.BaseFragment
 import com.king.frame.mvvmframe.base.BaseModel
 import com.king.frame.mvvmframe.base.BaseViewModel
 import com.tbruyelle.rxpermissions2.RxPermissions
-import kotlinx.android.synthetic.main.toolbar.*
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import timber.log.Timber

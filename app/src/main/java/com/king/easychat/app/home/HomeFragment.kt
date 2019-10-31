@@ -103,7 +103,7 @@ class HomeFragment : BaseFragment<HomeViewModel,HomeFragmentBinding>(),View.OnCl
         }
     }
 
-    fun requestData(){
+    private fun requestData(){
         if(isRefresh){
             mViewModel.delay(200)
         }

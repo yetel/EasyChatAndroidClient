@@ -5,9 +5,6 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.widget.ImageView
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners
-import com.bumptech.glide.manager.RequestManagerRetriever
-import com.bumptech.glide.request.RequestOptions
 import com.king.easychat.R
 import com.king.easychat.app.Constants
 import com.king.easychat.glide.GlideApp

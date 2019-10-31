@@ -95,8 +95,12 @@ class NettyClient {
     return netty.isOpen
   }
 
-  fun setOnConnectListener(listener: Netty.OnConnectListener){
+  fun setOnConnectListener(listener: Netty.OnConnectListener?){
       netty.setOnConnectListener(listener)
+  }
+
+  fun setOnSendMessageListener(listener: Netty.OnSendMessageListener?){
+    netty.setOnSendMessageListener(listener)
   }
 
   /**

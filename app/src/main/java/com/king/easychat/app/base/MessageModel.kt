@@ -110,22 +110,37 @@ open class MessageModel @Inject constructor(repository: IDataRepository?) : Base
         getRecentGroupChatDao().delete(userId,chatId)
     }
 
+    /**
+     * 根据好友ID更新消息为已读
+     */
     fun updateMessageRead(userId: String,friendId: String){
         getMessageDao().updateRead(userId,friendId,friendId)
     }
 
+    /**
+     * 根据群ID更新消息为已读
+     */
     fun updateGroupMessageRead(userId: String,groupId: String){
         getGroupMessageDao().updateRead(userId,groupId)
     }
 
+    /**
+     * 更新普通消息为已读
+     */
     fun updateMessageRead(userId: String){
         getMessageDao().updateRead(userId)
     }
 
+    /**
+     * 更新群消息为已读
+     */
     fun updateGroupMessageRead(userId: String){
         getGroupMessageDao().updateRead(userId)
     }
 
+    /**
+     * 更新所有消息为已读
+     */
     fun updateAllMessageRead(userId: String){
         updateMessageRead(userId)
         updateGroupMessageRead(userId)

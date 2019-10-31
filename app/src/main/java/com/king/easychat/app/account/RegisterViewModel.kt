@@ -7,11 +7,6 @@ import com.king.easychat.netty.NettyClient
 import com.king.easychat.netty.packet.req.RegisterReq
 import com.king.frame.mvvmframe.base.BaseModel
 import com.king.frame.mvvmframe.base.DataViewModel
-import io.netty.channel.ChannelFuture
-import io.netty.util.concurrent.GenericFutureListener
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 /**
@@ -21,12 +16,10 @@ class RegisterViewModel @Inject constructor(application: Application, model: Bas
 
     var registerReq: RegisterReq? = null
 
-    val genericFutureListener by lazy {
-        GenericFutureListener<ChannelFuture> {
-            hideLoading()
-            if(it.isSuccess){
-                sendSingleLiveEvent(Constants.EVENT_SUCCESS)
-            }
+    val onSendMessageListener = Netty.OnSendMessageListener { msg, success ->
+        hideLoading()
+        if(success){
+            sendSingleLiveEvent(Constants.EVENT_SUCCESS)
         }
     }
 
@@ -35,7 +28,7 @@ class RegisterViewModel @Inject constructor(application: Application, model: Bas
 
         NettyClient.INSTANCE.setOnConnectListener(object: Netty.OnConnectListener{
             override fun onSuccess() {
-                NettyClient.INSTANCE.addListener(genericFutureListener)
+
             }
 
             override fun onFailed() {
@@ -43,17 +36,15 @@ class RegisterViewModel @Inject constructor(application: Application, model: Bas
             }
 
             override fun onError(e: Exception?) {
-                GlobalScope.launch(Dispatchers.Main) {
-                    hideLoading()
-                }
+                hideLoading()
             }
 
         })
-
+        NettyClient.INSTANCE.setOnSendMessageListener(onSendMessageListener)
     }
 
     override fun onDestroy() {
-        NettyClient.INSTANCE.removeListener(genericFutureListener)
+        NettyClient.INSTANCE.setOnSendMessageListener(null)
         super.onDestroy()
     }
 

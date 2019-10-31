@@ -57,6 +57,9 @@ class UserProfileViewModel @Inject constructor(application: Application, model: 
 
     }
 
+    /**
+     * 添加好友
+     */
     fun addFriend(friendId: String){
         NettyClient.INSTANCE.sendMessage(AddUserReq(friendId))
     }

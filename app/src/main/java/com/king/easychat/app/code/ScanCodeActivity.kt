@@ -11,8 +11,6 @@ import com.king.easychat.app.base.BaseActivity
 import com.king.easychat.app.friend.UserProfileActivity
 import com.king.easychat.app.group.GroupProfileActivity
 import com.king.easychat.app.me.user.UserInfoActivity
-import com.king.easychat.app.web.WebActivity
-import com.king.easychat.util.CheckUtil
 import com.king.easychat.util.SystemBarHelper
 import com.king.frame.mvvmframe.base.DataViewModel
 import com.king.zxing.CaptureHelper

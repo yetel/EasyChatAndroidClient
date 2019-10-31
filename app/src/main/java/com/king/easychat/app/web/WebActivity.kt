@@ -21,6 +21,7 @@ import kotlinx.android.synthetic.main.web_activity.*
 class WebActivity : BaseActivity<DataViewModel, WebActivityBinding>() {
 
     private lateinit var url: String
+    private lateinit var curl: String
 
     private var isError = false
 
@@ -60,6 +61,7 @@ class WebActivity : BaseActivity<DataViewModel, WebActivityBinding>() {
 
             override fun onPageStarted(view: WebView?, url: String, favicon: Bitmap?) {
                 super.onPageStarted(view, url, favicon)
+                this@WebActivity.curl = url
                 if(!url.equals(BLANK_URL,true)){
                     this@WebActivity.url = url
                 }
@@ -100,6 +102,9 @@ class WebActivity : BaseActivity<DataViewModel, WebActivityBinding>() {
         web.loadUrl(url)
     }
 
+    /**
+     * 更新进度
+     */
     private fun updateProgress(progress: Int,isError: Boolean){
 
         if(isError){
@@ -139,7 +144,7 @@ class WebActivity : BaseActivity<DataViewModel, WebActivityBinding>() {
 
 
     override fun onBackPressed() {
-        if(isGoBack() && !isError && !url.equals(BLANK_URL,true)){
+        if(isGoBack() && !isError && !curl.equals(BLANK_URL,true)){
             web.goBack()
             return
         }

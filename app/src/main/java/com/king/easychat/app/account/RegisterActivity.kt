@@ -11,7 +11,6 @@ import com.king.easychat.databinding.RegisterActivityBinding
 import com.king.easychat.netty.packet.resp.RegisterResp
 import com.king.easychat.util.Cache
 import com.king.easychat.util.CheckUtil
-import com.king.easychat.util.SystemBarHelper
 import kotlinx.android.synthetic.main.login_activity.etPassword
 import kotlinx.android.synthetic.main.login_activity.etUsername
 import kotlinx.android.synthetic.main.register_activity.*

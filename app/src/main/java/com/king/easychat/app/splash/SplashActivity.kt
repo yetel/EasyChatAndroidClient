@@ -7,6 +7,7 @@ import android.view.animation.AnimationUtils
 import com.king.anetty.Netty
 import com.king.base.util.StringUtils
 import com.king.easychat.R
+import com.king.easychat.app.Constants
 import com.king.easychat.app.base.BaseActivity
 import com.king.easychat.app.service.HeartBeatService
 import com.king.easychat.databinding.SplashActivityBinding
@@ -28,6 +29,13 @@ class SplashActivity : BaseActivity<SplashViewModel, SplashActivityBinding>(){
     var isAnimEnd = false
     var loginResp: LoginResp? = null
 
+    private val onSendMessageListener = Netty.OnSendMessageListener { msg, success ->
+        if(!success){
+            isRequest = true
+            startActivity()
+        }
+    }
+
     override fun initData(savedInstanceState: Bundle?) {
         if(!NettyClient.INSTANCE.isConnected()){
             NettyClient.INSTANCE.setOnConnectListener(object: Netty.OnConnectListener{
@@ -46,6 +54,7 @@ class SplashActivity : BaseActivity<SplashViewModel, SplashActivityBinding>(){
                 }
 
             })
+            NettyClient.INSTANCE.setOnSendMessageListener(onSendMessageListener)
             NettyClient.INSTANCE.connect()
         }else{
             loginResp = getApp().loginResp
@@ -56,6 +65,9 @@ class SplashActivity : BaseActivity<SplashViewModel, SplashActivityBinding>(){
         startAnimation(rootView)
     }
 
+    /**
+     * token自动登录
+     */
     fun autoLogin(){
         var cacheToken = Cache.getToken()
         Timber.d("cacheToken=$cacheToken")
@@ -75,6 +87,12 @@ class SplashActivity : BaseActivity<SplashViewModel, SplashActivityBinding>(){
     override fun getLayoutId(): Int {
         return R.layout.splash_activity
     }
+
+    override fun onDestroy() {
+        NettyClient.INSTANCE.setOnSendMessageListener(null)
+        super.onDestroy()
+    }
+
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onMessageEvent(event: LoginResp){
