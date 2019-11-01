@@ -31,7 +31,7 @@ task clean(type: Delete) {
 }
 
 ext {
-    signingEnabled = true
+    signingEnabled = false
 
     tinkerEnabled = false
 
