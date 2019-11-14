@@ -126,6 +126,8 @@
         <meta-data android:name="com.king.easychat.config.ConfigModule"
             android:value="FrameConfigModule"/>
 
+        <meta-data android:name="android.max_aspect"
+            android:value="2.4" />
 
     </application>
 

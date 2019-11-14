@@ -21,6 +21,7 @@
     </style>
 
     <style name="SplashAppTheme" parent="AppTheme">
+        <item name="colorPrimaryDark">@color/black</item>
         <item name="android:windowBackground">@drawable/splash_layer</item>
         <item name="android:windowFullscreen">true</item>
     </style>

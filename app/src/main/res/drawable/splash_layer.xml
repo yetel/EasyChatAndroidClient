@@ -3,9 +3,10 @@
     <item android:drawable="@color/black" />
     <item>
         <bitmap
-            android:gravity="center"
-            android:scaleType="centerCrop"
+            android:gravity="center_horizontal|bottom"
+            android:dither="true"
+            android:tileMode="disabled"
             android:src="@drawable/ec_welcome"
-            android:tileMode="disabled" />
+            android:scaleType="centerCrop"/>
     </item>
 </layer-list>

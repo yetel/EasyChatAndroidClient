@@ -1,5 +1,6 @@
 package com.king.easychat.app.splash
 
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.view.animation.Animation
@@ -37,6 +38,7 @@ class SplashActivity : BaseActivity<SplashViewModel, SplashActivityBinding>(){
     }
 
     override fun initData(savedInstanceState: Bundle?) {
+
         if(!NettyClient.INSTANCE.isConnected()){
             NettyClient.INSTANCE.setOnConnectListener(object: Netty.OnConnectListener{
                 override fun onSuccess() {
@@ -143,4 +145,6 @@ class SplashActivity : BaseActivity<SplashViewModel, SplashActivityBinding>(){
         }
 
     }
+
+
 }
